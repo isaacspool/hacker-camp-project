@@ -1,92 +1,88 @@
-.container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.border {
+    border: 5px solid black;
+    border-radius: 30px;
 }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
+.thinBorder {
+    border: 2px solid black;
+    border-radius: 30px;
 }
 
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
+.week {
+    display: flex;
+    flex-direction: row;
+    padding: 3%;
+    gap: 10px;
+    height: 90vh;
+    font-family: "Lato", sans-serif;
 }
 
-.title {
-  margin: 0 0 1rem;
-  line-height: 1.15;
-  font-size: 3.6rem;
-}
-
-.title {
-  text-align: center;
-}
-
-.title,
-.description {
-  text-align: center;
-}
-
-.description {
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  max-width: 800px;
-  margin-top: 3rem;
-}
-
-.card {
-  margin: 1rem;
-  flex-basis: 45%;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease;
-}
-
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
-}
-
-.card h3 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-}
-
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
-
-.logo {
-  height: 1em;
-}
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
+.day {
+    box-sizing: border-box;
+    display: flex;
     flex-direction: column;
-  }
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
+.projectList {
+    height: 100%;
+    list-style-type: none;
+    padding: 0;
+    overflow-y: scroll;
+}
+
+.projectList::-webkit-scrollbar {
+    display: none;
+}
+
+.project {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    list-style: none;
+    margin: 10px;
+}
+
+.location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    list-style: none;
+    font-size: 22px;
+}
+
+.staffList {
+    padding: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 22px;
+    white-space: nowrap;
+}
+
+.pill {
+    border-radius: 1000px;
+    background-color: #ffffff49;
+}
+
+.newProjectButton {
+    position: fixed;
+    right: 4%;
+    bottom: 4%;
+    z-index: 1;
+}
+
+.buttonBackground {
+    position: absolute;
+    z-index: -1;
+    background: white;
+    border-radius: 26px;
+    right: calc(4% + 1.5px);
+    bottom: 4%;
+    width: 94.521px;
+    height: 94.521px;
 }

@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 90vh;
+    overflow-y: hidden;
+    padding: 3% 12%;
+}
+
+.filledDot {
+    height: 30px;
+    width: 30px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.emptyDot {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border: 4px solid black;
+    box-sizing: border-box;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dots {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.bigLogo {
+    /* width: 50%;
+    height: 88%; */
+    position: fixed;
+    top: 6%;
+    bottom: 6%;
+    left: 25%;
+    right: 25%;
+    object-fit: contain;
+    z-index: -1;
+    opacity: 0.05;
+}
+
+.thickBorder {
+    border: 10px solid black;
+    border-radius: 30px;
+}
