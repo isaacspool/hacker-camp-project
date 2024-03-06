@@ -1,7 +1,8 @@
 import styles from "../styles/Home.module.css";
+import { Person } from "./Person";
 
-export function Project({ name, location, staff, types }) {
-    let colors = types.map((type) => {
+export function Project(props) {
+    let colors = props.types.map((type) => {
         switch (type) {
             case "Analytical":
                 return "rgba(220, 63, 63, 0.25)";
@@ -39,27 +40,22 @@ export function Project({ name, location, staff, types }) {
                 background: background,
             }}
         >
-            <h2 style={{ fontSize: 26 }}>{name}</h2>
-            <div style={{ borderTop: "5px solid", padding: "1rem" }}>
+            <h2 style={{ fontSize: 26 }}>{props.projectName}</h2>
+            <div className={styles.projectBody}>
                 <div className={styles.location}>
                     <img
                         src="/location_pin.svg"
                         alt="location"
-                        width={24}
-                        height={24}
+                        width={30}
+                        height={30}
                     />
-                    <p>{location}</p>
+                    <p style={{ fontSize: 24, margin: "1%" }}>
+                        {props.location}
+                    </p>
                 </div>
                 <ul className={styles.staffList}>
-                    {staff.map((person) => (
-                        <p
-                            className={[styles.thinBorder, styles.pill].join(
-                                " "
-                            )}
-                            style={{ padding: "10px 3rem", margin: "0.3rem" }}
-                        >
-                            {person}
-                        </p>
+                    {props.staff.map((person) => (
+                        <Person icon="/PersonIcon.svg">{person}</Person>
                     ))}
                 </ul>
             </div>

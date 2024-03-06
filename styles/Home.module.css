@@ -11,10 +11,14 @@
 .week {
     display: flex;
     flex-direction: row;
-    padding: 3%;
-    gap: 10px;
+    padding: 2% 2% 0 2%;
+    gap: 2vmax;
     height: 90vh;
     font-family: "Lato", sans-serif;
+}
+
+.main::-webkit-scrollbar {
+    display: none;
 }
 
 .day {
@@ -53,15 +57,23 @@
     justify-content: left;
     gap: 10px;
     list-style: none;
-    font-size: 22px;
+    margin: 0.3rem;
 }
 
 .staffList {
     padding: 0px;
+    margin: 0px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    font-size: 22px;
-    white-space: nowrap;
+}
+
+.projectBody {
+    border-top: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
 }
 
 .pill {
@@ -85,4 +97,25 @@
     bottom: 4%;
     width: 94.521px;
     height: 94.521px;
+}
+
+.detailsList {
+    padding: 1vmax 0px;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    white-space: nowrap;
+    padding: 0.65rem 2.5rem;
+    margin: 0.3rem;
+    font-size: 19px;
+    flex-grow: 1;
 }
