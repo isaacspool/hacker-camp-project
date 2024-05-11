@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import { ScheduleWeek } from "../components/ScheduleWeek";
 import { useState } from "react";
 import { LanguageButton } from "../components/LanguageButton";
+import { Popup } from "../components/Popup";
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"];
 const daysHebrew = ["ראשון", "שני", "שלישי", "רביעי", "המשי"];
@@ -61,14 +62,20 @@ export default function Home() {
             </Head>
 
             <main>
+                <Popup>
+                    <h1>Popup</h1>
+                    <p>This is a popup</p>
+                </Popup>
                 <Link href="/form" className={styles.newProjectButton}>
                     <img src="/form_button.svg" />
                 </Link>
                 <LanguageButton language={language} setLanguage={setLanguage} />
-                <ScheduleWeek
-                    days={language == "hebrew" ? daysHebrew : days}
-                    projects={exampleProjects}
-                />
+                <div>
+                    <ScheduleWeek
+                        days={language == "hebrew" ? daysHebrew : days}
+                        projects={exampleProjects}
+                    />
+                </div>
             </main>
         </div>
     );

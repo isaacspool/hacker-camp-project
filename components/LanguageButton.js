@@ -12,6 +12,7 @@ export function LanguageButton({ language, setLanguage }) {
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
+                zIndex: 100,
             }}
         >
             <img src="/language_button.svg" />
