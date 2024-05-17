@@ -70,14 +70,14 @@ export function Person({ children, icon, language }) {
                                     .toLowerCase()
                                     .includes(search.toLowerCase())
                         )
-                        .map((person) => (
+                        .map((person, i) => (
                             <button
                                 className={[
                                     styles.thinBorder,
                                     styles.staff,
                                 ].join(" ")}
                                 onClick={() => handlePersonSelect(person)}
-                                key={person}
+                                key={i}
                             >
                                 {person}
                             </button>

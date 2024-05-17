@@ -55,6 +55,9 @@ export default function Form() {
     }, [formPage]);
 
     const [language, setLanguage] = useState("en");
+    useEffect(() => {
+        setLanguage(localStorage.getItem("language") || "en");
+    }, []);
 
     return (
         <div className={styles.container}>

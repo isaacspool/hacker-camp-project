@@ -38,8 +38,6 @@ export function Popup({
     const myRef = useRef();
 
     const modifyFilter = (name) => {
-        console.log(name);
-        console.log(filter);
         return filter.includes(name)
             ? setFilter(filter.filter((f) => f !== name))
             : setFilter([...filter, name]);
@@ -108,7 +106,12 @@ export function Popup({
                     </div>
                 )}
 
-                <div className={styles.selectionMenu} id="selection_menu">
+                <div
+                    className={[styles.selectionMenu, styles.blackScroll].join(
+                        " "
+                    )}
+                    id="selection_menu"
+                >
                     {children}
                 </div>
             </div>

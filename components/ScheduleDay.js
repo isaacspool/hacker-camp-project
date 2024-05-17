@@ -60,36 +60,36 @@ export function ScheduleDay({
 
     return (
         <div className={styles.day}>
-            <h1>{day}</h1>
+            <h1 className={styles.dayTitle}>{day}</h1>
             <div className={styles.detailsList}>
-                {satellites.map((satellite) => (
+                {satellites.map((satellite, i) => (
                     <Person
                         icon="/SatelliteIcon.svg"
                         language={language}
-                        key={satellite}
+                        key={i}
                     >
                         {satellite}
                     </Person>
                 ))}
-                {rundown.map((rundownPerson) => (
+                {rundown.map((rundownPerson, i) => (
                     <Person
                         icon="/RundownIcon.svg"
                         language={language}
-                        key={rundownPerson}
+                        key={i + satellites.length}
                     >
                         {rundownPerson}
                     </Person>
                 ))}
             </div>
             <div className={[styles.border, styles.projectList].join(" ")}>
-                {projects.map((project) => (
+                {projects.map((project, i) => (
                     <Project
                         projectName={project.name}
                         location={project.location}
                         staff={project.staff}
                         types={project.types}
                         language={language}
-                        key={project.name}
+                        key={i}
                     />
                 ))}
                 <img

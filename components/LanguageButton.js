@@ -1,21 +1,23 @@
 export function LanguageButton({ language, setLanguage }) {
     const handleChangeLanguage = () => {
-        setLanguage(language === "en" ? "hebrew" : "en");
+        const newLanguage = language === "en" ? "hebrew" : "en";
+        setLanguage(newLanguage);
+        localStorage.setItem("language", newLanguage);
     };
     return (
         <button
             onClick={handleChangeLanguage}
             style={{
                 position: "fixed",
-                right: "3%",
-                top: "6%",
+                right: "0",
+                top: "1%",
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
                 zIndex: 100,
             }}
         >
-            <img src="/language_button.svg" />
+            <img src="/language_button.svg" width="40" height="40" />
         </button>
     );
 }

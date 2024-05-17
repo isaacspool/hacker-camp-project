@@ -133,14 +133,14 @@ export function Project(props) {
                                     .includes(search.toLowerCase()) ||
                                 room == "Option 42"
                         )
-                        .map((room) => (
+                        .map((room, i) => (
                             <button
                                 className={[
                                     styles.thinBorder,
                                     styles.staff,
                                 ].join(" ")}
                                 onClick={() => handleRoomSelect(room)}
-                                key={room}
+                                key={i}
                             >
                                 {room}
                             </button>

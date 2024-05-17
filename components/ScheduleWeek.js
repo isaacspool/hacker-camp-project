@@ -4,14 +4,14 @@ import styles from "../styles/Home.module.css";
 export function ScheduleWeek(props) {
     return (
         <div className={styles.week}>
-            {props.days.map((day) => (
+            {props.days.map((day, i) => (
                 <ScheduleDay
                     day={day}
                     originalProjects={props.projects}
-                    satellites={["Satellite 1", "Satellite 2"]}
-                    rundown={["Rundown 1", "Rundown 2"]}
+                    satellites={["Satellite", "Satellite"]}
+                    rundown={["Rundown", "Rundown"]}
                     language={props.language}
-                    key={day.toLowerCase()}
+                    key={i}
                 />
             ))}
         </div>

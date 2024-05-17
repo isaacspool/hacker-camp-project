@@ -46,11 +46,11 @@ export function CategoryPage({ value, setValue }) {
     };
     return (
         <div className={styles.categories}>
-            {categories.map((category) => (
+            {categories.map((category, i) => (
                 <button
                     className={styles.pill}
                     onClick={handleCategoryClick}
-                    key={category.toLowerCase()}
+                    key={i}
                     style={
                         value.includes(category)
                             ? {

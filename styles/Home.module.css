@@ -11,7 +11,7 @@
 .week {
     display: flex;
     flex-direction: row;
-    padding: 2% 2% 0 2%;
+    padding: 0.5% 2% 0 2%;
     gap: 2vmax;
     height: 90vh;
     font-family: "Lato", sans-serif;
@@ -47,7 +47,13 @@
     justify-content: center;
     list-style: none;
     margin: 10px;
-    width: 92%;
+    width: 500px;
+}
+
+@media screen and (max-width: 800px) {
+    .project {
+        width: 85vw;
+    }
 }
 
 .location {
@@ -63,10 +69,9 @@
 .staffList {
     padding: 0px;
     margin: 0px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    width: 100%;
 }
 
 .projectBody {
@@ -141,19 +146,19 @@
     flex-grow: 1;
 }
 
-.selectionMenu::-webkit-scrollbar {
+.blackScroll::-webkit-scrollbar {
     background: transparent;
     border-radius: 100px;
     width: 15px;
 }
 
-.selectionMenu::-webkit-scrollbar-thumb {
+.blackScroll::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 1);
     border-radius: 100px;
 }
 
 /* Buttons */
-.selectionMenu::-webkit-scrollbar-button:single-button {
+.blackScroll::-webkit-scrollbar-button:single-button {
     background-color: transparent;
     display: block;
     border-style: solid;
@@ -161,14 +166,25 @@
     width: 16px;
 }
 /* Up */
-.selectionMenu::-webkit-scrollbar-button:single-button:vertical:decrement {
+.blackScroll::-webkit-scrollbar-button:single-button:vertical:decrement {
     border-width: 0 8px 8px 8px;
     border-color: transparent transparent black transparent;
 }
 
 /* Down */
-.selectionMenu::-webkit-scrollbar-button:single-button:vertical:increment {
+.blackScroll::-webkit-scrollbar-button:single-button:vertical:increment {
     border-width: 8px 8px 0 8px;
+    border-color: black transparent transparent transparent;
+}
+/* Left */
+.blackScroll::-webkit-scrollbar-button:single-button:horizontal:decrement {
+    border-width: 8px 0 8px 8px;
+    border-color: transparent transparent black transparent;
+}
+
+/* Right */
+.blackScroll::-webkit-scrollbar-button:single-button:horizontal:increment {
+    border-width: 8px 8px 8px 0;
     border-color: black transparent transparent transparent;
 }
 
@@ -294,4 +310,70 @@
     transition: 0.1s;
     scale: 1 1.05;
     translate: 0 -1px;
+}
+
+.weekList {
+    display: flex;
+    flex-direction: column;
+    gap: 1%;
+    justify-content: center;
+    padding: 1%;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.weekButton {
+    border-radius: 20px;
+    border: 5px solid black;
+    padding: 1%;
+    margin: 1%;
+    font-size: 1.3em;
+    cursor: pointer;
+    font-size: 30px;
+    font-family: "Lato", sans-serif;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    /* make text not look like a link */
+    text-decoration: none;
+    color: black;
+    backdrop-filter: blur(10px);
+    background: #f0f0f0;
+}
+
+.weekButton:hover {
+    background: #e1e1e1;
+}
+
+.grandTitle {
+    font-size: 48px;
+    font-family: "Lato", sans-serif;
+    margin: 1%;
+    text-align: center;
+}
+
+.bigLogo {
+    position: fixed;
+    object-fit: contain;
+    z-index: -1;
+    opacity: 0.05;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.dayTitle {
+    margin: 0;
+    font-size: 36px;
+    font-family: "Lato", sans-serif;
+}
+
+.weekTitle {
+    font-size: 36px;
+    font-family: "Lato", sans-serif;
+    margin: 1% 2%;
+    margin-bottom: 0;
+    color: black;
+    text-decoration: none;
+    font-weight: 700;
 }
