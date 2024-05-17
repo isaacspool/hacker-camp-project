@@ -47,7 +47,6 @@ export default function Form() {
     const pageRef = useRef();
 
     useEffect(() => {
-        console.log(window.innerWidth, window.innerHeight, formPage);
         if (formPage == 2 && window.innerWidth < window.innerHeight) {
             pageRef.current.style.height = "auto";
         } else {

@@ -7,9 +7,11 @@ export function ScheduleWeek(props) {
             {props.days.map((day) => (
                 <ScheduleDay
                     day={day}
-                    projects={props.projects}
+                    originalProjects={props.projects}
                     satellites={["Satellite 1", "Satellite 2"]}
                     rundown={["Rundown 1", "Rundown 2"]}
+                    language={props.language}
+                    key={day.toLowerCase()}
                 />
             ))}
         </div>

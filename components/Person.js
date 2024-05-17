@@ -1,5 +1,6 @@
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
+import { Popup } from "../components/Popup";
 
 const staff = [
     "Alex",
@@ -21,17 +22,28 @@ const staff = [
     "Option 42",
 ];
 
-export function Person({ children, icon }) {
+export function Person({ children, icon, language }) {
     // Usage: <Person>text here</Person>
     // children is used because the text is passed as a child of the component
     const [showSelectionMenu, setShowSelectionMenu] = useState(false);
-    const handlePersonSelect = () => {
-        // setShowSelectionMenu(!showSelectionMenu);
-
-        const popup = document.querySelector("#popup");
-        popup.style.display = "block";
+    const handleFinish = () => {
+        setShowSelectionMenu(!showSelectionMenu);
     };
+    const handlePersonSelect = (person) => {
+        setShowSelectionMenu(false);
+        setSelectedPerson(person);
+        // move person to second to last position in array
+        const index = staff.indexOf(person);
+        staff.splice(index, 1);
+        staff.splice(staff.length - 1, 0, person);
+    };
+
     const [selectedPerson, setSelectedPerson] = useState(children);
+
+    const [search, setSearch] = useState("");
+    const handleSearch = (e) => {
+        setSearch(e.target.value);
+    };
 
     return (
         <div style={{ display: "flex", flexGrow: 1, justifyContent: "center" }}>
@@ -39,28 +51,39 @@ export function Person({ children, icon }) {
                 className={[styles.thinBorder, styles.pill, styles.person].join(
                     " "
                 )}
-                onClick={handlePersonSelect}
+                onClick={handleFinish}
             >
-                <img src={icon} width={23} height={23} />
+                <img src={icon} width={21} height={21} />
                 <p style={{ margin: 0 }}>{selectedPerson}</p>
             </button>
-            <div
-                className={styles.selectionMenu}
-                style={{ display: showSelectionMenu ? "flex" : "none" }}
-            >
-                {staff.map((person) => (
-                    <button
-                        className={styles.thinBorder}
-                        style={{ padding: "0.5em 1em", fontSize: "1em" }}
-                        onClick={() => {
-                            setShowSelectionMenu(false);
-                            setSelectedPerson(person);
-                        }}
-                    >
-                        {person}
-                    </button>
-                ))}
-            </div>
+            {showSelectionMenu && (
+                <Popup
+                    handleSearch={handleSearch}
+                    closeEffect={handleFinish}
+                    language={language}
+                >
+                    {staff
+                        .filter(
+                            (person) =>
+                                !search ||
+                                person
+                                    .toLowerCase()
+                                    .includes(search.toLowerCase())
+                        )
+                        .map((person) => (
+                            <button
+                                className={[
+                                    styles.thinBorder,
+                                    styles.staff,
+                                ].join(" ")}
+                                onClick={() => handlePersonSelect(person)}
+                                key={person}
+                            >
+                                {person}
+                            </button>
+                        ))}
+                </Popup>
+            )}
         </div>
     );
 }
