@@ -8,6 +8,8 @@ export function Popup({
     filterChips,
     filter,
     setFilter,
+    useTrashButton,
+    handleTrashButton,
     language,
 }) {
     function handleClosePopup() {
@@ -23,6 +25,12 @@ export function Popup({
             const selectionMenu = document.getElementById("selection_menu");
             if (selectionMenu && selectionMenu.children.length == 1) {
                 selectionMenu.children[0].click();
+            }
+        }
+        if (e.key == "Delete" || e.key == "Backspace") {
+            const trashButton = document.getElementById("trash_button");
+            if (trashButton) {
+                trashButton.click();
             }
         }
     };
@@ -53,10 +61,13 @@ export function Popup({
             <div className={styles.popup}>
                 <div className={styles.popupNav}>
                     <img
-                        style={{ opacity: 0 }}
-                        src="/close_button.svg"
+                        src="/trash_button.svg"
                         width="30"
-                        height="30"
+                        height="33.33"
+                        style={{ opacity: useTrashButton ? 1 : 0 }}
+                        className={styles.trashButton}
+                        onClick={useTrashButton ? handleTrashButton : () => {}}
+                        id="trash_button"
                     />
                     <div className={styles.search}>
                         <img src="/search.svg" width="30" height="30" />

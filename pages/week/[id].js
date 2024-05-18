@@ -69,10 +69,11 @@ export default function SchedulePage() {
     }, []);
     const router = useRouter();
     const { id } = router.query;
+    const title = `Hacker Schedule - Week ${id}`;
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>
             <Head>
-                <title>Hacker Schedule - Week {id}</title>
+                <title>{title}</title>
                 <link rel="icon" href="/hacker_brain.png" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link

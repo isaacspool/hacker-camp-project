@@ -2,7 +2,7 @@ import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import { Popup } from "../components/Popup";
 
-const staff = [
+const staffList = [
     "Alex",
     "AmTal",
     "Ariel",
@@ -22,7 +22,8 @@ const staff = [
     "Option 42",
 ];
 
-export function Person({ children, icon, language }) {
+export function Person(props) {
+    const { index, icon, language, handleDeletion, staff, setStaff } = props;
     // Usage: <Person>text here</Person>
     // children is used because the text is passed as a child of the component
     const [showSelectionMenu, setShowSelectionMenu] = useState(false);
@@ -31,22 +32,31 @@ export function Person({ children, icon, language }) {
     };
     const handlePersonSelect = (person) => {
         setShowSelectionMenu(false);
-        setSelectedPerson(person);
-        // move person to second to last position in array
-        const index = staff.indexOf(person);
-        staff.splice(index, 1);
-        staff.splice(staff.length - 1, 0, person);
-    };
+        const editedStaff = [...staff];
+        editedStaff[props.index] = person;
+        setStaff(editedStaff);
 
-    const [selectedPerson, setSelectedPerson] = useState(children);
+        // move person to second to last position in array because of the "Option 42"
+        const index = staffList.indexOf(person);
+        staffList.splice(props.index, 1);
+        staffList.splice(staffList.length - 1, 0, person);
+    };
 
     const [search, setSearch] = useState("");
     const handleSearch = (e) => {
         setSearch(e.target.value);
     };
 
+    const handleTrashButton = () => {
+        setShowSelectionMenu(false);
+        handleDeletion(index);
+    };
+
     return (
-        <div style={{ display: "flex", flexGrow: 1, justifyContent: "center" }}>
+        <div
+            id="person"
+            style={{ display: "flex", flexGrow: 1, justifyContent: "center" }}
+        >
             <button
                 className={[styles.thinBorder, styles.pill, styles.person].join(
                     " "
@@ -54,15 +64,17 @@ export function Person({ children, icon, language }) {
                 onClick={handleFinish}
             >
                 <img src={icon} width={21} height={21} />
-                <p style={{ margin: 0 }}>{selectedPerson}</p>
+                <p style={{ margin: 0, color: "black" }}>{staff[index]}</p>
             </button>
             {showSelectionMenu && (
                 <Popup
                     handleSearch={handleSearch}
                     closeEffect={handleFinish}
+                    useTrashButton={handleDeletion !== undefined}
+                    handleTrashButton={handleTrashButton}
                     language={language}
                 >
-                    {staff
+                    {staffList
                         .filter(
                             (person) =>
                                 !search ||

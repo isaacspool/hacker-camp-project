@@ -56,6 +56,8 @@ export function ScheduleDay({
         setSearch(e.target.value);
     };
 
+    const [staff, setStaff] = useState(satellites.concat(rundown));
+
     const [selectedTypes, setSelectedTypes] = useState([]);
 
     return (
@@ -65,20 +67,22 @@ export function ScheduleDay({
                 {satellites.map((satellite, i) => (
                     <Person
                         icon="/SatelliteIcon.svg"
+                        index={i}
                         language={language}
+                        staff={staff}
+                        setStaff={setStaff}
                         key={i}
-                    >
-                        {satellite}
-                    </Person>
+                    />
                 ))}
                 {rundown.map((rundownPerson, i) => (
                     <Person
                         icon="/RundownIcon.svg"
+                        index={i + satellites.length}
                         language={language}
+                        staff={staff}
+                        setStaff={setStaff}
                         key={i + satellites.length}
-                    >
-                        {rundownPerson}
-                    </Person>
+                    />
                 ))}
             </div>
             <div className={[styles.border, styles.projectList].join(" ")}>

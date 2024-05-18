@@ -76,6 +76,23 @@ export function Project(props) {
         setSearch(e.target.value);
     };
 
+    const [editingName, setEditingName] = useState(false);
+    const [projectName, setProjectName] = useState(props.projectName);
+
+    const handleFocus = (e) => {
+        console.log("hello");
+        if (e.target.id != props.projectName) {
+            setEditingName(false);
+        }
+    };
+
+    useEffect(() => {
+        if (document.activeElement.id != props.projectName) {
+            console.log(document.activeElement.id);
+            setEditingName(false);
+        }
+    }, []);
+
     return (
         <div
             className={[styles.border, styles.project].join(" ")}
@@ -84,7 +101,39 @@ export function Project(props) {
             }}
             id={props.projectName}
         >
-            <h2 style={{ fontSize: 26 }}>{props.projectName}</h2>
+            {editingName ? (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                        src="/trash_button.svg"
+                        width="35"
+                        height="38.89"
+                        style={{ opacity: 0 }}
+                    />
+                    <input
+                        type="text"
+                        style={{
+                            fontSize: 26,
+                            margin: "0.83em",
+                            textAlign: "center",
+                            background: "none",
+                            outline: "none",
+                            border: "none",
+                            fontWeight: "bold",
+                        }}
+                        value={projectName}
+                        id={props.projectName}
+                        onChange={(e) => setProjectName(e.target.value)}
+                    ></input>
+                    <img src="/trash_button.svg" width="35" height="35" />
+                </div>
+            ) : (
+                <h2
+                    style={{ fontSize: 26 }}
+                    onClick={() => setEditingName(true)}
+                >
+                    {props.projectName}
+                </h2>
+            )}
             <div className={styles.projectBody}>
                 <div className={styles.location} onClick={handleFinish}>
                     <img
@@ -102,11 +151,15 @@ export function Project(props) {
                     {staff.map((person, i) => (
                         <Person
                             icon="/PersonIcon.svg"
+                            index={i}
                             language={props.language}
+                            handleDeletion={(index) => {
+                                setStaff(staff.filter((_, j) => j != index));
+                            }}
+                            staff={staff}
+                            setStaff={setStaff}
                             key={i}
-                        >
-                            {person}
-                        </Person>
+                        />
                     ))}
 
                     <img

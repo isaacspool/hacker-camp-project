@@ -263,6 +263,7 @@
     padding: 0.5em;
     font-size: 1.3em;
     border-radius: 20;
+    color: black;
 }
 
 .staff:hover {
@@ -284,6 +285,11 @@
     border: 2px solid black;
     flex-grow: 1;
     padding: 2%;
+    /* make border inside div */
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .filterChip:hover {
@@ -297,7 +303,6 @@
 }
 
 .addButton:hover {
-    filter: opacity(1);
     cursor: pointer;
     scale: 1.05;
     transition: 0.1s;
@@ -305,7 +310,6 @@
 }
 
 .locationButton:hover {
-    filter: opacity(0.7);
     cursor: pointer;
     transition: 0.1s;
     scale: 1 1.05;
@@ -376,4 +380,8 @@
     color: black;
     text-decoration: none;
     font-weight: 700;
+}
+
+.weekTitle:hover {
+    text-decoration: underline;
 }
