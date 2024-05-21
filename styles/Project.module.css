@@ -1,0 +1,43 @@
+.infoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1%;
+    margin: -1% 0 0 0;
+}
+
+.infoContainer > * {
+    margin-top: 1%;
+}
+
+.projectInfo {
+    border: 3px solid black;
+    border-radius: 20px;
+    font-size: 20px;
+    font-family: "Lato", sans-serif;
+    max-width: 500px;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.typeText {
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 0.8em;
+    text-align: center;
+}
+.typeText p {
+    margin: 0;
+}
+
+.infoTitle {
+    font-size: 34px;
+    font-family: "Lato", sans-serif;
+    margin: 0.67em;
+}
+
+.titleContainer {
+    text-align: center;
+    margin: -5px;
+    border: 3px solid black;
+    border-radius: 20px 20px 0 0;
+}

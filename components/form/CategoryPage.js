@@ -12,6 +12,12 @@ const categories = [
     "Pinky",
     "Gaming",
 
+    "Laptops",
+    "Desktops",
+    "Outside",
+    "Garden",
+    "BOOP",
+
     "Writing",
     "Art",
     "Music",

@@ -1,6 +1,5 @@
 import styles from "../../styles/Form.module.css";
-import { useState } from "react";
-import { useEffect } from "react";
+import { translate } from "../../pages/index.js";
 
 export function ParticipantsPage({
     participants,
@@ -20,7 +19,7 @@ export function ParticipantsPage({
             }}
         >
             <h1 style={{ fontSize: 40 }}>
-                {language == "hebrew" ? "מספר המשתתפים" : "Participants"}
+                {translate("form.participants", language)}
             </h1>
             <div
                 style={{
@@ -35,7 +34,7 @@ export function ParticipantsPage({
                     type="number"
                     min="4"
                     max="1000"
-                    placeholder="Min"
+                    placeholder={translate("form.min", language)}
                     value={participants[0]}
                     onChange={(e) =>
                         setParticipants([e.target.value, participants[1]])
@@ -43,19 +42,17 @@ export function ParticipantsPage({
                     className={styles.textBox}
                     style={{
                         flexGrow: 0,
-                        width: 70,
                         textAlign: "center",
+                        width: 180,
                         borderRadius: 20,
                     }}
-                ></input>
-                <p style={{ fontSize: 36 }}>
-                    {language == "hebrew" ? "עד" : "to"}
-                </p>
+                />
+                <p style={{ fontSize: 36 }}>{translate("form.to", language)}</p>
                 <input
                     type="number"
                     min="4"
                     max="1000"
-                    placeholder="Max"
+                    placeholder={translate("form.max", language)}
                     value={participants[1]}
                     onChange={(e) =>
                         setParticipants([participants[0], e.target.value])
@@ -63,14 +60,13 @@ export function ParticipantsPage({
                     className={styles.textBox}
                     style={{
                         flexGrow: 0,
-                        width: 70,
                         textAlign: "center",
                         borderRadius: 20,
                     }}
                 ></input>
             </div>
             <h1 style={{ fontSize: 40 }}>
-                {language == "hebrew" ? "משך" : "Duration"}
+                {translate("form.duration", language)}
             </h1>
             <div
                 style={{
@@ -97,7 +93,9 @@ export function ParticipantsPage({
                     }}
                 ></input>
                 <p style={{ fontSize: 36 }}>
-                    {language == "hebrew" ? "ימים" : "days"}
+                    {duration == 1
+                        ? translate("form.day", language)
+                        : translate("form.days", language)}
                 </p>
             </div>
         </div>

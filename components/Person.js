@@ -22,8 +22,15 @@ const staffList = [
     "Option 42",
 ];
 
-export function Person(props) {
-    const { index, icon, language, handleDeletion, staff, setStaff } = props;
+export function Person({
+    index,
+    icon,
+    language,
+    handleDeletion,
+    staff,
+    setStaff,
+    setEditingProject,
+}) {
     // Usage: <Person>text here</Person>
     // children is used because the text is passed as a child of the component
     const [showSelectionMenu, setShowSelectionMenu] = useState(false);
@@ -33,13 +40,8 @@ export function Person(props) {
     const handlePersonSelect = (person) => {
         setShowSelectionMenu(false);
         const editedStaff = [...staff];
-        editedStaff[props.index] = person;
+        editedStaff[index] = person;
         setStaff(editedStaff);
-
-        // move person to second to last position in array because of the "Option 42"
-        const index = staffList.indexOf(person);
-        staffList.splice(props.index, 1);
-        staffList.splice(staffList.length - 1, 0, person);
     };
 
     const [search, setSearch] = useState("");
@@ -73,6 +75,7 @@ export function Person(props) {
                     useTrashButton={handleDeletion !== undefined}
                     handleTrashButton={handleTrashButton}
                     language={language}
+                    setEditingProject={setEditingProject}
                 >
                     {staffList
                         .filter(

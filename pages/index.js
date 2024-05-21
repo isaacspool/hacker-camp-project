@@ -1,13 +1,29 @@
 import Link from "next/link";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
+import { LanguageButton } from "../components/LanguageButton";
+import hebrewTranslation from "../public/lang/he-il.json";
+import englishTranslation from "../public/lang/en-us.json";
+
+export function translate(key, language) {
+    return language === "he" ? hebrewTranslation[key] : englishTranslation[key];
+}
+
+export function isHebrew(language) {
+    return language === "he";
+}
 
 export default function Home() {
+    const [language, setLanguage] = useState("en");
+    useEffect(() => {
+        setLanguage(localStorage.getItem("language") || "en");
+    }, []);
     return (
         <div className={styles.container}>
             <Head>
                 <title>Hacker Schedule</title>
-                <link rel="icon" href="/hacker_brain.png" />
+                <link rel="icon" href="/logo/hacker_brain.png" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
                     rel="preconnect"
@@ -16,14 +32,14 @@ export default function Home() {
                 />
                 <link
                     href="https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@100..900&display=swap"
-                    rel="stylesheet"
+                    rel="document"
                 />
             </Head>
 
             <main>
-                {/* <LanguageButton language={language} setLanguage={setLanguage} /> */}
+                <LanguageButton language={language} setLanguage={setLanguage} />
                 <img
-                    src="/hacker_brain.png"
+                    src="/logo/hacker_brain.png"
                     alt="logo"
                     className={styles.bigLogo}
                     width="92%"
@@ -32,18 +48,24 @@ export default function Home() {
 
                 <h1 className={styles.grandTitle}>Hacker Camp 2024</h1>
                 <Link href="/form" className={styles.newProjectButton}>
-                    <img src="/form_button.svg" />
+                    <img src="/icons/form.svg" />
                 </Link>
                 <div className={styles.weekList}>
-                    {[1, 2, 3, 4, 5, 6, 7].map((week) => (
-                        <Link
-                            href={`/week/${week}`}
-                            className={styles.weekButton}
-                            key={week}
-                        >
-                            Week {week}
-                        </Link>
-                    ))}
+                    {[1, 2, 3, 4, 5, 6, 7].map((week) => {
+                        let link = [translate("week", language), week];
+                        if (isHebrew(language)) {
+                            link = link.reverse();
+                        }
+                        return (
+                            <Link
+                                href={`/week/${week}`}
+                                className={styles.weekButton}
+                                key={week}
+                            >
+                                {link.join(" ")}
+                            </Link>
+                        );
+                    })}
                 </div>
             </main>
         </div>

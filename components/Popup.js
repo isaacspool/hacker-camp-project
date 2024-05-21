@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import styles from "../styles/Home.module.css";
+import { translate } from "../pages/index.js";
 
 export function Popup({
     children,
@@ -11,6 +12,7 @@ export function Popup({
     useTrashButton,
     handleTrashButton,
     language,
+    setEditingProject,
 }) {
     function handleClosePopup() {
         const popups = document.querySelectorAll("#popup");
@@ -27,7 +29,11 @@ export function Popup({
                 selectionMenu.children[0].click();
             }
         }
-        if (e.key == "Delete" || e.key == "Backspace") {
+        if (
+            e.key == "Delete" ||
+            (e.key == "Backspace" &&
+                !document.getElementById("search").matches(":focus"))
+        ) {
             const trashButton = document.getElementById("trash_button");
             if (trashButton) {
                 trashButton.click();
@@ -36,6 +42,7 @@ export function Popup({
     };
     // add event listener to close popup on escape key press
     useEffect(() => {
+        setEditingProject(null);
         document.addEventListener("keydown", handlePressExitKey);
         // focus on search input
         document.getElementById("search").focus();
@@ -61,7 +68,7 @@ export function Popup({
             <div className={styles.popup}>
                 <div className={styles.popupNav}>
                     <img
-                        src="/trash_button.svg"
+                        src="/icons/trash.svg"
                         width="30"
                         height="33.33"
                         style={{ opacity: useTrashButton ? 1 : 0 }}
@@ -70,13 +77,11 @@ export function Popup({
                         id="trash_button"
                     />
                     <div className={styles.search}>
-                        <img src="/search.svg" width="30" height="30" />
+                        <img src="/icons/search.svg" width="30" height="30" />
                         <input
                             className={styles.searchInput}
                             type="text"
-                            placeholder={
-                                language == "hebrew" ? "חיפוש" : "Search"
-                            }
+                            placeholder={translate("form.search", language)}
                             onChange={handleSearch}
                             id="search"
                         />
@@ -89,11 +94,11 @@ export function Popup({
                         }}
                     >
                         <img
-                            src="/close_button.svg"
+                            src="/icons/close.svg"
                             width="30"
                             height="30"
                             onClick={handleClosePopup}
-                            style={{ cursor: "pointer" }}
+                            className={styles.closeButton}
                         />
                     </button>
                 </div>

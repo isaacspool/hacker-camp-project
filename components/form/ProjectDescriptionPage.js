@@ -32,24 +32,7 @@ export function ProjectDescriptionPage({
     );
     if (children) {
         return (
-            <div
-                style={
-                    window.innerWidth < window.innerHeight
-                        ? {
-                              display: "flex",
-                              gap: "1%",
-                              width: "100%",
-                              height: "100%",
-                              flexDirection: "column",
-                          }
-                        : {
-                              display: "flex",
-                              gap: "1%",
-                              width: "100%",
-                              height: "100%",
-                          }
-                }
-            >
+            <div className={styles.descriptionContainer}>
                 {inputPart}
                 {children}
             </div>

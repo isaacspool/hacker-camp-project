@@ -1,6 +1,6 @@
 import styles from "../../styles/Form.module.css";
-import { useState } from "react";
 import { useEffect } from "react";
+import { translate } from "../../pages/index";
 
 const engineering = "engineering";
 const analytical = "analytical";
@@ -62,16 +62,11 @@ export function ProjectTypePage({
     const handleTriangleClick = (e) => {
         // Handle events where user clicks anywhere on the page
         const triangle = e.target;
-        // y = mx + b
-        // x = (y - b) / m
-        // x = y / 1.1547
         if (
             e &&
             triangle &&
             triangle.tagName === "IMG" &&
-            triangle.classList.contains(styles.roundedTriangle) // &&
-            // e.clientX < (e.clientY + triangle.height) * 0.865 &&
-            // e.clientX > (e.clientY - triangle.height) * -0.86602
+            triangle.classList.contains(styles.roundedTriangle)
         ) {
             const client = { x: e.clientX, y: e.clientY };
             let closestPoint = null;
@@ -118,13 +113,13 @@ export function ProjectTypePage({
                     top: "calc(50% - var(--triangle-height) / 2 - 90px)",
                 }}
             >
-                {language === "hebrew" ? "יצירתי" : "Creative"}
+                {translate("type.creative", language)}
             </p>
             <p className={styles.triangleText} style={{ left: "72%" }}>
-                {language === "hebrew" ? "הנדסאי" : "Engineering"}
+                {translate("type.engineering", language)}
             </p>
             <p className={styles.triangleText} style={{ left: "27%" }}>
-                {language === "hebrew" ? "אנליטי" : "Analytical"}
+                {translate("type.analytical", language)}
             </p>
             <div
                 className={styles.emptyDot}
@@ -138,7 +133,7 @@ export function ProjectTypePage({
                 }}
             ></div>
             <img
-                src="/rounded_triangle.svg"
+                src="/triangle/rounded_triangle.svg"
                 width="410"
                 height="345"
                 className={styles.roundedTriangle}
@@ -165,31 +160,6 @@ export function ProjectTypePage({
                         "linear-gradient(180deg, rgba(43,73,231,1) 0%, rgba(255,255,255,0) 65%)",
                 }}
             />
-            {/* <div>
-                {getPointsOfInterest(roundedTriangle()).map((point, i) => (
-                    <div
-                        className={styles.emptyDot}
-                        style={{
-                            position: "absolute",
-                            left:
-                                point.x -
-                                15 -
-                                roundedTriangle().width / 2 +
-                                window.innerWidth / 2,
-                            top:
-                                point.y -
-                                15 -
-                                (roundedTriangle().height - 35) / 2 +
-                                window.innerHeight / 2,
-                            border: "5px solid red",
-                            zIndex: 2,
-                            background: "transparent",
-                            pointerEvents: "none",
-                        }}
-                        key={i}
-                    ></div>
-                ))}
-            </div> */}
         </div>
     );
 }

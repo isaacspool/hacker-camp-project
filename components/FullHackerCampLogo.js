@@ -1,22 +1,19 @@
+import styles from "../styles/Form.module.css";
+
 export function FullHackerCampLogo() {
     return (
-        <div style={{ width: "65%" }}>
+        <div style={{ width: "65%", margin: "auto" }}>
             <img
-                src="/full_hacker_logo_hexagons.svg"
+                src="/logo/full_hacker_logo_hexagons.svg"
                 width="100%"
                 height="100%"
-                style={{ objectFit: "contain", position: "relative", top: 0 }}
+                className={styles.hexagonsLogo}
             />
             <img
-                src="/hacker_brain.png"
+                src="/logo/hacker_brain.png"
                 width="28%"
                 height="28%"
-                style={{
-                    objectFit: "contain",
-                    position: "relative",
-                    top: "-65%",
-                    left: "36%",
-                }}
+                className={styles.smallHackerBrain}
             />
         </div>
     );

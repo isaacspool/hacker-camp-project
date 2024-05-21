@@ -193,7 +193,7 @@
     z-index: 1001;
     top: 50%;
     left: 50%;
-    height: 50vh;
+    height: 65vh;
     transform: translate(-50%, -50%);
 
     display: flex;
@@ -264,6 +264,7 @@
     font-size: 1.3em;
     border-radius: 20;
     color: black;
+    flex-grow: 1;
 }
 
 .staff:hover {
@@ -283,6 +284,7 @@
     font-size: 1.3em;
     border-radius: 1000px;
     border: 2px solid black;
+    color: black;
     flex-grow: 1;
     padding: 2%;
     /* make border inside div */
@@ -303,10 +305,22 @@
 }
 
 .addButton:hover {
+    filter: opacity(1);
     cursor: pointer;
     scale: 1.05;
     transition: 0.1s;
     rotate: 90deg;
+}
+
+.addButtonContainer {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+}
+@media screen and (max-width: 800px) {
+    .addButtonContainer {
+        width: 85vw;
+    }
 }
 
 .locationButton:hover {
@@ -338,7 +352,6 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    /* make text not look like a link */
     text-decoration: none;
     color: black;
     backdrop-filter: blur(10px);
@@ -384,4 +397,69 @@
 
 .weekTitle:hover {
     text-decoration: underline;
+}
+
+.trashButton:hover {
+    cursor: pointer;
+    transition: 0.1s;
+    scale: 1.1;
+}
+
+.closeButton:hover {
+    cursor: pointer;
+    transition: 0.1s;
+    scale: 1.1;
+}
+
+.languageButton {
+    position: fixed;
+    right: 0;
+    top: 1%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+}
+
+@media screen and (max-width: 600px) {
+    .languageButton {
+        top: 6%;
+        right: 2%;
+    }
+}
+
+.infoIconI {
+    position: relative;
+    transform: translateY(-50%);
+    right: 50%;
+    pointer-events: none;
+    transform-origin: 50% 50%;
+}
+
+@keyframes rotate {
+    0% {
+        rotate: 0deg;
+    }
+    25% {
+        rotate: 10deg;
+    }
+    50% {
+        rotate: -10deg;
+    }
+    75% {
+        rotate: 10deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
+
+.infoIconCircle:hover {
+    cursor: pointer;
+    transition: 0.1s;
+    scale: 1.05;
+}
+
+.infoIconCircle:hover + img {
+    animation: rotate 2s infinite;
 }

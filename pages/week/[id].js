@@ -5,40 +5,33 @@ import styles from "../../styles/Home.module.css";
 import { ScheduleWeek } from "../../components/ScheduleWeek";
 import { useEffect, useState } from "react";
 import { LanguageButton } from "../../components/LanguageButton";
-
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"];
-const daysHebrew = ["ראשון", "שני", "שלישי", "רביעי", "המשי"];
+import { translate, isHebrew } from "../index.js";
 
 const exampleProjects = [
     {
-        name: "Project 1",
+        id: 5,
         location: "Location",
         staff: ["Person 1", "Person 2", "Person 3", "Person 4"],
-        types: ["Analytical"],
     },
     {
-        name: "Project 2",
+        id: 6,
         location: "Location",
         staff: ["Person 1", "Person 2", "Person 3"],
-        types: ["Analytical", "Creative"],
     },
     {
-        name: "Project 3",
+        id: 7,
         location: "Location",
         staff: ["Person 1", "Person 2"],
-        types: ["Analytical", "Engineering"],
     },
     {
-        name: "Project 4",
+        id: 8,
         location: "Location",
         staff: ["Person 1", "Person 2"],
-        types: ["Creative", "Engineering"],
     },
     {
-        name: "Project 5",
+        id: 9,
         location: "Location",
         staff: ["Person 1", "Person 2"],
-        types: ["Analytical", "Creative", "Engineering"],
     },
 ];
 
@@ -70,11 +63,30 @@ export default function SchedulePage() {
     const router = useRouter();
     const { id } = router.query;
     const title = `Hacker Schedule - Week ${id}`;
+    // run on first render
+    // useEffect(() => {
+    //     const day = new Date().getDay();
+    //     if (day <= 4) {
+    //         // During the week
+    //         // scrollLeft until the current day
+    //         const vmax = Math.max(window.innerWidth, window.innerHeight);
+    //         const gap = vmax * 0.02;
+
+    //         const dayElement = document.getElementById("day_" + day);
+    //         const dayX = dayElement.getBoundingClientRect().x;
+    //         const htmlElement = document.querySelector("html");
+    //         htmlElement.scrollLeft = dayX - gap;
+    //     }
+    // }, []);
+    let weeksLink = [translate("week", language), id];
+    if (isHebrew(language)) {
+        weeksLink = weeksLink.reverse();
+    }
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>
             <Head>
                 <title>{title}</title>
-                <link rel="icon" href="/hacker_brain.png" />
+                <link rel="icon" href="/logo/hacker_brain.png" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
                     rel="preconnect"
@@ -83,19 +95,18 @@ export default function SchedulePage() {
                 />
                 <link
                     href="https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@100..900&display=swap"
-                    rel="stylesheet"
+                    rel="document"
                 />
             </Head>
 
             <main>
                 <Link href="/" className={styles.weekTitle}>
-                    Week {id}
+                    {weeksLink.join(" ")}
                 </Link>
                 <LanguageButton language={language} setLanguage={setLanguage} />
                 <div>
                     <ScheduleWeek
                         language={language}
-                        days={language == "hebrew" ? daysHebrew : days}
                         projects={exampleProjects}
                     />
                 </div>

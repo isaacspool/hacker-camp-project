@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import { Person } from "./Person";
 import { Popup } from "./Popup";
+import { InfoIcon } from "./InfoIcon";
 
 const rooms = [
     "Bifrost",
@@ -19,17 +20,19 @@ const rooms = [
     "Workshop",
 ];
 
+export const getColorFromType = (type) => {
+    switch (type) {
+        case "Analytical":
+            return "rgba(220, 63, 63, 0.25)";
+        case "Creative":
+            return "rgba(43, 73, 231, 0.25)";
+        case "Engineering":
+            return "rgba(251, 170, 11, 0.25)";
+    }
+};
+
 export const getBackgroundString = (types, degrees) => {
-    let colors = types.map((type) => {
-        switch (type) {
-            case "Analytical":
-                return "rgba(220, 63, 63, 0.25)";
-            case "Creative":
-                return "rgba(43, 73, 231, 0.25)";
-            case "Engineering":
-                return "rgba(251, 170, 11, 0.25)";
-        }
-    });
+    let colors = types.map(getColorFromType);
     let background = `linear-gradient(${degrees}, `;
     switch (colors.length) {
         case 0:
@@ -54,10 +57,23 @@ export const getBackgroundString = (types, degrees) => {
     return background;
 };
 
-export function Project(props) {
-    const [staff, setStaff] = useState(props.staff);
+export function Project({
+    staff,
+    location,
+    setStaff,
+    setLocation,
+    databaseId,
+    uniqueId,
+    index,
+    language,
+    setEditingProject,
+    editingProject,
+    projectName,
+    setProjectName,
+    handleDeletion,
+    types,
+}) {
     const [showSelectionMenu, setShowSelectionMenu] = useState(false);
-    const [selectedLocation, setSelectedLocation] = useState(props.location);
     const [search, setSearch] = useState("");
 
     const handleFinish = () => {
@@ -65,49 +81,47 @@ export function Project(props) {
     };
     const handleRoomSelect = (room) => {
         setShowSelectionMenu(false);
-        setSelectedLocation(room);
-        // move room to second to last position in array
-        const index = rooms.indexOf(room);
-        rooms.splice(index, 1);
-        rooms.splice(rooms.length - 1, 0, room);
+        setLocation(room, index);
     };
-
     const handleSearch = (e) => {
         setSearch(e.target.value);
     };
-
-    const [editingName, setEditingName] = useState(false);
-    const [projectName, setProjectName] = useState(props.projectName);
-
-    const handleFocus = (e) => {
-        console.log("hello");
-        if (e.target.id != props.projectName) {
-            setEditingName(false);
-        }
+    const handleBeginEditing = () => {
+        setEditingProject(uniqueId);
     };
-
-    useEffect(() => {
-        if (document.activeElement.id != props.projectName) {
-            console.log(document.activeElement.id);
-            setEditingName(false);
-        }
-    }, []);
+    const handleAddStaff = () => {
+        setStaff([...staff, "Staff"]);
+        setEditingProject(null);
+    };
 
     return (
         <div
             className={[styles.border, styles.project].join(" ")}
-            style={{
-                background: getBackgroundString(props.types, "180deg"),
-            }}
-            id={props.projectName}
+            style={
+                types && {
+                    background: getBackgroundString(types, "180deg"),
+                }
+            }
+            id={"project_" + uniqueId}
         >
-            {editingName ? (
-                <div style={{ display: "flex", alignItems: "center" }}>
+            {editingProject == uniqueId ? (
+                <div
+                    style={{
+                        display: "flex",
+                        alignContent: "center",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "0 0.83em",
+                    }}
+                >
                     <img
-                        src="/trash_button.svg"
-                        width="35"
-                        height="38.89"
-                        style={{ opacity: 0 }}
+                        src="/icons/trash.svg"
+                        width="31"
+                        height="34.44"
+                        className={styles.trashButton}
+                        onClick={() => {
+                            handleDeletion(index);
+                        }}
                     />
                     <input
                         type="text"
@@ -121,53 +135,48 @@ export function Project(props) {
                             fontWeight: "bold",
                         }}
                         value={projectName}
-                        id={props.projectName}
                         onChange={(e) => setProjectName(e.target.value)}
-                    ></input>
-                    <img src="/trash_button.svg" width="35" height="35" />
+                    />
+                    <InfoIcon scale={33} url={`/project/${databaseId}`} />
                 </div>
             ) : (
-                <h2
-                    style={{ fontSize: 26 }}
-                    onClick={() => setEditingName(true)}
-                >
-                    {props.projectName}
+                <h2 style={{ fontSize: 26 }} onClick={handleBeginEditing}>
+                    {projectName}
                 </h2>
             )}
             <div className={styles.projectBody}>
                 <div className={styles.location} onClick={handleFinish}>
                     <img
-                        src="/location_pin.svg"
+                        src="/icons/location.svg"
                         alt="location"
                         width={30}
                         height={30}
                         className={styles.locationButton}
                     />
-                    <p style={{ fontSize: 24, margin: "1%" }}>
-                        {selectedLocation}
-                    </p>
+                    <p style={{ fontSize: 24, margin: "1%" }}>{location}</p>
                 </div>
                 <ul className={styles.staffList}>
                     {staff.map((person, i) => (
                         <Person
-                            icon="/PersonIcon.svg"
+                            icon="/icons/person.svg"
                             index={i}
-                            language={props.language}
+                            language={language}
                             handleDeletion={(index) => {
                                 setStaff(staff.filter((_, j) => j != index));
                             }}
                             staff={staff}
                             setStaff={setStaff}
+                            setEditingProject={setEditingProject}
                             key={i}
                         />
                     ))}
 
                     <img
-                        src="/add_button.svg"
+                        src="/icons/add.svg"
                         width="50"
                         height="50"
                         className={styles.addButton}
-                        onClick={() => setStaff([...staff, "Staff"])}
+                        onClick={handleAddStaff}
                     />
                 </ul>
             </div>
@@ -175,7 +184,8 @@ export function Project(props) {
                 <Popup
                     handleSearch={handleSearch}
                     closeEffect={handleFinish}
-                    language={props.language}
+                    language={language}
+                    setEditingProject={setEditingProject}
                 >
                     {rooms
                         .filter(

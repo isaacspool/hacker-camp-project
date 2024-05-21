@@ -6,17 +6,18 @@ import { useEffect } from "react";
 import { NamePage } from "../../components/form/NamePage";
 import { ProjectTypePage } from "../../components/form/ProjectTypePage";
 import { CategoryPage } from "../../components/form/CategoryPage";
-import { LocationPage } from "../../components/form/LocationPage";
 import { ParticipantsPage } from "../../components/form/ParticipantsPage";
 import { ProjectDescriptionPage } from "../../components/form/ProjectDescriptionPage";
 import { FullHackerCampLogo } from "../../components/FullHackerCampLogo";
 import { LanguageButton } from "../../components/LanguageButton";
 import { useRef } from "react";
+import { SubmitButton } from "../../components/form/SubmitButton";
+import { translate } from "../index";
 import Link from "next/link";
 
 export default function Form() {
     const [formPage, setFormPage] = useState(0);
-    const PAGE_COUNT = 9;
+    const PAGE_COUNT = 8;
     const handleClick = (e) => {
         setFormPage(e.target.value);
     };
@@ -24,11 +25,6 @@ export default function Form() {
     const [projectName, setProjectName] = useState("");
     const [projectTypes, setProjectTypes] = useState("");
     const [categories, setCategories] = useState("");
-    const [checkboxAnswers, setCheckboxAnswers] = useState([
-        { "Pink Room": false, "LEGO Room": false, Library: false },
-        { Laptops: false, Desktops: false },
-        { Outside: false, Garden: false },
-    ]);
     const [participants, setParticipants] = useState(["", ""]);
     const [duration, setDuration] = useState(1);
     const [description, setDescription] = useState("");
@@ -59,6 +55,62 @@ export default function Form() {
         setLanguage(localStorage.getItem("language") || "en");
     }, []);
 
+    const getFormPage = () =>
+        [
+            <NamePage
+                value={projectName}
+                setValue={setProjectName}
+                language={language}
+            />,
+            <ProjectTypePage
+                triangleLocation={triangleLocation}
+                setTriangleLocation={setTriangleLocation}
+                setProjectTypes={setProjectTypes}
+                language={language}
+            />,
+
+            <CategoryPage value={categories} setValue={setCategories} />,
+            <ParticipantsPage
+                participants={participants}
+                setParticipants={setParticipants}
+                duration={duration}
+                setDuration={setDuration}
+                language={language}
+            />,
+            <ProjectDescriptionPage
+                title={translate("form.plan.title", language)}
+                subtitle={translate("form.plan.subtitle", language)}
+                value={description}
+                setValue={setDescription}
+            />,
+            <ProjectDescriptionPage
+                title={translate("form.materials.title", language)}
+                subtitle={translate("form.materials.subtitle", language)}
+                value={materials}
+                setValue={setMaterials}
+            />,
+            <ProjectDescriptionPage
+                title={translate("form.goals.title", language)}
+                subtitle={translate("form.goals.subtitle", language)}
+                value={goals}
+                setValue={setGoals}
+            >
+                <FullHackerCampLogo />
+            </ProjectDescriptionPage>,
+            <SubmitButton
+                language={language}
+                formAnswers={{
+                    projectName: projectName,
+                    projectTypes: projectTypes,
+                    categories: categories,
+                    participants: participants,
+                    duration: duration,
+                    description: description,
+                    materials: materials,
+                    goals: goals,
+                }}
+            />,
+        ][formPage];
     return (
         <div className={styles.container}>
             <svg
@@ -92,19 +144,25 @@ export default function Form() {
 
             <Head>
                 <title>Project Form</title>
-                <link rel="icon" href="/hacker_brain.png" />
+                <link rel="icon" href="/logo/hacker_brain.png" />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link
+                    rel="preconnect"
+                    href="https://fonts.gstatic.com"
+                    crossorigin
+                />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@100..900&display=swap"
+                    rel="document"
+                />
             </Head>
 
             <main
                 className={styles.main}
                 style={{ width: "100%", height: "90vh" }}
             >
-                {/* <Link href="/form" className={styles.newProjectButton}>
-                    <div className={styles.buttonBackground} />
-                    <img src="/form_button.svg" />
-                </Link> */}
                 <img
-                    src="/hacker_brain.png"
+                    src="/logo/hacker_brain.png"
                     alt="logo"
                     className={styles.bigLogo}
                     width="92%"
@@ -112,7 +170,7 @@ export default function Form() {
                 />
 
                 <Link href="/" className={styles.backButton}>
-                    <img src="/back_button.svg" />
+                    <img src="/icons/back.svg" />
                 </Link>
 
                 <LanguageButton language={language} setLanguage={setLanguage} />
@@ -144,98 +202,7 @@ export default function Form() {
                     }}
                     ref={pageRef}
                 >
-                    {formPage == 0 ? (
-                        <NamePage
-                            value={projectName}
-                            setValue={setProjectName}
-                            language={language}
-                        />
-                    ) : formPage == 1 ? (
-                        <ProjectTypePage
-                            triangleLocation={triangleLocation}
-                            setTriangleLocation={setTriangleLocation}
-                            setProjectTypes={setProjectTypes}
-                            language={language}
-                        />
-                    ) : formPage == 2 ? (
-                        <CategoryPage
-                            value={categories}
-                            setValue={setCategories}
-                        />
-                    ) : formPage == 3 ? (
-                        <LocationPage
-                            value={checkboxAnswers}
-                            setValue={setCheckboxAnswers}
-                        />
-                    ) : formPage == 4 ? (
-                        <ParticipantsPage
-                            participants={participants}
-                            setParticipants={setParticipants}
-                            duration={duration}
-                            setDuration={setDuration}
-                            language={language}
-                        />
-                    ) : formPage == 5 ? (
-                        <ProjectDescriptionPage
-                            title="What do you plan to do?"
-                            subtitle="The long story."
-                            value={description}
-                            setValue={setDescription}
-                        />
-                    ) : formPage == 6 ? (
-                        <ProjectDescriptionPage
-                            title="What materials does the project need?"
-                            subtitle="Write how many and what we would need to purchase for the project. "
-                            value={materials}
-                            setValue={setMaterials}
-                        />
-                    ) : formPage == 7 ? (
-                        <ProjectDescriptionPage
-                            title="Project Goals"
-                            subtitle="Which TLW goals does this project specifically support?"
-                            value={goals}
-                            setValue={setGoals}
-                        >
-                            <FullHackerCampLogo />
-                        </ProjectDescriptionPage>
-                    ) : formPage == 8 ? (
-                        <div style={{ width: "40%" }}>
-                            <button
-                                className={styles.box}
-                                style={{
-                                    fontSize: 40,
-                                    alignItems: "center",
-                                    padding: "3%",
-                                    width: "100%",
-                                    backdropFilter: "blur(5px)",
-                                    background: "transparent",
-                                }}
-                                onClick={() => {
-                                    if (projectName == "") {
-                                        // send them to set the project name
-                                        setFormPage(0);
-                                    } else {
-                                        console.log({
-                                            projectName: projectName,
-                                            projectTypes: projectTypes,
-                                            categories: categories,
-                                            checkboxAnswers: checkboxAnswers,
-                                            participants: participants,
-                                            duration: duration,
-                                            description: description,
-                                            materials: materials,
-                                            goals: goals,
-                                        });
-                                        router.push("/", { scroll: false });
-                                    }
-                                }}
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    ) : (
-                        <div></div>
-                    )}
+                    {getFormPage()}
                 </div>
             </main>
         </div>

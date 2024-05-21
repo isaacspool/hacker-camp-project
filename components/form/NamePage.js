@@ -1,10 +1,11 @@
 import styles from "../../styles/Form.module.css";
+import { translate } from "../../pages/index.js";
 
 export function NamePage({ value, setValue, language }) {
     return (
         <input
             type="text"
-            placeholder={language == "hebrew" ? "שם הפרוייקט" : "Project Name"}
+            placeholder={translate("form.project_name", language)}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             className={styles.thickBorder}
