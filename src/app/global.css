@@ -1,0 +1,73 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    /* overflow: hidden; */
+}
+
+body::-webkit-scrollbar {
+    background: transparent;
+    border-radius: 100px;
+    width: 15px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 100px;
+}
+
+/* Buttons */
+body::-webkit-scrollbar-button:single-button {
+    background-color: transparent;
+    display: block;
+    border-style: solid;
+    height: 13px;
+    width: 16px;
+}
+/* Up */
+body::-webkit-scrollbar-button:single-button:vertical:decrement {
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent black transparent;
+}
+
+/* Down */
+body::-webkit-scrollbar-button:single-button:vertical:increment {
+    border-width: 8px 8px 0 8px;
+    border-color: black transparent transparent transparent;
+}
+/* Left */
+body::-webkit-scrollbar-button:single-button:horizontal:decrement {
+    border-width: 8px 8px 8px 8px;
+    border-color: transparent black transparent transparent;
+}
+
+/* Right */
+body::-webkit-scrollbar-button:single-button:horizontal:increment {
+    border-width: 8px 8px 8px 8px;
+    border-color: transparent transparent transparent black;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.notoSerifHebrew200 {
+    font-family: "Noto Serif Hebrew", serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+@media screen and (max-width: 768px) {
+    img {
+        height: auto;
+    }
+}

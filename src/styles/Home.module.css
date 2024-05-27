@@ -1,0 +1,466 @@
+.border {
+    border: 5px solid black;
+    border-radius: 30px;
+}
+
+.thinBorder {
+    border: 2px solid black;
+    border-radius: 30px;
+}
+
+.week {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5% 2% 0 2%;
+    gap: 2vmax;
+    height: 90vh;
+    font-family: "Lato", sans-serif;
+}
+
+.main::-webkit-scrollbar {
+    display: none;
+}
+
+.day {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+
+.projectList {
+    list-style-type: none;
+    overflow-y: scroll;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.projectList::-webkit-scrollbar {
+    display: none;
+}
+
+.project {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    list-style: none;
+    margin: 10px;
+    width: 500px;
+}
+
+@media screen and (max-width: 800px) {
+    .project {
+        width: 85vw;
+    }
+}
+
+.location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    list-style: none;
+    margin: 0.3rem;
+}
+
+.staffList {
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.projectBody {
+    border-top: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.pill {
+    border-radius: 1000px;
+    background-color: #ffffff49;
+}
+
+.newProjectButton {
+    position: fixed;
+    right: 4%;
+    bottom: 4%;
+    z-index: 1;
+}
+
+.buttonBackground {
+    position: absolute;
+    z-index: -1;
+    background: white;
+    border-radius: 26px;
+    right: calc(4% + 1.5px);
+    bottom: 4%;
+    width: 94.521px;
+    height: 94.521px;
+}
+
+.detailsList {
+    padding: 1vmax 0px;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+    white-space: nowrap;
+    padding: 0.65rem 2.5rem;
+    margin: 0.3rem;
+    font-size: 18px;
+    outline: none;
+    flex-grow: 1;
+}
+
+.person:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
+}
+
+.selectionMenu {
+    position: sticky;
+    z-index: 1;
+    border-radius: 20px;
+    display: flex;
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    width: 90%;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.blackScroll::-webkit-scrollbar {
+    background: transparent;
+    border-radius: 100px;
+    width: 15px;
+}
+
+.blackScroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 1);
+    border-radius: 100px;
+}
+
+/* Buttons */
+.blackScroll::-webkit-scrollbar-button:single-button {
+    background-color: transparent;
+    display: block;
+    border-style: solid;
+    height: 13px;
+    width: 16px;
+}
+/* Up */
+.blackScroll::-webkit-scrollbar-button:single-button:vertical:decrement {
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent black transparent;
+}
+
+/* Down */
+.blackScroll::-webkit-scrollbar-button:single-button:vertical:increment {
+    border-width: 8px 8px 0 8px;
+    border-color: black transparent transparent transparent;
+}
+/* Left */
+.blackScroll::-webkit-scrollbar-button:single-button:horizontal:decrement {
+    border-width: 8px 0 8px 8px;
+    border-color: transparent transparent black transparent;
+}
+
+/* Right */
+.blackScroll::-webkit-scrollbar-button:single-button:horizontal:increment {
+    border-width: 8px 8px 8px 0;
+    border-color: black transparent transparent transparent;
+}
+
+.popup {
+    position: fixed;
+    z-index: 1001;
+    top: 50%;
+    left: 50%;
+    height: 65vh;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1%;
+    border-radius: 30px;
+    border: 5px solid black;
+    background-color: rgb(255, 255, 255);
+
+    width: 40%;
+}
+
+@media screen and (max-width: 1000px) {
+    .popup {
+        width: 90%;
+        height: 90%;
+    }
+}
+
+.blurBackground {
+    background: #00000075;
+    backdrop-filter: blur(5px);
+    /* fill whole screen */
+    border-width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.search {
+    border-radius: 20px;
+    padding: 0.5em 1em;
+    border: 2px solid black;
+    margin: 3%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3%;
+}
+
+.searchInput {
+    border: none;
+    outline: none;
+
+    background: transparent;
+    width: 90%;
+
+    font-size: 1.3em;
+}
+
+.popupNav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.staff {
+    padding: 0.5em;
+    font-size: 1.3em;
+    border-radius: 20;
+    color: black;
+    flex-grow: 1;
+}
+
+.staff:hover {
+    background-color: #e1e1e1;
+    cursor: pointer;
+}
+
+.filterChips {
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+    gap: 2%;
+    padding: 2%;
+}
+
+.filterChip {
+    font-size: 1.3em;
+    border-radius: 1000px;
+    border: 2px solid black;
+    color: black;
+    flex-grow: 1;
+    padding: 3%;
+    /* make border inside div */
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.filterChip:hover {
+    background: #000000;
+    cursor: pointer;
+}
+
+.addButton {
+    filter: opacity(0.5);
+    transition: 0.1s;
+}
+
+.addButton:hover {
+    filter: opacity(1);
+    cursor: pointer;
+    scale: 1.05;
+    transition: 0.1s;
+    rotate: 90deg;
+}
+
+.addButtonContainer {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+}
+@media screen and (max-width: 800px) {
+    .addButtonContainer {
+        width: 85vw;
+    }
+}
+
+.locationButton:hover {
+    cursor: pointer;
+    transition: 0.1s;
+    scale: 1.05;
+}
+
+.weekList {
+    display: flex;
+    flex-direction: column;
+    gap: 1%;
+    justify-content: center;
+    padding: 1%;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.weekButton {
+    border-radius: 20px;
+    border: 5px solid black;
+    padding: 1%;
+    margin: 1%;
+    font-size: 1.3em;
+    cursor: pointer;
+    font-size: 30px;
+    font-family: "Lato", sans-serif;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    backdrop-filter: blur(10px);
+    background: #f0f0f0;
+}
+
+.weekButton:hover {
+    background: #e1e1e1;
+}
+
+.grandTitle {
+    font-size: 48px;
+    font-family: "Lato", sans-serif;
+    margin: 1%;
+    text-align: center;
+}
+
+.bigLogo {
+    position: fixed;
+    object-fit: contain;
+    z-index: -1;
+    opacity: 0.05;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.dayTitle {
+    margin: 0;
+    font-size: 36px;
+    font-family: "Lato", sans-serif;
+}
+
+.weekTitle {
+    font-size: 36px;
+    font-family: "Lato", sans-serif;
+    margin: 1% 2%;
+    margin-bottom: 0;
+    color: black;
+    text-decoration: none;
+    font-weight: 700;
+    position: fixed;
+    top: 1%;
+}
+
+.weekTitle:hover {
+    text-decoration: underline;
+}
+
+.trashButton:hover {
+    cursor: pointer;
+    transition: 0.1s;
+    scale: 1.1;
+}
+
+.closeButton:hover {
+    cursor: pointer;
+    transition: 0.1s;
+    scale: 1.1;
+}
+
+.languageButton {
+    position: fixed;
+    right: 0;
+    top: 1%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+}
+
+@media screen and (max-width: 600px) {
+    .languageButton {
+        top: 6%;
+        right: 2%;
+    }
+}
+
+.infoIconI {
+    position: relative;
+    transform: translateY(-50%);
+    right: 50%;
+    pointer-events: none;
+    transform-origin: 50% 50%;
+}
+
+@keyframes rotate {
+    0% {
+        rotate: 0deg;
+    }
+    25% {
+        rotate: 10deg;
+    }
+    50% {
+        rotate: -10deg;
+    }
+    75% {
+        rotate: 10deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
+
+.infoIconCircle:hover {
+    cursor: pointer;
+    transition: 0.1s;
+    scale: 1.05;
+}
+
+.infoIconCircle:hover + img {
+    animation: rotate 2s infinite;
+}

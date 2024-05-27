@@ -1,16 +1,32 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "latest",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
-  "engines": {
-    "node": ">=18"
-  }
+    "name": "hacker-schedule",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "build": "next build",
+        "dev": "next dev",
+        "start": "next start",
+        "lint": "next lint",
+        "prisma:generate": "npx dotenv -e .env.local -- prisma generate",
+        "migrate:dev": "npx dotenv -e .env.local -- prisma migrate dev",
+        "prisma:studio": "npx dotenv -e .env.local -- prisma studio",
+        "migrate": "npx dotenv -e .env.local -- prisma migrate deploy",
+        "build:production": "npx dotenv -e .env.local -- npm run migrate && npm run generate && npm run build"
+    },
+    "dependencies": {
+        "@prisma/client": "^5.14.0",
+        "@vercel/postgres": "^0.8.0",
+        "next": "^14.2.3",
+        "react": "^18",
+        "react-dom": "^18"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "devDependencies": {
+        "dotenv-cli": "^7.4.2",
+        "eslint": "^9.3.0",
+        "eslint-config-next": "^14.2.3",
+        "prisma": "^5.14.0"
+    }
 }

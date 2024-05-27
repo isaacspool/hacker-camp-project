@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Project {
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  name            String     @unique
+  types           String[]
+  description     String?
+  materials       String?
+  goals           String?
+  minParticipants Int        @default(4)
+  maxParticipants Int        @default(16)
+  duration        Int        @default(1)
+  categories      Category[]
+
+  ScheduledProject ScheduledProject[]
+
+  @@index([name], type: Hash)
+}
+
+model Day {
+  id         Int     @id @default(autoincrement())
+  week       Int
+  day        Int
+  year       Int
+  rundown    Staff[] @relation("StaffRundown")
+  satellites Staff[] @relation("StaffSatellites")
+  out        Staff[] @relation("StaffOut")
+
+  ScheduledProject ScheduledProject[]
+
+  @@index([week], type: Hash)
+  @@index([day], type: Hash)
+}
+
+model Room {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  ScheduledProject ScheduledProject[]
+
+  @@index([name], type: Hash)
+}
+
+model ScheduledProject {
+  id      Int     @id @default(autoincrement())
+  name    String
+  project Project @relation(fields: [projectId], references: [id])
+  day     Day     @relation(fields: [dayId], references: [id])
+  room    Room?   @relation(fields: [roomId], references: [id])
+  staff   Staff[]
+
+  projectId Int
+  dayId     Int
+  roomId    Int?
+
+  @@index([dayId], type: Hash)
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  projects Project[]
+
+  @@index([name], type: Hash)
+}
+
+model Staff {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  rundownDay        Day[]              @relation("StaffRundown")
+  satelliteDay      Day[]              @relation("StaffSatellites")
+  outDay            Day[]              @relation("StaffOut")
+  scheduledProjects ScheduledProject[]
+
+  @@index([name], type: Hash)
+}
