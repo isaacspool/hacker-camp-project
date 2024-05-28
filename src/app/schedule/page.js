@@ -1,7 +1,8 @@
 import HomeLink from "./components/HomeLink";
 import styles from "@/styles/Home.module.css";
 import ScheduleWeek from "./components/ScheduleWeek.js";
-import prisma from "@/lib/prisma";
+import YearProvider from "@/components/YearProvider";
+import { getSearchParamsInt } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 
@@ -14,17 +15,23 @@ export async function generateMetadata({ searchParams }) {
 }
 
 export default function SchedulePage({ searchParams }) {
-    const week = parseInt(searchParams.week);
-    const year = parseInt(searchParams.year);
+    const week = getSearchParamsInt(searchParams.week, 1);
+    const year = getSearchParamsInt(
+        searchParams.year,
+        new Date().getFullYear()
+    );
+    const day = getSearchParamsInt(searchParams.day, null);
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>
-            <HomeLink
-                url="/"
-                week={week}
-                css={styles.weekTitle}
-                hasHidden={true}
-            />
-            <ScheduleWeek week={week} year={year} />
+            <YearProvider defaultYear={year}>
+                <HomeLink
+                    url={day == 0 || day ? `/schedule/?week=${week}&` : "/?"}
+                    week={week}
+                    css={styles.weekTitle}
+                    hasHidden={true}
+                />
+            </YearProvider>
+            <ScheduleWeek week={week} year={year} day={day} />
         </div>
     );
 }

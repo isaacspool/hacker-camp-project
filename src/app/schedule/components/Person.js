@@ -7,6 +7,7 @@ export default function Person({
     updateStaff,
     staffList,
     canDelete,
+    canEdit,
 }) {
     const deleteStaff = async (oldStaff) => {
         "use server";
@@ -18,28 +19,39 @@ export default function Person({
         await updateStaff({ connect: newStaff, disconnect: { name: name } });
     };
 
+    const personInfo = () => (
+        <div
+            className={[
+                styles.thinBorder,
+                styles.pill,
+                styles.person,
+                canEdit ? styles.personHoverable : "",
+            ].join(" ")}
+        >
+            <img src={icon} width={21} height={21} />
+            <p style={{ margin: 0, color: "black" }}>{name}</p>
+        </div>
+    );
+
     return (
         <div style={{ display: "flex", flexGrow: 1, justifyContent: "center" }}>
-            <Popup
-                data={staffList}
-                clickHandler={swapStaff}
-                handleTrashButton={
-                    canDelete ? deleteStaff.bind(null, { name: name }) : null
-                }
-                useFilterChips={false}
-                doFlexGrow={true}
-            >
-                <div
-                    className={[
-                        styles.thinBorder,
-                        styles.pill,
-                        styles.person,
-                    ].join(" ")}
+            {canEdit ? (
+                <Popup
+                    data={staffList}
+                    clickHandler={swapStaff}
+                    handleTrashButton={
+                        canDelete
+                            ? deleteStaff.bind(null, { name: name })
+                            : null
+                    }
+                    useFilterChips={false}
+                    doFlexGrow={true}
                 >
-                    <img src={icon} width={21} height={21} />
-                    <p style={{ margin: 0, color: "black" }}>{name}</p>
-                </div>
-            </Popup>
+                    {personInfo()}
+                </Popup>
+            ) : (
+                personInfo()
+            )}
         </div>
     );
 }

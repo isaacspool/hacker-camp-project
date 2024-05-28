@@ -128,7 +128,7 @@
     flex-grow: 1;
 }
 
-.person:hover {
+.personHoverable:hover {
     background-color: #eeeeee;
     cursor: pointer;
 }
@@ -463,4 +463,12 @@
 
 .infoIconCircle:hover + img {
     animation: rotate 2s infinite;
+}
+
+.yearSelect {
+    font-weight: 700;
+    font-size: 48px;
+    outline: none;
+    border: none;
+    text-decoration: underline;
 }

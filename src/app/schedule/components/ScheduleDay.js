@@ -6,6 +6,7 @@ import DayDetails from "./DayDetails";
 import prisma from "@/lib/prisma";
 
 export default function ScheduleDay({
+    dayInfo,
     dayKey,
     databaseDayId,
     databaseProjects,
@@ -14,6 +15,7 @@ export default function ScheduleDay({
     rundown,
     rooms,
     staffList,
+    presentationMode,
 }) {
     const handleDeletion = async (projectId) => {
         "use server";
@@ -60,13 +62,19 @@ export default function ScheduleDay({
 
     return (
         <div className={styles.day}>
-            <DayTitle dayKey={dayKey} />
-            <DayDetails
-                databaseId={databaseDayId}
-                rundownStaff={rundown}
-                satelliteStaff={satellites}
-                staffList={staffList}
+            <DayTitle
+                dayKey={dayKey}
+                dayInfo={dayInfo}
+                presentationMode={presentationMode}
             />
+            {!presentationMode && (
+                <DayDetails
+                    databaseId={databaseDayId}
+                    rundownStaff={rundown}
+                    satelliteStaff={satellites}
+                    staffList={staffList}
+                />
+            )}
             <div className={[styles.border, styles.projectList].join(" ")}>
                 {scheduledProjects.map((project, i) => {
                     return (
@@ -98,25 +106,28 @@ export default function ScheduleDay({
                             types={project.project.types}
                             rooms={rooms}
                             staffList={staffList}
+                            presentationMode={presentationMode}
                             key={project.id}
                         />
                     );
                 })}
-                <div className={styles.addButtonContainer}>
-                    <Popup
-                        data={databaseProjects}
-                        clickHandler={handleSelectProject}
-                        useFilterChips={true}
-                        doFlexGrow={false}
-                    >
-                        <img
-                            src="/icons/add.svg"
-                            width="80"
-                            height="80"
-                            className={styles.addButton}
-                        />
-                    </Popup>
-                </div>
+                {!presentationMode && (
+                    <div className={styles.addButtonContainer}>
+                        <Popup
+                            data={databaseProjects}
+                            clickHandler={handleSelectProject}
+                            useFilterChips={true}
+                            doFlexGrow={false}
+                        >
+                            <img
+                                src="/icons/add.svg"
+                                width="80"
+                                height="80"
+                                className={styles.addButton}
+                            />
+                        </Popup>
+                    </div>
+                )}
             </div>
         </div>
     );

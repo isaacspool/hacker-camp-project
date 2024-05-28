@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import styles from "@/styles/Home.module.css";
 import { translate, isHebrew } from "@/lib/translation";
-import { useParams } from "next/navigation";
 import { useLanguageContext } from "@/components/LanguageProvider";
+import { useYearContext } from "@/components/YearProvider";
 
 export default function HomeLink({ url, week, css, hasHidden }) {
     const language = useLanguageContext();
@@ -12,6 +11,7 @@ export default function HomeLink({ url, week, css, hasHidden }) {
     if (isHebrew(language)) {
         linkText = linkText.reverse();
     }
+    const { year, _ } = useYearContext();
     return (
         <>
             {hasHidden && (
@@ -22,7 +22,7 @@ export default function HomeLink({ url, week, css, hasHidden }) {
                     {linkText.join(" ")}
                 </div>
             )}
-            <Link href={url} className={css}>
+            <Link href={url + `year=${year}`} className={css}>
                 {linkText.join(" ")}
             </Link>
         </>

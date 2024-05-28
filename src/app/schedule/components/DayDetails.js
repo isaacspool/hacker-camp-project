@@ -39,6 +39,7 @@ export default function DayDetails({
                         }}
                         staffList={staffList}
                         canDelete={false}
+                        canEdit={true}
                         key={i}
                     />
                 ))}
@@ -59,6 +60,7 @@ export default function DayDetails({
                         }}
                         staffList={staffList}
                         canDelete={false}
+                        canEdit={true}
                         key={i}
                     />
                 ))}

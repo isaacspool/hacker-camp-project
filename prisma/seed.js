@@ -43,15 +43,19 @@ async function main() {
 
     await prisma.day.deleteMany();
     await prisma.day.createMany({
-        data: [1, 2, 3, 4, 5, 6, 7]
-            .map((week) =>
-                [0, 1, 2, 3, 4].map((day) => {
-                    return {
-                        week,
-                        day,
-                        year: 2024,
-                    };
-                })
+        data: [2026, 2025, 2024, 2023, 2022, 2021]
+            .map((year) =>
+                [1, 2, 3, 4, 5, 6, 7]
+                    .map((week) =>
+                        [0, 1, 2, 3, 4].map((day) => {
+                            return {
+                                week,
+                                day,
+                                year,
+                            };
+                        })
+                    )
+                    .flat()
             )
             .flat(),
     });

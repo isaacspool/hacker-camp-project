@@ -12,6 +12,7 @@ export default function ProjectTitle({
     projectName,
     handleDeletion,
     setProjectName,
+    presentationMode,
 }) {
     const { selectedProject, setSelectedProject } = useSelectedProjectContext();
     const [name, setName] = useState(projectName);
@@ -71,7 +72,9 @@ export default function ProjectTitle({
             ) : (
                 <h2
                     style={{ fontSize: 26 }}
-                    onClick={() => setSelectedProject(uniqueId)}
+                    onClick={() => {
+                        if (!presentationMode) setSelectedProject(uniqueId);
+                    }}
                 >
                     {name}
                 </h2>

@@ -2,8 +2,11 @@ import prisma from "@/lib/prisma";
 import ScheduleDay from "./ScheduleDay";
 import styles from "@/styles/Home.module.css";
 
-export default async function ScheduleWeek({ week, year }) {
+export default async function ScheduleWeek({ day, week, year }) {
     const weekFilter = { week, year };
+    if (day == 0 || day) {
+        weekFilter.day = day;
+    }
     const scheduledProjects = await prisma.scheduledProject.findMany({
         where: { day: weekFilter },
         include: {
@@ -46,19 +49,24 @@ export default async function ScheduleWeek({ week, year }) {
         );
 
     return (
-        <div className={styles.week}>
-            {days.map((day, i) => (
+        <div
+            className={styles.week}
+            style={days.length == 1 ? { justifyContent: "center" } : {}}
+        >
+            {days.map((day) => (
                 <ScheduleDay
-                    dayKey={`day.${i}`}
+                    dayInfo={{ week, year, day: day.day }}
+                    dayKey={`day.${day.day}`}
                     databaseDayId={day.id}
                     databaseProjects={databaseProjects}
                     scheduledProjects={scheduledProjects.filter(
-                        (project) => project.day.day == i
+                        (project) => project.day.day == day.day
                     )}
                     satellites={day.satellites}
                     rundown={day.rundown}
                     rooms={rooms}
                     staffList={staffList}
+                    presentationMode={days.length == 1}
                     key={day.id}
                 />
             ))}

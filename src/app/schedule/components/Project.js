@@ -18,11 +18,27 @@ export default function Project({
     types,
     rooms,
     staffList,
+    presentationMode,
 }) {
     const handleAddStaff = async (newStaff) => {
         "use server";
         await updateStaff({ connect: newStaff }); // false to not delete it
     };
+
+    const locationInfo = () => (
+        <div className={styles.location}>
+            <img
+                src="/icons/location.svg"
+                alt="location"
+                width={30}
+                height={30}
+                className={presentationMode ? "" : styles.locationButton}
+            />
+            <p style={{ fontSize: 24, margin: "1%" }}>
+                {location ? location.name : "The Void"}
+            </p>
+        </div>
+    );
     return (
         <div
             className={[styles.border, styles.project].join(" ")}
@@ -38,51 +54,48 @@ export default function Project({
                 projectName={projectName}
                 handleDeletion={handleDeletion}
                 setProjectName={setProjectName}
+                presentationMode={presentationMode}
             />
             <div className={styles.projectBody}>
-                <Popup
-                    data={rooms}
-                    clickHandler={setLocation}
-                    useFilterChips={false}
-                    doFlexGrow={false}
-                >
-                    <div className={styles.location}>
-                        <img
-                            src="/icons/location.svg"
-                            alt="location"
-                            width={30}
-                            height={30}
-                            className={styles.locationButton}
-                        />
-                        <p style={{ fontSize: 24, margin: "1%" }}>
-                            {location ? location.name : "The Void"}
-                        </p>
-                    </div>
-                </Popup>
+                {presentationMode ? (
+                    locationInfo()
+                ) : (
+                    <Popup
+                        data={rooms}
+                        clickHandler={setLocation}
+                        useFilterChips={false}
+                        doFlexGrow={false}
+                    >
+                        {locationInfo()}
+                    </Popup>
+                )}
                 <ul className={styles.staffList}>
-                    {staff.map((person, i) => (
+                    {staff.map((person) => (
                         <Person
                             icon="/icons/person.svg"
                             name={person.name}
                             staffList={staffList}
                             updateStaff={updateStaff}
                             canDelete={true}
+                            canEdit={!presentationMode}
                             key={person.id}
                         />
                     ))}
-                    <Popup
-                        data={staffList}
-                        clickHandler={handleAddStaff}
-                        useFilterChips={false}
-                        doFlexGrow={false}
-                    >
-                        <img
-                            src="/icons/add.svg"
-                            width="50"
-                            height="50"
-                            className={styles.addButton}
-                        />
-                    </Popup>
+                    {!presentationMode && (
+                        <Popup
+                            data={staffList}
+                            clickHandler={handleAddStaff}
+                            useFilterChips={false}
+                            doFlexGrow={false}
+                        >
+                            <img
+                                src="/icons/add.svg"
+                                width="50"
+                                height="50"
+                                className={styles.addButton}
+                            />
+                        </Popup>
+                    )}
                 </ul>
             </div>
         </div>
