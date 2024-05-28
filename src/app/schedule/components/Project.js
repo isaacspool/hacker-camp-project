@@ -23,17 +23,6 @@ export default function Project({
         "use server";
         await updateStaff({ connect: newStaff }); // false to not delete it
     };
-
-    const handleDeleteStaff = async (oldStaff) => {
-        "use server";
-        await updateStaff({ disconnect: oldStaff });
-    };
-
-    const handleSwapStaff = async (newStaff) => {
-        "use server";
-        await updateStaff({ connect: newStaff, disconnect: { name: name } });
-    };
-
     return (
         <div
             className={[styles.border, styles.project].join(" ")}
@@ -76,8 +65,7 @@ export default function Project({
                             icon="/icons/person.svg"
                             name={person.name}
                             staffList={staffList}
-                            swapStaff={handleSwapStaff}
-                            deleteStaff={handleDeleteStaff}
+                            updateStaff={updateStaff}
                             canDelete={true}
                             key={person.id}
                         />

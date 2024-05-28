@@ -26,6 +26,7 @@
     display: flex;
     flex-direction: column;
     list-style: none;
+    gap: 0.3vmax;
 }
 
 .projectList {
@@ -107,7 +108,6 @@
 }
 
 .detailsList {
-    padding: 1vmax 0px;
     list-style: none;
     display: flex;
     flex-wrap: wrap;
