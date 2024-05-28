@@ -1,17 +1,22 @@
-import styles from "../../styles/Form.module.css";
-import { translate } from "../../../pages/index.js";
+import styles from "@/styles/Form.module.css";
+import { translate } from "@/lib/translation";
+import { useFormPageContext } from "./FormPageProvider";
+import { useRouter } from "next/navigation";
 
-export default function SubmitButton({ language, formAnswers }) {
+export default function SubmitButton({ language, formAnswers, submitAction }) {
+    const { formPage, setFormPage } = useFormPageContext();
+    const router = useRouter();
     return (
         <div style={{ width: "40%" }}>
             <button
                 className={[styles.box, styles.submitButton].join(" ")}
-                onClick={() => {
-                    if (projectName == "") {
+                onClick={async () => {
+                    if (formAnswers.projectName == "") {
                         setFormPage(0);
                     } else {
-                        console.log(formAnswers);
-                        router.push("/", { scroll: false });
+                        await submitAction(formAnswers).then((_) =>
+                            router.push("/", { scroll: false })
+                        );
                     }
                 }}
             >

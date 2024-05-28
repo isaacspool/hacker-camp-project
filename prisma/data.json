@@ -1,0 +1,67 @@
+{
+    "staff": [
+        "Alex",
+        "AmTal",
+        "Ariel",
+        "Hadaria",
+        "Isaac",
+        "Matan",
+        "Maya",
+        "Daniel",
+        "Rafi",
+        "Ranon",
+        "Sapir",
+        "Shai",
+        "Shaiel",
+        "Shayna",
+        "Yehoshua",
+        "Zev",
+        "Option 42"
+    ],
+    "categories": [
+        "Geeky",
+        "Nerdy",
+        "Subversive",
+
+        "Computers",
+        "Robotics",
+        "LEGO",
+        "Pinky",
+        "Gaming",
+
+        "Laptops",
+        "Desktops",
+        "Outside",
+        "Garden",
+        "Coding",
+
+        "Writing",
+        "Art",
+        "Music",
+        "Design",
+        "Improv",
+        "\"Chemistry\"",
+
+        "Explosive",
+        "Puns",
+
+        "Advanced",
+        "Beginners",
+        "Innovative"
+    ],
+    "rooms": [
+        "Bifrost",
+        "Doofenshmirtz Evil Incorperated",
+        "Hyrule",
+        "Jedi Temple",
+        "Nautilus",
+        "Nether",
+        "Pandora's Box",
+        "Pink Room",
+        "Shire",
+        "The Bridge",
+        "The Cliffs of Insanity",
+        "The Forbidden Forest",
+        "Workshop"
+    ]
+}

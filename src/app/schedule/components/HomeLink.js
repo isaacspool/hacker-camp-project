@@ -6,24 +6,23 @@ import { translate, isHebrew } from "@/lib/translation";
 import { useParams } from "next/navigation";
 import { useLanguageContext } from "@/components/LanguageProvider";
 
-export default function HomeLink() {
+export default function HomeLink({ url, week, css, hasHidden }) {
     const language = useLanguageContext();
-
-    const params = useParams();
-    const id = params.id;
-    let linkText = [translate("week", language), id];
+    let linkText = [translate("week", language), week];
     if (isHebrew(language)) {
         linkText = linkText.reverse();
     }
     return (
         <>
-            <div
-                className={styles.weekTitle}
-                style={{ opacity: 0, position: "relative" }}
-            >
-                {linkText.join(" ")}
-            </div>
-            <Link href="/" className={styles.weekTitle}>
+            {hasHidden && (
+                <div
+                    className={css}
+                    style={{ opacity: 0, position: "relative" }}
+                >
+                    {linkText.join(" ")}
+                </div>
+            )}
+            <Link href={url} className={css}>
                 {linkText.join(" ")}
             </Link>
         </>

@@ -1,10 +1,10 @@
-import styles from "../../styles/Form.module.css";
+import styles from "@/styles/Form.module.css";
 import { useEffect } from "react";
-import { translate } from "../../../pages/index";
+import { translate } from "@/lib/translation";
 
-const engineering = "engineering";
-const analytical = "analytical";
-const creative = "creative";
+const engineering = "Engineering";
+const analytical = "Analytical";
+const creative = "Creative";
 
 function getDistance(a, b) {
     return Math.hypot(a.x - b.x, a.y - b.y);

@@ -1,5 +1,5 @@
-import styles from "../../styles/Form.module.css";
-import { translate } from "../../../pages/index.js";
+import styles from "@/styles/Form.module.css";
+import { translate } from "@/lib/translation";
 
 export default function NamePage({ value, setValue, language }) {
     return (

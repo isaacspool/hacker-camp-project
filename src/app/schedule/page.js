@@ -18,7 +18,12 @@ export default function SchedulePage({ searchParams }) {
     const year = parseInt(searchParams.year);
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>
-            <HomeLink />
+            <HomeLink
+                url="/"
+                week={week}
+                css={styles.weekTitle}
+                hasHidden={true}
+            />
             <ScheduleWeek week={week} year={year} />
         </div>
     );

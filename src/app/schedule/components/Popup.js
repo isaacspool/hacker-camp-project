@@ -216,21 +216,24 @@ export default function Popup({
                                             alignItems: "center",
                                             gap: "3%",
                                         }}
-                                        key={item.id}
+                                        key={item.id ? item.id : item.name}
                                     >
                                         <button
                                             className={[
                                                 styles.thinBorder,
                                                 styles.staff,
                                             ].join(" ")}
-                                            style={{
-                                                background: useFilterChips
-                                                    ? getBackgroundString(
-                                                          item.types,
-                                                          "90deg"
-                                                      )
-                                                    : "none",
-                                            }}
+                                            style={
+                                                useFilterChips
+                                                    ? {
+                                                          background:
+                                                              getBackgroundString(
+                                                                  item.types,
+                                                                  "90deg"
+                                                              ),
+                                                      }
+                                                    : {}
+                                            }
                                             onClick={async () => {
                                                 handleClosePopup();
                                                 await clickHandler(item).then(

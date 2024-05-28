@@ -1,8 +1,6 @@
 import styles from "@/styles/Home.module.css";
-import pageStyles from "@/styles/Project.module.css";
-import { ProjectInformation } from "./components/ProjectInformation.js";
-import { getColorFromType } from "@/lib/colors";
 import prisma from "@/lib/prisma";
+import ProjectDetails from "./components/ProjectDetails.js";
 
 export async function generateMetadata({ params }) {
     const id = params.id;
@@ -17,91 +15,23 @@ export async function generateMetadata({ params }) {
     };
 }
 
-export default function ProjectPage() {
+export default async function ProjectPage({ params }) {
+    const id = params.id;
+    const project = await prisma.project.findFirst({
+        where: { id: parseInt(id) },
+        include: { categories: true },
+    });
+    // .then((p) => console.log(p));
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>
             <div style={{ padding: "3%" }}>
-                {projectNotFound || !project ? (
+                {!project ? (
                     <div>
                         <h1>Project not found!</h1>
                         <p>ID is {id}.</p>{" "}
                     </div>
                 ) : (
-                    <div className={pageStyles.infoContainer}>
-                        <ProjectInformation title={project.name}>
-                            {project.description}
-                        </ProjectInformation>
-                        {project.duration == 0.5 ? (
-                            <ProjectInformation title="Half Day" />
-                        ) : project.duration == 5 ? (
-                            <ProjectInformation title="All Week" />
-                        ) : project.duration ? (
-                            <ProjectInformation
-                                title={`${project.duration} Days Long`}
-                            />
-                        ) : (
-                            <div style={{ display: "none" }} />
-                        )}
-                        {project.min_participants &&
-                            project.max_participants && (
-                                <ProjectInformation
-                                    title={`${project.min_participants} to ${project.max_participants} Participants`}
-                                />
-                            )}
-                        {project.categories && (
-                            <ProjectInformation>
-                                <div
-                                    className={pageStyles.infoContainer}
-                                    style={{
-                                        alignContent: "center",
-                                        height: "100%",
-                                    }}
-                                >
-                                    {project.categories.map((category) => (
-                                        <div
-                                            key={category}
-                                            className={pageStyles.typeText}
-                                        >
-                                            <p>{category}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </ProjectInformation>
-                        )}
-                        {project.types && (
-                            <ProjectInformation stopFlexGrow={true}>
-                                <div
-                                    className={pageStyles.infoContainer}
-                                    style={{
-                                        flexDirection: "column",
-                                    }}
-                                >
-                                    {project.types.map((type) => (
-                                        <div
-                                            className={pageStyles.typeText}
-                                            style={{
-                                                background:
-                                                    getColorFromType(type),
-                                            }}
-                                            key={type}
-                                        >
-                                            <p>{type}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </ProjectInformation>
-                        )}
-                        {project.materials && (
-                            <ProjectInformation title="Materials">
-                                {project.materials}
-                            </ProjectInformation>
-                        )}
-                        {project.goals && (
-                            <ProjectInformation title="Goals">
-                                {project.goals}
-                            </ProjectInformation>
-                        )}
-                    </div>
+                    <ProjectDetails project={project} id={id} />
                 )}
             </div>
         </div>

@@ -1,4 +1,4 @@
-import styles from "../styles/Form.module.css";
+import styles from "@/styles/Form.module.css";
 
 export default function FullHackerCampLogo() {
     return (

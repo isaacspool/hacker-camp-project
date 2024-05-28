@@ -2,6 +2,7 @@ import Link from "next/link";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { isHebrew, translate } from "@/lib/translation";
+import HomeLink from "./schedule/components/HomeLink";
 
 export default function Home() {
     return (
@@ -19,21 +20,19 @@ export default function Home() {
                 <img src="/icons/form.svg" />
             </Link>
             <div className={styles.weekList}>
-                {[...Array.from(Array(7).keys())].map((week) => {
-                    let link = [translate("week", language), week];
-                    if (isHebrew(language)) {
-                        link = link.reverse();
-                    }
-                    return (
-                        <Link
-                            href={`/schedule/?week=${week}&year={year}`}
-                            className={styles.weekButton}
-                            key={week}
-                        >
-                            {link.join(" ")}
-                        </Link>
-                    );
-                })}
+                {[...Array.from(Array(7).keys())]
+                    .map((week) => week + 1)
+                    .map((week) => {
+                        return (
+                            <HomeLink
+                                url={`/schedule/?week=${week}&year=${new Date().getFullYear()}`}
+                                week={week}
+                                css={styles.weekButton}
+                                hasHidden={false}
+                                key={week}
+                            />
+                        );
+                    })}
             </div>
         </div>
     );
