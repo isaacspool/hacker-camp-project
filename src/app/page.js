@@ -1,9 +1,9 @@
-import Link from "next/link";
 import styles from "@/styles/Home.module.css";
 import WeekLink from "./schedule/components/WeekLink";
 import YearProvider from "@/components/YearProvider";
 import YearSelect from "@/components/YearSelect";
 import { getSearchParamsInt } from "@/lib/time";
+import FormButton from "@/components/FormButton";
 
 export default function Home({ searchParams }) {
     const year = getSearchParamsInt(
@@ -19,9 +19,7 @@ export default function Home({ searchParams }) {
                 width="92%"
                 height="92%"
             />
-            <Link href="/form" className={styles.newProjectButton}>
-                <img src="/icons/form.svg" width="150" height="150" />
-            </Link>
+            <FormButton scale={4} />
             <YearProvider defaultYear={year}>
                 <h1 className={styles.grandTitle}>
                     Hacker Camp <YearSelect currentYear={year} />

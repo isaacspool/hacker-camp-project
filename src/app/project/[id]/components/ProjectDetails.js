@@ -40,11 +40,27 @@ export default function ProjectDetails({ project }) {
             ) : (
                 <></>
             )}
-            {project.minParticipants && project.maxParticipants && (
+            {project.minParticipants && !project.maxParticipants && (
                 <ProjectInformation
-                    title={`${project.minParticipants} to ${project.maxParticipants} Campers`}
+                    title={`At Least ${project.maxParticipants} Campers`}
                 />
             )}
+            {!project.minParticipants && project.maxParticipants && (
+                <ProjectInformation
+                    title={`At Most ${project.maxParticipants} Campers`}
+                />
+            )}
+            {project.minParticipants &&
+                project.maxParticipants &&
+                (project.minParticipants == project.maxParticipants ? (
+                    <ProjectInformation
+                        title={`Around ${project.maxParticipants} Campers`}
+                    />
+                ) : (
+                    <ProjectInformation
+                        title={`${project.minParticipants} to ${project.maxParticipants} Campers`}
+                    />
+                ))}
             {project.categories && project.categories.length > 0 && (
                 <ProjectInformation>
                     <div
@@ -86,6 +102,11 @@ export default function ProjectDetails({ project }) {
                         ))}
                     </div>
                 </ProjectInformation>
+            )}
+            {project.creator && (
+                <ProjectInformation
+                    title={`Submitted by ${project.creator.name}`}
+                />
             )}
         </div>
     );

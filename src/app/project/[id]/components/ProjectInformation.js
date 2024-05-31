@@ -14,9 +14,7 @@ export default function ProjectInformation({ children, title }) {
                     <h1 className={styles.infoTitle}>{title}</h1>
                 </div>
             )}
-            {children && (
-                <div style={{ padding: "5%", height: "100%" }}>{children}</div>
-            )}
+            {children && <div style={{ padding: "5%" }}>{children}</div>}
         </div>
     );
 }

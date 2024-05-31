@@ -3,10 +3,12 @@ import Link from "next/link";
 import FormState from "./components/FormState";
 import FormDots from "./components/FormDots";
 import prisma from "@/lib/prisma";
+import { cookies } from "next/headers";
 
 export default async function Form() {
     const submitAction = async (formData) => {
         "use server";
+        const creator = cookies().get("name")?.value;
         await prisma.project.create({
             data: {
                 name: formData.name,
@@ -21,11 +23,14 @@ export default async function Form() {
                     ? parseInt(formData.participants[1])
                     : 16,
                 duration: formData.duration ? parseFloat(formData.duration) : 1,
-                // categories: {
-                //     connect: formData.categories.map((c) => {
-                //         return { id: c.id };
-                //     }),
-                // },
+                categories: {
+                    connect: formData.categories.map((c) => {
+                        return { id: c.id };
+                    }),
+                },
+                creator: {
+                    connect: { name: creator ? creator : "Option 42" },
+                },
             },
         });
     };

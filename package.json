@@ -8,6 +8,7 @@
         "start": "next start",
         "lint": "next lint",
         "postinstall": "prisma generate",
+        "reset": "npx dotenv -e .env.local -- prisma db push --force-reset && npx dotenv -e .env.local -- prisma db seed",
         "prisma:generate": "npx dotenv -e .env.local -- prisma generate",
         "migrate:dev": "npx dotenv -e .env.local -- prisma migrate dev",
         "prisma:studio": "npx dotenv -e .env.local -- prisma studio",

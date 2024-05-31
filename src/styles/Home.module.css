@@ -92,11 +92,51 @@
     background-color: #ffffff49;
 }
 
-.newProjectButton {
+.openFormButton {
     position: fixed;
-    right: 4%;
-    bottom: 8%;
+    right: 10px;
+    bottom: 80px;
     z-index: 1;
+}
+
+.openFormButton:hover {
+    scale: 1.1;
+    transition: 0.1s;
+}
+
+.openFormButtonPencil {
+    position: relative;
+}
+
+.openFormButton:hover > div > img {
+    animation: hover 4s infinite;
+}
+
+@keyframes hover {
+    0% {
+        transform: translateX(0px) translateY(0px) rotate(-30deg);
+    }
+    12.5% {
+        transform: translateX(-30px) translateY(-66px);
+    }
+    25% {
+        transform: translateX(13px) translateY(-66px);
+    }
+    37.5% {
+        transform: translateX(-30px) translateY(-50px);
+    }
+    50% {
+        transform: translateX(13px) translateY(-50px);
+    }
+    62.5% {
+        transform: translateX(-30px) translateY(-34px);
+    }
+    69% {
+        transform: translateX(-16px) translateY(-34px);
+    }
+    100% {
+        transform: translateX(0px) translateY(0px) rotate(-30deg);
+    }
 }
 
 .buttonBackground {

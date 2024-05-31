@@ -20,7 +20,7 @@ export default async function ProjectPage({ params }) {
     const id = getSearchParamsInt(params.id);
     const project = await prisma.project.findFirst({
         where: { id: id },
-        include: { categories: true },
+        include: { categories: true, creator: true },
     });
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>

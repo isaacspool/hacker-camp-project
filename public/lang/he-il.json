@@ -23,5 +23,7 @@
     "form.materials.subtitle": "כתבו כמה ומה נצטרך לרכוש",
     "form.goals.title": "מטרות הפרויקט",
     "form.goals.subtitle": "?באילו מטרות ארגון תומך הפרויקט הזה במיוחד",
-    "form.submit": "שלח"
+    "form.submit": "שלח",
+    "login.request.name": "מה השם שלך",
+    "login.request.secret": "?מהו הקוד הסודי"
 }

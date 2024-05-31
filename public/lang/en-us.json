@@ -23,5 +23,7 @@
     "form.materials.subtitle": "Write how many and what we would need to purchase for the project.",
     "form.goals.title": "Project Goals",
     "form.goals.subtitle": "Which TLW goals does this project specifically support?",
-    "form.submit": "Submit"
+    "form.submit": "Submit",
+    "login.request.name": "What's your name?",
+    "login.request.secret": "What's the secret code?"
 }
