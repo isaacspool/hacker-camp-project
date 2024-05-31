@@ -14,7 +14,7 @@ export default function DayTitle({ dayKey, dayInfo, presentationMode }) {
                 <Link
                     href={`/schedule/?week=${dayInfo.week}&year=${dayInfo.year}&day=${dayInfo.day}`}
                     target="_blank"
-                    style={{ display: "flex", alignItems: "center" }}
+                    className={styles.openDayButton}
                 >
                     <img src="/icons/new_window.svg" height="30" width="30" />
                 </Link>

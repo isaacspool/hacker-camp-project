@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "@/styles/Home.module.css";
-import HomeLink from "./schedule/components/HomeLink";
+import WeekLink from "./schedule/components/WeekLink";
 import YearProvider from "@/components/YearProvider";
 import YearSelect from "@/components/YearSelect";
 import { getSearchParamsInt } from "@/lib/time";
@@ -20,7 +20,7 @@ export default function Home({ searchParams }) {
                 height="92%"
             />
             <Link href="/form" className={styles.newProjectButton}>
-                <img src="/icons/form.svg" />
+                <img src="/icons/form.svg" width="150" height="150" />
             </Link>
             <YearProvider defaultYear={year}>
                 <h1 className={styles.grandTitle}>
@@ -31,7 +31,7 @@ export default function Home({ searchParams }) {
                         .map((week) => week + 1)
                         .map((week) => {
                             return (
-                                <HomeLink
+                                <WeekLink
                                     url={`/schedule/?week=${week}&`}
                                     week={week}
                                     css={styles.weekButton}

@@ -22,7 +22,7 @@ export default function Project({
 }) {
     const handleAddStaff = async (newStaff) => {
         "use server";
-        await updateStaff({ connect: newStaff }); // false to not delete it
+        await updateStaff({ connect: { id: newStaff.id } }); // false to not delete it
     };
 
     const locationInfo = () => (
@@ -82,19 +82,29 @@ export default function Project({
                         />
                     ))}
                     {!presentationMode && (
-                        <Popup
-                            data={staffList}
-                            clickHandler={handleAddStaff}
-                            useFilterChips={false}
-                            doFlexGrow={false}
-                        >
-                            <img
-                                src="/icons/add.svg"
-                                width="50"
-                                height="50"
-                                className={styles.addButton}
-                            />
-                        </Popup>
+                        <>
+                            {staff.length == 0 && (
+                                <img
+                                    src="/icons/person.svg"
+                                    width="25"
+                                    height="25"
+                                    style={{ margin: "0.3rem" }}
+                                />
+                            )}
+                            <Popup
+                                data={staffList}
+                                clickHandler={handleAddStaff}
+                                useFilterChips={false}
+                                doFlexGrow={false}
+                            >
+                                <img
+                                    src="/icons/add.svg"
+                                    width="50"
+                                    height="50"
+                                    className={styles.addButton}
+                                />
+                            </Popup>
+                        </>
                     )}
                 </ul>
             </div>

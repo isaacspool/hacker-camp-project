@@ -16,11 +16,20 @@ export default function ProjectTitle({
 }) {
     const { selectedProject, setSelectedProject } = useSelectedProjectContext();
     const [name, setName] = useState(projectName);
+    const [lastClickedIndex, setLastClickedIndex] = useState(0);
     const router = useRouter();
 
     useEffect(() => {
         setName(projectName);
     }, [projectName]);
+
+    useEffect(() => {
+        if (selectedProject == uniqueId) {
+            const nameInput = document.getElementById(`textarea_${uniqueId}`);
+            if (nameInput) nameInput.focus();
+            nameInput.selectionStart = lastClickedIndex;
+        }
+    }, [selectedProject]);
 
     useEffect(() => {
         const submitNewName = setTimeout(async () => {
@@ -53,8 +62,7 @@ export default function ProjectTitle({
                             );
                         }}
                     />
-                    <input
-                        type="text"
+                    <textarea
                         style={{
                             fontSize: 26,
                             margin: "0.83em",
@@ -64,20 +72,42 @@ export default function ProjectTitle({
                             border: "none",
                             fontWeight: "700",
                         }}
+                        className={styles.blackScroll}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        id={`textarea_${uniqueId}`}
                     />
                     <InfoIcon scale={33} url={`/project/${databaseId}`} />
                 </div>
             ) : (
-                <h2
-                    style={{ fontSize: 26 }}
-                    onClick={() => {
-                        if (!presentationMode) setSelectedProject(uniqueId);
+                <div
+                    style={{
+                        marginBlockStart: 26 * 0.83,
+                        marginBlockEnd: 26 * 0.83,
                     }}
                 >
-                    {name}
-                </h2>
+                    {name.split("\n").map((line, i) => (
+                        <h2
+                            style={{ fontSize: 26, margin: 0 }}
+                            onClick={() => {
+                                if (!presentationMode)
+                                    setSelectedProject(uniqueId);
+
+                                const selection = getSelection();
+                                setLastClickedIndex(
+                                    selection.focusOffset +
+                                        name
+                                            .split("\n")
+                                            .filter((_, j) => j < i)
+                                            .join("\n").length
+                                );
+                            }}
+                            key={i}
+                        >
+                            {line}
+                        </h2>
+                    ))}
+                </div>
             )}
         </>
     );

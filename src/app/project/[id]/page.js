@@ -1,10 +1,11 @@
 import styles from "@/styles/Home.module.css";
 import prisma from "@/lib/prisma";
 import ProjectDetails from "./components/ProjectDetails.js";
+import { getSearchParamsInt } from "@/lib/time.js";
 
 export async function generateMetadata({ params }) {
-    const id = params.id;
-    const project = prisma.project.findFirst({ where: { id: parseInt(id) } });
+    const id = getSearchParamsInt(params.id);
+    const project = prisma.project.findFirst({ where: { id: id } });
     if (project) {
         return {
             title: `Project ${project.name}`,
@@ -16,12 +17,11 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProjectPage({ params }) {
-    const id = params.id;
+    const id = getSearchParamsInt(params.id);
     const project = await prisma.project.findFirst({
-        where: { id: parseInt(id) },
+        where: { id: id },
         include: { categories: true },
     });
-    // .then((p) => console.log(p));
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>
             <div style={{ padding: "3%" }}>

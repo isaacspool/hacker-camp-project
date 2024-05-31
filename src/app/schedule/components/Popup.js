@@ -64,7 +64,7 @@ export default function Popup({
         if (e.key == "Enter") {
             const selectionMenu = document.getElementById("selection_menu");
             if (selectionMenu && selectionMenu.children.length == 1) {
-                selectionMenu.children[0].click();
+                selectionMenu.children[0].children[0].click();
             }
         }
         if (
@@ -83,15 +83,21 @@ export default function Popup({
     const [filterChips, setFilterChips] = useState(null);
 
     useEffect(() => {
-        document.addEventListener("keydown", handlePressKey);
-        const searchInput = document.getElementById("search");
-        if (searchInput) searchInput.focus();
-        if (useFilterChips) {
-            setFilterChips(filterChipsProvider(language));
+        if (showPopup) {
+            document.addEventListener("keydown", handlePressKey);
+
+            const searchInput = document.getElementById("search");
+            if (searchInput) searchInput.focus();
         }
         return () => {
             document.removeEventListener("keydown", handlePressKey);
         };
+    }, [showPopup]);
+
+    useEffect(() => {
+        if (useFilterChips) {
+            setFilterChips(filterChipsProvider(language));
+        }
     }, []);
 
     const router = useRouter();
@@ -202,57 +208,66 @@ export default function Popup({
                             ].join(" ")}
                             id="selection_menu"
                         >
-                            {[
-                                ...data,
-                                useFilterChips
-                                    ? { name: search, types: elementFilter }
-                                    : { name: "" },
-                            ]
-                                .filter(itemFilter)
-                                .map((item) => (
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "3%",
-                                        }}
-                                        key={item.id ? item.id : item.name}
-                                    >
-                                        <button
-                                            className={[
-                                                styles.thinBorder,
-                                                styles.staff,
-                                            ].join(" ")}
-                                            style={
-                                                useFilterChips
-                                                    ? {
-                                                          background:
-                                                              getBackgroundString(
-                                                                  item.types,
-                                                                  "90deg"
-                                                              ),
-                                                      }
-                                                    : {}
-                                            }
-                                            onClick={async () => {
-                                                handleClosePopup();
-                                                await clickHandler(item).then(
-                                                    (_) => router.refresh()
-                                                );
+                            {data.filter(itemFilter).length < 100 ? (
+                                [
+                                    ...data,
+                                    useFilterChips
+                                        ? { name: search, types: elementFilter }
+                                        : { name: "" },
+                                ]
+                                    .filter(itemFilter)
+                                    .map((item) => (
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "3%",
                                             }}
+                                            key={item.id ? item.id : item.name}
                                         >
-                                            {item.name}
-                                        </button>
-                                        {useFilterChips && item.id && (
-                                            <div style={{ height: 45 }}>
-                                                <InfoIcon
-                                                    scale={45}
-                                                    url={`/project/${item.id}`}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
+                                            <button
+                                                className={[
+                                                    styles.thinBorder,
+                                                    styles.staff,
+                                                ].join(" ")}
+                                                style={
+                                                    useFilterChips
+                                                        ? {
+                                                              background:
+                                                                  getBackgroundString(
+                                                                      item.types,
+                                                                      "90deg"
+                                                                  ),
+                                                          }
+                                                        : {}
+                                                }
+                                                onClick={async () => {
+                                                    handleClosePopup();
+                                                    await clickHandler(
+                                                        item
+                                                    ).then((_) =>
+                                                        router.refresh()
+                                                    );
+                                                }}
+                                            >
+                                                {item.name}
+                                            </button>
+                                            {useFilterChips && item.id && (
+                                                <div style={{ height: 45 }}>
+                                                    <InfoIcon
+                                                        scale={45}
+                                                        url={`/project/${item.id}`}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))
+                            ) : (
+                                <p style={{ margin: "auto" }}>
+                                    Please refine your search (there are more
+                                    than 100 results).
+                                </p>
+                            )}
                         </div>
                     </div>
                 </div>

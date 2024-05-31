@@ -1,13 +1,31 @@
 const { PrismaClient } = require("@prisma/client");
-const projectsJson = require("./csvjson.json");
+const projectsJson = require("./project_data.json");
 const dataJson = require("./data.json");
+const jsonStaff = dataJson.staff;
+const jsonCategories = dataJson.categories;
+const jsonRooms = dataJson.rooms;
+const weekExampleJson = require("./week_1_example_2023.json");
 
 const prisma = new PrismaClient();
+
+function getYearsObject(what) {
+    let items = {};
+    Object.entries(what).forEach(([year, whatsits]) => {
+        whatsits.forEach((s) => {
+            if (items[s]) {
+                items[s].push(parseInt(year));
+            } else {
+                items[s] = [parseInt(year)];
+            }
+        });
+    });
+    return items;
+}
 
 async function main() {
     await prisma.category.deleteMany();
     await prisma.category.createMany({
-        data: dataJson.categories.map((category, i) => {
+        data: jsonCategories.map((category, i) => {
             return { id: i + 1, name: category };
         }),
     });
@@ -16,9 +34,18 @@ async function main() {
     const categories = (await prisma.category.findMany()).map(
         (category) => category.name
     );
+    await prisma.staff.deleteMany();
+    const staff = getYearsObject(jsonStaff);
+    await prisma.staff.createMany({
+        data: Object.entries(staff).map(([s, years]) => {
+            return { name: s, years: years };
+        }),
+    });
     const projectArray = projectsJson.map((project) => {
         const modifiedProject = { ...project };
-        modifiedProject.types = modifiedProject.types.split(", ");
+        modifiedProject.types = modifiedProject.types
+            .split(",")
+            .map((t) => t.trim());
         modifiedProject.categories = {
             connect: modifiedProject.categories
                 .split(", ")
@@ -27,8 +54,13 @@ async function main() {
                     return { name: category };
                 }),
         };
+        if (!Object.keys(staff).includes(modifiedProject.creator)) {
+            console.log(modifiedProject.creator);
+        }
+        modifiedProject.creator = {
+            connect: { name: modifiedProject.creator.trim() },
+        };
         modifiedProject.createdAt = new Date(modifiedProject.createdAt * 1000);
-        modifiedProject.updatedAt = new Date(modifiedProject.updatedAt * 1000);
         if (!modifiedProject.minParticipants) {
             delete modifiedProject.minParticipants;
         }
@@ -43,7 +75,7 @@ async function main() {
 
     await prisma.day.deleteMany();
     await prisma.day.createMany({
-        data: [2026, 2025, 2024, 2023, 2022, 2021]
+        data: [2030, 2029, 2028, 2027, 2026, 2025, 2024, 2023, 2022, 2021]
             .map((year) =>
                 [1, 2, 3, 4, 5, 6, 7]
                     .map((week) =>
@@ -59,17 +91,11 @@ async function main() {
             )
             .flat(),
     });
-    await prisma.staff.deleteMany();
-    await prisma.staff.createMany({
-        data: dataJson.staff.map((staff, i) => {
-            return { id: i + 1, name: staff };
-        }),
-    });
 
     await prisma.room.deleteMany();
     await prisma.room.createMany({
-        data: dataJson.rooms.map((room, i) => {
-            return { id: i + 1, name: room };
+        data: Object.entries(getYearsObject(jsonRooms)).map(([s, years]) => {
+            return { name: s, years: years };
         }),
     });
 }

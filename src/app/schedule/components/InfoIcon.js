@@ -3,8 +3,8 @@ import styles from "@/styles/Home.module.css";
 
 export default function InfoIcon({ scale, url }) {
     return (
-        <Link href={url} target="_blank">
-            <img
+        <Link href={url} target="_blank" style={{ position: "relative" }}>
+            {/* <img
                 src="/icons/info_circle.svg"
                 width={scale}
                 height={scale}
@@ -15,6 +15,12 @@ export default function InfoIcon({ scale, url }) {
                 width={scale / 10}
                 height={scale / 2}
                 className={styles.infoIconI}
+            /> */}
+            <img
+                src="/icons/info.svg"
+                width={scale}
+                height={scale}
+                className={styles.infoIcon}
             />
         </Link>
     );

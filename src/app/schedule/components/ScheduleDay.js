@@ -17,10 +17,13 @@ export default function ScheduleDay({
     staffList,
     presentationMode,
 }) {
+    const currentYear = new Date().getFullYear();
+
     const handleDeletion = async (projectId) => {
         "use server";
         await prisma.scheduledProject.delete({ where: { id: projectId } });
     };
+
     const handleUpdateProject = async (projectId, update) => {
         "use server";
         await prisma.scheduledProject.update({
@@ -28,6 +31,7 @@ export default function ScheduleDay({
             data: update,
         });
     };
+
     const scheduleProject = async (project) => {
         "use server";
         await prisma.scheduledProject.create({
@@ -44,6 +48,7 @@ export default function ScheduleDay({
             },
         });
     };
+
     const handleSelectProject = async (project) => {
         "use server";
         if (!project.id) {
@@ -67,15 +72,16 @@ export default function ScheduleDay({
                 dayInfo={dayInfo}
                 presentationMode={presentationMode}
             />
-            {!presentationMode && (
-                <DayDetails
-                    databaseId={databaseDayId}
-                    rundownStaff={rundown}
-                    satelliteStaff={satellites}
-                    staffList={staffList}
-                />
-            )}
             <div className={[styles.border, styles.projectList].join(" ")}>
+                {(!presentationMode || dayInfo.year != currentYear) && (
+                    <DayDetails
+                        databaseId={databaseDayId}
+                        rundownStaff={rundown}
+                        satelliteStaff={satellites}
+                        staffList={staffList}
+                        isCurrentYear={dayInfo.year == currentYear}
+                    />
+                )}
                 {scheduledProjects.map((project, i) => {
                     return (
                         <Project

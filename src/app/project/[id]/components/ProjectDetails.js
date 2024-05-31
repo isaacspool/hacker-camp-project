@@ -34,7 +34,7 @@ export default function ProjectDetails({ project }) {
             ) : project.duration == 5 ? (
                 <ProjectInformation title="All Week" />
             ) : project.duration == 1 ? (
-                <ProjectInformation title="All Day" />
+                <ProjectInformation title="1 Day" />
             ) : project.duration ? (
                 <ProjectInformation title={`${project.duration} Days Long`} />
             ) : (

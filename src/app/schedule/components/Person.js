@@ -8,15 +8,19 @@ export default function Person({
     staffList,
     canDelete,
     canEdit,
+    backgroundStyle,
 }) {
     const deleteStaff = async (oldStaff) => {
         "use server";
-        await updateStaff({ disconnect: oldStaff });
+        await updateStaff({ disconnect: { name: oldStaff.name } });
     };
 
     const swapStaff = async (newStaff) => {
         "use server";
-        await updateStaff({ connect: newStaff, disconnect: { name: name } });
+        await updateStaff({
+            connect: { id: newStaff.id },
+            disconnect: { name: name },
+        });
     };
 
     const personInfo = () => (
@@ -27,8 +31,13 @@ export default function Person({
                 styles.person,
                 canEdit ? styles.personHoverable : "",
             ].join(" ")}
+            // style={
+            //     backgroundStyle
+            //         ? { backgroundColor: backgroundStyle, border: "none" }
+            //         : {}
+            // }
         >
-            <img src={icon} width={21} height={21} />
+            <img src={icon} width={canDelete ? 21 : 30} height={21} />
             <p style={{ margin: 0, color: "black" }}>{name}</p>
         </div>
     );

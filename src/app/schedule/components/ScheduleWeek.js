@@ -7,6 +7,7 @@ export default async function ScheduleWeek({ day, week, year }) {
     if (day == 0 || day) {
         weekFilter.day = day;
     }
+    const currentYear = new Date().getFullYear();
     const scheduledProjects = await prisma.scheduledProject.findMany({
         where: { day: weekFilter },
         include: {
@@ -30,8 +31,20 @@ export default async function ScheduleWeek({ day, week, year }) {
         },
         orderBy: { id: "asc" },
     });
-    const rooms = await prisma.room.findMany();
-    const staffList = await prisma.staff.findMany();
+    const rooms = await prisma.room.findMany({
+        where: {
+            years: {
+                has: year,
+            },
+        },
+    });
+    const staffList = await prisma.staff.findMany({
+        where: {
+            years: {
+                has: year,
+            },
+        },
+    });
 
     const days = await prisma.day
         .findMany({
@@ -66,7 +79,7 @@ export default async function ScheduleWeek({ day, week, year }) {
                     rundown={day.rundown}
                     rooms={rooms}
                     staffList={staffList}
-                    presentationMode={days.length == 1}
+                    presentationMode={days.length == 1 || year != currentYear}
                     key={day.id}
                 />
             ))}
