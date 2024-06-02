@@ -4,6 +4,7 @@ import Popup from "./Popup";
 import AddStaffButton from "./AddStaffButton";
 import { getBackgroundString } from "@/lib/colors";
 import ProjectTitle from "./ProjectTitle";
+import prisma from "@/lib/prisma";
 
 export default function Project({
     staff,
@@ -19,6 +20,10 @@ export default function Project({
     rooms,
     staffList,
     presentationMode,
+    staffOut,
+    staffInProjects,
+    dayInfo,
+    handleModifyStaffOut,
 }) {
     const handleAddStaff = async (newStaff) => {
         "use server";
@@ -39,6 +44,7 @@ export default function Project({
             </p>
         </div>
     );
+
     return (
         <div
             className={[styles.border, styles.project].join(" ")}
@@ -78,7 +84,11 @@ export default function Project({
                             updateStaff={updateStaff}
                             canDelete={true}
                             canEdit={!presentationMode}
+                            staffOut={staffOut}
+                            staffInProjects={staffInProjects}
+                            year={dayInfo.year}
                             key={person.id}
+                            handleModifyStaffOut={handleModifyStaffOut}
                         />
                     ))}
                     {!presentationMode && (
@@ -94,8 +104,12 @@ export default function Project({
                             <Popup
                                 data={staffList}
                                 clickHandler={handleAddStaff}
-                                useFilterChips={false}
+                                useFilterChips={true}
                                 doFlexGrow={false}
+                                staffOut={staffOut}
+                                staffInProjects={staffInProjects}
+                                year={dayInfo.year}
+                                handleModifyStaffOut={handleModifyStaffOut}
                             >
                                 <img
                                     src="/icons/add.svg"

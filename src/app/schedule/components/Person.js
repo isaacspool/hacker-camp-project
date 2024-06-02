@@ -9,6 +9,10 @@ export default function Person({
     canDelete,
     canEdit,
     backgroundStyle,
+    staffOut,
+    staffInProjects,
+    handleModifyStaffOut,
+    year,
 }) {
     const deleteStaff = async (oldStaff) => {
         "use server";
@@ -53,8 +57,12 @@ export default function Person({
                             ? deleteStaff.bind(null, { name: name })
                             : null
                     }
-                    useFilterChips={false}
+                    useFilterChips={true}
                     doFlexGrow={true}
+                    staffOut={staffOut}
+                    staffInProjects={staffInProjects}
+                    year={year}
+                    handleModifyStaffOut={handleModifyStaffOut}
                 >
                     {personInfo()}
                 </Popup>

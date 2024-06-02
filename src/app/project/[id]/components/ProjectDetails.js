@@ -2,14 +2,21 @@ import styles from "@/styles/Project.module.css";
 import ProjectInformation from "./ProjectInformation";
 import { getColorFromType } from "@/lib/colors";
 import Linkify from "linkify-react";
+import englishLang from "@/../public/lang/en-us.json";
+import Link from "next/link";
 
 export default function ProjectDetails({ project }) {
+    const date = new Date(project.createdAt);
     return (
         <div className={styles.infoContainer}>
             <ProjectInformation title={project.name}>
-                <Linkify options={{ target: "_blank", className: styles.link }}>
-                    {project.description}
-                </Linkify>
+                {project.description && (
+                    <Linkify
+                        options={{ target: "_blank", className: styles.link }}
+                    >
+                        {project.description}
+                    </Linkify>
+                )}
             </ProjectInformation>
             {project.goals && (
                 <ProjectInformation title="Goals">
@@ -42,7 +49,7 @@ export default function ProjectDetails({ project }) {
             )}
             {project.minParticipants && !project.maxParticipants && (
                 <ProjectInformation
-                    title={`At Least ${project.maxParticipants} Campers`}
+                    title={`At Least ${project.minParticipants} Campers`}
                 />
             )}
             {!project.minParticipants && project.maxParticipants && (
@@ -81,33 +88,56 @@ export default function ProjectDetails({ project }) {
                     </div>
                 </ProjectInformation>
             )}
-            {project.types && project.types.length > 0 && (
-                <ProjectInformation stopFlexGrow={true}>
-                    <div
-                        className={styles.infoContainer}
-                        style={{
-                            flexDirection: "column",
-                        }}
-                    >
-                        {project.types.map((type) => (
-                            <div
-                                className={styles.typeText}
-                                style={{
-                                    background: getColorFromType(type),
-                                }}
-                                key={type}
-                            >
-                                <p>{type}</p>
-                            </div>
-                        ))}
-                    </div>
-                </ProjectInformation>
-            )}
+            {project.types &&
+                project.types.length > 0 &&
+                !project.types.every((t) => t.length == 0) && (
+                    <ProjectInformation stopFlexGrow={true}>
+                        <div
+                            className={styles.infoContainer}
+                            style={{
+                                flexDirection: "column",
+                            }}
+                        >
+                            {project.types.map((type) => (
+                                <div
+                                    className={styles.typeText}
+                                    style={{
+                                        background: getColorFromType(type),
+                                    }}
+                                    key={type}
+                                >
+                                    <p>{type}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </ProjectInformation>
+                )}
             {project.creator && (
                 <ProjectInformation
-                    title={`Submitted by ${project.creator.name}`}
+                    title={`Submitted by ${
+                        project.creator.name
+                    } on ${date.getDay()}/${date.getMonth()}/${
+                        date.getFullYear() - 2000
+                    }`}
                 />
             )}
+            {project.ScheduledProject &&
+                project.ScheduledProject.length > 0 && (
+                    <ProjectInformation title="Schedule">
+                        {project.ScheduledProject.map(
+                            (scheduledProject) => scheduledProject.day
+                        ).map((day) => (
+                            <>
+                                <Link
+                                    href={`/schedule/?week=${day.week}&year=${day.year}`}
+                                >{`${englishLang["day." + day.day]} of Week ${
+                                    day.week
+                                }, ${day.year}`}</Link>
+                                <br />
+                            </>
+                        ))}
+                    </ProjectInformation>
+                )}
         </div>
     );
 }

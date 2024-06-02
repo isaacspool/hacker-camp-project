@@ -18,7 +18,7 @@ model Project {
   id              Int        @id @default(autoincrement())
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
-  creator         Staff      @relation(fields: [creatorId], references: [id])
+  creator         Staff?      @relation(fields: [creatorId], references: [id])
   name            String     @unique
   types           String[]
   description     String?
@@ -29,7 +29,7 @@ model Project {
   duration        Int        @default(1)
   categories      Category[]
 
-  creatorId        Int
+  creatorId        Int?
   ScheduledProject ScheduledProject[]
 
   @@index([name], type: Hash)
@@ -65,12 +65,11 @@ model ScheduledProject {
   name    String
   project Project @relation(fields: [projectId], references: [id])
   day     Day     @relation(fields: [dayId], references: [id])
-  room    Room?   @relation(fields: [roomId], references: [id])
+  rooms    Room[]
   staff   Staff[]
 
   projectId Int
   dayId     Int
-  roomId    Int?
 
   @@index([dayId], type: Hash)
 }

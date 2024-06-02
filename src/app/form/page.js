@@ -9,30 +9,41 @@ export default async function Form() {
     const submitAction = async (formData) => {
         "use server";
         const creator = cookies().get("name")?.value;
-        await prisma.project.create({
-            data: {
-                name: formData.name,
-                types: formData.types,
-                description: formData.description,
-                materials: formData.materials,
-                goals: formData.goals,
-                minParticipants: formData.participants[0]
-                    ? parseInt(formData.participants[0])
-                    : 4,
-                maxParticipants: formData.participants[1]
-                    ? parseInt(formData.participants[1])
-                    : 16,
-                duration: formData.duration ? parseFloat(formData.duration) : 1,
-                categories: {
-                    connect: formData.categories.map((c) => {
-                        return { id: c.id };
-                    }),
-                },
-                creator: {
-                    connect: { name: creator ? creator : "Option 42" },
-                },
+        let minParticipants = formData.participants[0];
+        if (minParticipants) {
+            minParticipants = parseInt(minParticipants);
+        } else {
+            minParticipants = null;
+        }
+        let maxParticipants = formData.participants[1];
+        if (maxParticipants) {
+            maxParticipants = parseInt(maxParticipants);
+        } else {
+            maxParticipants = null;
+        }
+        const data = {
+            name: formData.name,
+            description: formData.description,
+            materials: formData.materials,
+            goals: formData.goals,
+            minParticipants: minParticipants,
+            maxParticipants: maxParticipants,
+            duration: formData.duration ? parseFloat(formData.duration) : 1,
+            creator: {
+                connect: { name: creator ? creator : "Option 42" },
             },
-        });
+        };
+        if (formData.types) {
+            data.types = formData.types;
+        }
+        if (formData.categories && formData.categories.length > 0) {
+            data.categories = {
+                connect: formData.categories.map((c) => {
+                    return { id: c.id };
+                }),
+            };
+        }
+        return await prisma.project.create({ data });
     };
 
     const categories = await prisma.category.findMany();

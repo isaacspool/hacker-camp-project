@@ -16,6 +16,7 @@ export default function ScheduleDay({
     rooms,
     staffList,
     presentationMode,
+    staffOut,
 }) {
     const currentYear = new Date().getFullYear();
 
@@ -65,6 +66,24 @@ export default function ScheduleDay({
         }
     };
 
+    const handleModifyStaffOut = async (update) => {
+        "use server";
+        await prisma.day.update({
+            where: dayInfo,
+            data: {
+                out: update,
+            },
+        });
+    };
+
+    const staffInProjects = staffList
+        .filter((s) =>
+            scheduledProjects.find((sp) =>
+                sp.staff.find((spStaff) => spStaff.name == s.name)
+            )
+        )
+        .concat(satellites, rundown);
+
     return (
         <div className={styles.day}>
             <DayTitle
@@ -80,6 +99,10 @@ export default function ScheduleDay({
                         satelliteStaff={satellites}
                         staffList={staffList}
                         isCurrentYear={dayInfo.year == currentYear}
+                        staffOut={staffOut}
+                        staffInProjects={staffInProjects}
+                        year={dayInfo.year}
+                        handleModifyStaffOut={handleModifyStaffOut}
                     />
                 )}
                 {scheduledProjects.map((project, i) => {
@@ -92,11 +115,20 @@ export default function ScheduleDay({
                                     staff: edits,
                                 });
                             }}
-                            location={project.room}
+                            location={project.rooms[0]}
                             setLocation={async (location) => {
                                 "use server";
                                 await handleUpdateProject(project.id, {
-                                    roomId: location.id,
+                                    rooms: project.rooms[0]?.id
+                                        ? {
+                                              connect: { id: location.id },
+                                              disconnect: {
+                                                  id: project.rooms[0]?.id,
+                                              },
+                                          }
+                                        : {
+                                              connect: { id: location.id },
+                                          },
                                 });
                             }}
                             databaseId={project.project.id}
@@ -113,6 +145,9 @@ export default function ScheduleDay({
                             rooms={rooms}
                             staffList={staffList}
                             presentationMode={presentationMode}
+                            staffInProjects={staffInProjects}
+                            staffOut={staffOut}
+                            dayInfo={dayInfo}
                             key={project.id}
                         />
                     );

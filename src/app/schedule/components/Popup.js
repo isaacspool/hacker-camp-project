@@ -13,8 +13,8 @@ function useFilter() {
     const [elementFilter, setElementFilter] = useState([]);
     const modifyFilter = (name) => {
         return elementFilter.includes(name)
-            ? setElementFilter(elementFilter.filter((f) => f !== name))
-            : setElementFilter([...elementFilter, name]);
+            ? setElementFilter((prev) => prev.filter((f) => f !== name))
+            : setElementFilter((prev) => [...prev, name]);
     };
     const clearFilter = () => {
         setElementFilter([]);
@@ -22,11 +22,23 @@ function useFilter() {
     return [elementFilter, modifyFilter, clearFilter];
 }
 
-const filterChipsProvider = (language) => {
+const filterChipsProviderProject = (language) => {
     return ["Creative", "Engineering", "Analytical"].map((type) => ({
         displayName: translate(`type.${type.toLowerCase()}`, language),
         name: type,
         color: getColorFromType(type),
+    }));
+};
+
+const filterChipsProviderStaff = () => {
+    return [
+        ["Out", "#d14c3b6b"],
+        ["Unassigned", "#f7cd6a6b"],
+        ["Assigned", "#79d1606b"],
+    ].map((chip) => ({
+        displayName: chip[0],
+        name: chip[0],
+        color: chip[1],
     }));
 };
 
@@ -37,6 +49,10 @@ export default function Popup({
     useFilterChips,
     doFlexGrow,
     handleTrashButton,
+    staffOut,
+    staffInProjects,
+    year,
+    handleModifyStaffOut,
 }) {
     const [showPopup, setShowPopup] = useState(false);
     const [search, setSearch] = useState("");
@@ -96,7 +112,11 @@ export default function Popup({
 
     useEffect(() => {
         if (useFilterChips) {
-            setFilterChips(filterChipsProvider(language));
+            setFilterChips(
+                handleModifyStaffOut
+                    ? filterChipsProviderStaff()
+                    : filterChipsProviderProject(language)
+            );
         }
     }, []);
 
@@ -106,10 +126,33 @@ export default function Popup({
         const hasSearchTerm =
             !search || item.name.toLowerCase().includes(search.toLowerCase());
         const hasSelectedTypes =
+            handleModifyStaffOut ||
             elementFilter.length == 0 ||
             elementFilter.every((t) => item.types.includes(t));
+        const isStaffOut =
+            !staffOut ||
+            !elementFilter.find((e) => e == "Out") ||
+            staffOut.find((s) => s.name == item.name);
+        const isStaffInProject =
+            !staffInProjects ||
+            !elementFilter.find((e) => e == "Assigned") ||
+            staffInProjects.find((e) => e.name == item.name);
+        const isStaffUnassigned =
+            !year ||
+            !item.years ||
+            !elementFilter.find((e) => e == "Unassigned") ||
+            (item.years.includes(year) &&
+                !staffInProjects?.find((e) => e.name == item.name) &&
+                !staffOut?.find((e) => e.name == item.name));
         const hasName = item.name.length > 0;
-        return hasSearchTerm && hasSelectedTypes && hasName;
+        return (
+            hasSearchTerm &&
+            hasSelectedTypes &&
+            hasName &&
+            isStaffOut &&
+            isStaffUnassigned &&
+            isStaffInProject
+        );
     };
 
     return (
@@ -184,7 +227,12 @@ export default function Popup({
                                 {filterChips.map((chip) => (
                                     <button
                                         className={styles.filterChip}
-                                        onClick={() => modifyFilter(chip.name)}
+                                        onClick={() => {
+                                            if (handleModifyStaffOut) {
+                                                clearFilter();
+                                            }
+                                            modifyFilter(chip.name);
+                                        }}
                                         style={{
                                             background: chip.color,
                                             border: elementFilter.includes(
@@ -192,6 +240,11 @@ export default function Popup({
                                             )
                                                 ? "2px solid black"
                                                 : "none",
+                                            margin: elementFilter.includes(
+                                                chip.name
+                                            )
+                                                ? "-2px 0px"
+                                                : "2px",
                                         }}
                                         key={chip.name}
                                     >
@@ -208,51 +261,51 @@ export default function Popup({
                             ].join(" ")}
                             id="selection_menu"
                         >
-                            {data.filter(itemFilter).length < 100 ? (
-                                [
-                                    ...data,
-                                    useFilterChips
-                                        ? { name: search, types: elementFilter }
-                                        : { name: "" },
-                                ]
-                                    .filter(itemFilter)
-                                    .map((item) => (
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                gap: "3%",
+                            {[
+                                ...data,
+                                useFilterChips && !handleModifyStaffOut
+                                    ? { name: search, types: elementFilter }
+                                    : { name: "" },
+                            ]
+                                .filter(itemFilter)
+                                .filter((_, i) => i <= 99)
+                                .map((item) => (
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: "3%",
+                                        }}
+                                        key={item.id ? item.id : item.name}
+                                    >
+                                        <button
+                                            className={[
+                                                styles.thinBorder,
+                                                styles.staff,
+                                            ].join(" ")}
+                                            style={
+                                                useFilterChips && item.types
+                                                    ? {
+                                                          background:
+                                                              getBackgroundString(
+                                                                  item.types,
+                                                                  "90deg"
+                                                              ),
+                                                      }
+                                                    : {}
+                                            }
+                                            onClick={async () => {
+                                                handleClosePopup();
+                                                await clickHandler(item).then(
+                                                    (_) => router.refresh()
+                                                );
                                             }}
-                                            key={item.id ? item.id : item.name}
                                         >
-                                            <button
-                                                className={[
-                                                    styles.thinBorder,
-                                                    styles.staff,
-                                                ].join(" ")}
-                                                style={
-                                                    useFilterChips
-                                                        ? {
-                                                              background:
-                                                                  getBackgroundString(
-                                                                      item.types,
-                                                                      "90deg"
-                                                                  ),
-                                                          }
-                                                        : {}
-                                                }
-                                                onClick={async () => {
-                                                    handleClosePopup();
-                                                    await clickHandler(
-                                                        item
-                                                    ).then((_) =>
-                                                        router.refresh()
-                                                    );
-                                                }}
-                                            >
-                                                {item.name}
-                                            </button>
-                                            {useFilterChips && item.id && (
+                                            {item.name}
+                                        </button>
+                                        {useFilterChips &&
+                                            item.id &&
+                                            item.types && (
                                                 <div style={{ height: 45 }}>
                                                     <InfoIcon
                                                         scale={45}
@@ -260,14 +313,65 @@ export default function Popup({
                                                     />
                                                 </div>
                                             )}
-                                        </div>
-                                    ))
-                            ) : (
-                                <p style={{ margin: "auto" }}>
-                                    Please refine your search (there are more
-                                    than 100 results).
-                                </p>
-                            )}
+                                        {useFilterChips &&
+                                            staffInProjects &&
+                                            staffOut &&
+                                            year &&
+                                            !staffInProjects.find(
+                                                (s) => s.name == item.name
+                                            ) &&
+                                            !staffOut.find(
+                                                (s) => s.name == item.name
+                                            ) &&
+                                            item.years.includes(year) && (
+                                                <img
+                                                    src="/icons/close.svg"
+                                                    width="25"
+                                                    height="25"
+                                                    onClick={async () =>
+                                                        await handleModifyStaffOut(
+                                                            {
+                                                                connect: {
+                                                                    name: item.name,
+                                                                },
+                                                            }
+                                                        ).then((_) =>
+                                                            router.refresh()
+                                                        )
+                                                    }
+                                                />
+                                            )}
+                                        {useFilterChips &&
+                                            staffOut &&
+                                            staffOut.find(
+                                                (s) => s.name == item.name
+                                            ) && (
+                                                <img
+                                                    src="/icons/add.svg"
+                                                    width="47"
+                                                    height="47"
+                                                    onClick={async () =>
+                                                        await handleModifyStaffOut(
+                                                            {
+                                                                disconnect: {
+                                                                    name: item.name,
+                                                                },
+                                                            }
+                                                        ).then((_) =>
+                                                            router.refresh()
+                                                        )
+                                                    }
+                                                />
+                                            )}
+                                    </div>
+                                ))}
+                            {useFilterChips &&
+                                !handleModifyStaffOut &&
+                                data.filter(itemFilter).length > 100 && (
+                                    <p style={{ margin: "auto" }}>
+                                        Only showing 100 results.
+                                    </p>
+                                )}
                         </div>
                     </div>
                 </div>

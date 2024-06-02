@@ -36,7 +36,7 @@ async function main() {
     );
     await prisma.staff.deleteMany();
     const staff = getYearsObject(jsonStaff);
-    await prisma.staff.createMany({
+    const staffList = await prisma.staff.createManyAndReturn({
         data: Object.entries(staff).map(([s, years]) => {
             return { name: s, years: years };
         }),
@@ -93,10 +93,73 @@ async function main() {
     });
 
     await prisma.room.deleteMany();
-    await prisma.room.createMany({
+    const roomList = await prisma.room.createManyAndReturn({
         data: Object.entries(getYearsObject(jsonRooms)).map(([s, years]) => {
             return { name: s, years: years };
         }),
+    });
+
+    const projectNames = [];
+    weekExampleJson.forEach(async (proj) => {
+        const types = [];
+        if (proj.types.includes("A")) types.push("Analytical");
+        if (proj.types.includes("C")) types.push("Creative");
+        if (proj.types.includes("E")) types.push("Engineering");
+
+        const rooms = proj.rooms
+            .split(",")
+            .filter((r) => r.length > 0)
+            .map((r) => ({ name: r.trim() }));
+        const staff = proj.staff
+            .split(",")
+            .filter((r) => r.length > 1)
+            .map((r) => ({ name: r.trim() }));
+        const name = proj.fullName;
+        const scheduleNewProject = async (dbProj) => {
+            await prisma.day
+                .findFirst({
+                    where: {
+                        week: proj.week,
+                        year: proj.year,
+                        day: proj.day,
+                    },
+                })
+                .then(async (day) => {
+                    try {
+                        await prisma.scheduledProject.create({
+                            data: {
+                                name,
+                                project: { connect: { id: dbProj.id } },
+                                day: { connect: { id: day.id } },
+                                staff: { connect: staff },
+                                rooms: { connect: rooms },
+                            },
+                        });
+                    } catch (error) {
+                        console.log(proj);
+                        console.log(error);
+                    }
+                });
+        };
+        if (projectNames.includes(name)) {
+            await prisma.project
+                .findFirst({
+                    where: {
+                        name,
+                    },
+                })
+                .then(scheduleNewProject);
+        } else {
+            await prisma.project
+                .create({
+                    data: {
+                        name,
+                        types,
+                    },
+                })
+                .then(scheduleNewProject);
+            projectNames.push(name);
+        }
     });
 }
 

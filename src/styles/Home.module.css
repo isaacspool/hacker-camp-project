@@ -532,5 +532,5 @@
 .openDayButton:hover {
     cursor: pointer;
     transition: 0.1s;
-    scale: 1.05;
+    scale: 1.1;
 }

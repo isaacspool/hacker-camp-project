@@ -71,7 +71,12 @@ export default function ProjectTitle({
                             outline: "none",
                             border: "none",
                             fontWeight: "700",
+                            fontFamily: '"Lato", sans-serif',
                         }}
+                        rows={
+                            name.split("").filter((char) => char == "\n")
+                                .length + 1
+                        }
                         className={styles.blackScroll}
                         value={name}
                         onChange={(e) => setName(e.target.value)}

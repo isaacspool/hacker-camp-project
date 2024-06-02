@@ -19,7 +19,7 @@ export default async function ScheduleWeek({ day, week, year }) {
             },
             staff: true,
             day: true,
-            room: true,
+            rooms: true,
         },
         orderBy: { id: "asc" },
     });
@@ -38,18 +38,12 @@ export default async function ScheduleWeek({ day, week, year }) {
             },
         },
     });
-    const staffList = await prisma.staff.findMany({
-        where: {
-            years: {
-                has: year,
-            },
-        },
-    });
+    const staffList = await prisma.staff.findMany();
 
     const days = await prisma.day
         .findMany({
             where: weekFilter,
-            include: { satellites: true, rundown: true },
+            include: { satellites: true, rundown: true, out: true },
         })
         .then((daysData) =>
             daysData.map((day) => {
@@ -68,7 +62,7 @@ export default async function ScheduleWeek({ day, week, year }) {
         >
             {days.map((day) => (
                 <ScheduleDay
-                    dayInfo={{ week, year, day: day.day }}
+                    dayInfo={{ id: day.id, week, year, day: day.day }}
                     dayKey={`day.${day.day}`}
                     databaseDayId={day.id}
                     databaseProjects={databaseProjects}
@@ -80,6 +74,7 @@ export default async function ScheduleWeek({ day, week, year }) {
                     rooms={rooms}
                     staffList={staffList}
                     presentationMode={days.length == 1 || year != currentYear}
+                    staffOut={day.out}
                     key={day.id}
                 />
             ))}

@@ -268,3 +268,23 @@
     background: transparent;
     color: black;
 }
+
+.submitDoneContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 36px;
+}
+
+.submitDoneLink {
+    font-size: 26px;
+    border: 2px solid black;
+    backdrop-filter: blur(5px);
+    padding: 2% 7%;
+    margin: 2%;
+    border-radius: 20px;
+}
+
+.submitDoneLink:hover {
+    background: #e1e1e1;
+}
