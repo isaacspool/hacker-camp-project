@@ -12,7 +12,6 @@ export default function Home({ searchParams }) {
     );
     return (
         <div className={styles.container}>
-            <FormButton scale={4} />
             <YearProvider defaultYear={year}>
                 <h1 className={styles.grandTitle}>
                     Hacker Camp <YearSelect currentYear={year} />
@@ -33,6 +32,7 @@ export default function Home({ searchParams }) {
                         })}
                 </div>
             </YearProvider>
+            <FormButton scale={4} />
         </div>
     );
 }
