@@ -89,6 +89,14 @@
     z-index: 1;
 }
 
+@media screen and (max-width: 800px) {
+    .openFormButton {
+        bottom: 80px;
+        right: calc(50% - 80px);
+        transform: translateX(50%);
+    }
+}
+
 .openFormButton:hover {
     scale: 1.1;
     transition: 0.1s;
@@ -426,6 +434,12 @@
     text-align: center;
 }
 
+@media screen and (max-width: 800px) {
+    .grandTitle {
+        margin-top: 15%;
+    }
+}
+
 .bigLogo {
     position: fixed;
     object-fit: contain;
@@ -493,7 +507,6 @@
 
 @media screen and (max-width: 600px) {
     .languageButton {
-        top: 88vh;
         right: 2%;
     }
 }
