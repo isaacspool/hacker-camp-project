@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import styles from "@/styles/Home.module.css";
 import { translate } from "@/lib/translation";
 import { useSelectedProjectContext } from "./SelectedProjectProvider";
@@ -8,16 +8,56 @@ import { useLanguageContext } from "@/components/LanguageProvider";
 import { useRouter } from "next/navigation";
 import { getBackgroundString, getColorFromType } from "@/lib/colors";
 import InfoIcon from "./InfoIcon";
+import { usePopupContext } from "./PopupProvider";
+import { useTempStaffContext } from "./TempStaffProvider";
 
-function useFilter() {
-    const [elementFilter, setElementFilter] = useState([]);
+/**
+ * https://github.com/vercel/next.js/discussions/58520
+ * Wrapper around `router.refresh()` from `next/navigation` `useRouter()` to return Promise, and resolve after refresh completed
+ * @returns Refresh function
+ */
+export function useRouterRefresh() {
+    const router = useRouter();
+    const [isPending, startTransition] = useTransition();
+
+    const [resolve, setResolve] = useState(null);
+    const [isTriggered, setIsTriggered] = useState(false);
+
+    const refresh = () => {
+        return new Promise((resolve, reject) => {
+            setResolve(() => resolve);
+            startTransition(() => {
+                router.refresh();
+            });
+        });
+    };
+
+    useEffect(() => {
+        if (isTriggered && !isPending) {
+            if (resolve) {
+                resolve(null);
+
+                setIsTriggered(false);
+                setResolve(null);
+            }
+        }
+        if (isPending) {
+            setIsTriggered(true);
+        }
+    }, [isTriggered, isPending, resolve]);
+
+    return refresh;
+}
+
+function useFilter(initFilter) {
+    const [elementFilter, setElementFilter] = useState(initFilter);
     const modifyFilter = (name) => {
         return elementFilter.includes(name)
             ? setElementFilter((prev) => prev.filter((f) => f !== name))
             : setElementFilter((prev) => [...prev, name]);
     };
     const clearFilter = () => {
-        setElementFilter([]);
+        setElementFilter(initFilter);
     };
     return [elementFilter, modifyFilter, clearFilter];
 }
@@ -53,13 +93,20 @@ export default function Popup({
     staffInProjects,
     year,
     handleModifyStaffOut,
+    addTempStaff,
 }) {
     const [showPopup, setShowPopup] = useState(false);
     const [search, setSearch] = useState("");
-    const [elementFilter, modifyFilter, clearFilter] = useFilter();
+    const [elementFilter, modifyFilter, clearFilter] = useFilter(
+        handleModifyStaffOut ? ["Unassigned"] : []
+    );
 
     const { _, setSelectedProject } = useSelectedProjectContext();
     const language = useLanguageContext();
+
+    const [isDeleted, setDeleted] = useState(false);
+
+    const refresh = useRouterRefresh();
 
     const handleClosePopup = () => {
         setShowPopup(false);
@@ -70,6 +117,17 @@ export default function Popup({
         setSearch("");
         setSelectedProject(null);
         clearFilter();
+    };
+
+    const handleDeleteElement = () => {
+        handleClosePopup();
+        setDeleted(true);
+        const deleteStaff = async () => {
+            await handleTrashButton().then(() =>
+                refresh().then(() => setDeleted(false))
+            );
+        };
+        deleteStaff();
     };
 
     const handlePressKey = (e) => {
@@ -89,14 +147,19 @@ export default function Popup({
                 (e.key == "Backspace" &&
                     !document.getElementById("search").matches(":focus")))
         ) {
-            const deleteStaff = async () => {
-                await handleTrashButton();
-            };
-            deleteStaff();
+            handleDeleteElement();
         }
     };
 
-    const [filterChips, setFilterChips] = useState(null);
+    const filterChips = useFilterChips
+        ? handleModifyStaffOut
+            ? filterChipsProviderStaff()
+            : filterChipsProviderProject(language)
+        : null;
+
+    useEffect(() => {
+        setDeleted(false);
+    }, []);
 
     useEffect(() => {
         if (showPopup) {
@@ -109,16 +172,6 @@ export default function Popup({
             document.removeEventListener("keydown", handlePressKey);
         };
     }, [showPopup]);
-
-    useEffect(() => {
-        if (useFilterChips) {
-            setFilterChips(
-                handleModifyStaffOut
-                    ? filterChipsProviderStaff()
-                    : filterChipsProviderProject(language)
-            );
-        }
-    }, []);
 
     const router = useRouter();
 
@@ -155,13 +208,20 @@ export default function Popup({
         );
     };
 
+    const { __, setDisplayValue } = usePopupContext();
+    const { tempStaff, setTempStaff } = useTempStaffContext();
+
     return (
         <>
             <div
                 onClick={handleOpenPopup}
                 style={{
-                    flexGrow: doFlexGrow ? 1 : 0,
-                    display: useFilterChips ? "flex" : "block",
+                    flexGrow: doFlexGrow && !isDeleted ? 1 : 0,
+                    display: isDeleted
+                        ? "none"
+                        : useFilterChips
+                        ? "flex"
+                        : "block",
                     justifyContent: "center",
                 }}
             >
@@ -183,12 +243,7 @@ export default function Popup({
                                 className={styles.trashButton}
                                 onClick={
                                     handleTrashButton
-                                        ? async () => {
-                                              handleClosePopup();
-                                              await handleTrashButton().then(
-                                                  (_) => router.refresh()
-                                              );
-                                          }
+                                        ? handleDeleteElement
                                         : () => {}
                                 }
                             />
@@ -228,8 +283,11 @@ export default function Popup({
                                     <button
                                         className={styles.filterChip}
                                         onClick={() => {
-                                            if (handleModifyStaffOut) {
-                                                clearFilter();
+                                            if (
+                                                handleModifyStaffOut &&
+                                                elementFilter
+                                            ) {
+                                                modifyFilter(elementFilter[0]);
                                             }
                                             modifyFilter(chip.name);
                                         }}
@@ -296,8 +354,20 @@ export default function Popup({
                                             }
                                             onClick={async () => {
                                                 handleClosePopup();
+                                                if (setDisplayValue) {
+                                                    setDisplayValue(item.name);
+                                                }
+                                                if (addTempStaff) {
+                                                    setTempStaff([
+                                                        ...tempStaff,
+                                                        item.name,
+                                                    ]);
+                                                }
                                                 await clickHandler(item).then(
-                                                    (_) => router.refresh()
+                                                    () =>
+                                                        refresh().then(() =>
+                                                            setTempStaff([])
+                                                        )
                                                 );
                                             }}
                                         >

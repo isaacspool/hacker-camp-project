@@ -148,6 +148,7 @@ export default function ScheduleDay({
                             staffInProjects={staffInProjects}
                             staffOut={staffOut}
                             dayInfo={dayInfo}
+                            handleModifyStaffOut={handleModifyStaffOut}
                             key={project.id}
                         />
                     );

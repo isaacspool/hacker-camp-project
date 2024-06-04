@@ -5,6 +5,9 @@ const jsonStaff = dataJson.staff;
 const jsonCategories = dataJson.categories;
 const jsonRooms = dataJson.rooms;
 const weekExampleJson = require("./week_1_example_2023.json");
+const exampleSchedule = weekExampleJson.schedule;
+const exampleRundowns = weekExampleJson.rundown;
+const exampleSatellites = weekExampleJson.satellites;
 
 const prisma = new PrismaClient();
 
@@ -74,23 +77,63 @@ async function main() {
     );
 
     await prisma.day.deleteMany();
-    await prisma.day.createMany({
-        data: [2030, 2029, 2028, 2027, 2026, 2025, 2024, 2023, 2022, 2021]
+    await prisma.week.deleteMany();
+    const years = [2030, 2029, 2028, 2027, 2026, 2025, 2024, 2023, 2022, 2021];
+    const weeks = [1, 2, 3, 4, 5, 6, 7];
+    const weeksDatabase = await prisma.week.createManyAndReturn({
+        data: years
             .map((year) =>
-                [1, 2, 3, 4, 5, 6, 7]
-                    .map((week) =>
-                        [0, 1, 2, 3, 4].map((day) => {
-                            return {
-                                week,
-                                day,
-                                year,
-                            };
-                        })
-                    )
-                    .flat()
+                weeks.map((week) => ({
+                    week,
+                    year,
+                }))
             )
             .flat(),
     });
+    await prisma.day
+        .createManyAndReturn({
+            data: weeksDatabase
+                .map((week) =>
+                    [0, 1, 2, 3, 4].map((day) => ({
+                        weekId: week.id,
+                        day: day,
+                    }))
+                )
+                .flat(),
+            include: {
+                week: true,
+            },
+        })
+        .then((days) => {
+            [0, 1, 2, 3, 4].forEach(async (i) => {
+                await prisma.day.update({
+                    where: {
+                        id: days.find(
+                            (d) =>
+                                d.day == i &&
+                                d.week.week == 1 &&
+                                d.week.year == 2023
+                        ).id,
+                    },
+                    data: {
+                        rundown: exampleRundowns[i]
+                            ? {
+                                  connect: exampleRundowns[i].map((s) => ({
+                                      name: s,
+                                  })),
+                              }
+                            : null,
+                        satellites: exampleSatellites[i]
+                            ? {
+                                  connect: exampleSatellites[i].map((s) => ({
+                                      name: s,
+                                  })),
+                              }
+                            : null,
+                    },
+                });
+            });
+        });
 
     await prisma.room.deleteMany();
     const roomList = await prisma.room.createManyAndReturn({
@@ -100,7 +143,7 @@ async function main() {
     });
 
     const projectNames = [];
-    weekExampleJson.forEach(async (proj) => {
+    exampleSchedule.forEach(async (proj) => {
         const types = [];
         if (proj.types.includes("A")) types.push("Analytical");
         if (proj.types.includes("C")) types.push("Creative");
@@ -119,8 +162,7 @@ async function main() {
             await prisma.day
                 .findFirst({
                     where: {
-                        week: proj.week,
-                        year: proj.year,
+                        week: { week: proj.week, year: proj.year },
                         day: proj.day,
                     },
                 })

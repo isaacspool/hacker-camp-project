@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request) {
     const secret = request.cookies.get("secret");
-    const isAuthenticated = secret?.value == process.env.LOGIN_SECRET;
+    const hasSecret = request.cookies.has("secret");
+    const isAuthenticated =
+        hasSecret && secret?.value == process.env.LOGIN_SECRET;
 
     if (!isAuthenticated) {
         return NextResponse.redirect(new URL("/login", request.url));

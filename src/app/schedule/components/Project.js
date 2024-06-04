@@ -1,10 +1,11 @@
 import styles from "@/styles/Home.module.css";
 import Person from "./Person";
-import Popup from "./Popup";
-import AddStaffButton from "./AddStaffButton";
-import { getBackgroundString } from "@/lib/colors";
 import ProjectTitle from "./ProjectTitle";
-import prisma from "@/lib/prisma";
+import LocationButton from "./LocationButton";
+import PopupProvider from "./PopupProvider";
+import Popup from "./Popup";
+import ProjectBackground from "./ProjectBackground";
+import TempStaffProvider from "./TempStaffProvider";
 
 export default function Project({
     staff,
@@ -27,33 +28,11 @@ export default function Project({
 }) {
     const handleAddStaff = async (newStaff) => {
         "use server";
-        await updateStaff({ connect: { id: newStaff.id } }); // false to not delete it
+        await updateStaff({ connect: { id: newStaff.id } });
     };
 
-    const locationInfo = () => (
-        <div className={styles.location}>
-            <img
-                src="/icons/location.svg"
-                alt="location"
-                width={30}
-                height={30}
-                className={presentationMode ? "" : styles.locationButton}
-            />
-            <p style={{ fontSize: 24, margin: "1%" }}>
-                {location ? location.name : "The Void"}
-            </p>
-        </div>
-    );
-
     return (
-        <div
-            className={[styles.border, styles.project].join(" ")}
-            style={
-                types && {
-                    background: getBackgroundString(types, "180deg"),
-                }
-            }
-        >
+        <ProjectBackground types={types}>
             <ProjectTitle
                 uniqueId={scheduledProjectId}
                 databaseId={databaseId}
@@ -64,16 +43,19 @@ export default function Project({
             />
             <div className={styles.projectBody}>
                 {presentationMode ? (
-                    locationInfo()
+                    <LocationButton presentationMode>
+                        {location?.name}
+                    </LocationButton>
                 ) : (
-                    <Popup
+                    <PopupProvider
                         data={rooms}
                         clickHandler={setLocation}
                         useFilterChips={false}
                         doFlexGrow={false}
+                        initValue={location?.name}
                     >
-                        {locationInfo()}
-                    </Popup>
+                        <LocationButton />
+                    </PopupProvider>
                 )}
                 <ul className={styles.staffList}>
                     {staff.map((person) => (
@@ -92,16 +74,18 @@ export default function Project({
                         />
                     ))}
                     {!presentationMode && (
-                        <>
+                        <TempStaffProvider>
                             {staff.length == 0 && (
                                 <img
                                     src="/icons/person.svg"
                                     width="25"
                                     height="25"
                                     style={{ margin: "0.3rem" }}
+                                    key="img"
                                 />
                             )}
                             <Popup
+                                addTempStaff={true}
                                 data={staffList}
                                 clickHandler={handleAddStaff}
                                 useFilterChips={true}
@@ -110,6 +94,7 @@ export default function Project({
                                 staffInProjects={staffInProjects}
                                 year={dayInfo.year}
                                 handleModifyStaffOut={handleModifyStaffOut}
+                                key="popup"
                             >
                                 <img
                                     src="/icons/add.svg"
@@ -118,10 +103,10 @@ export default function Project({
                                     className={styles.addButton}
                                 />
                             </Popup>
-                        </>
+                        </TempStaffProvider>
                     )}
                 </ul>
             </div>
-        </div>
+        </ProjectBackground>
     );
 }

@@ -2,7 +2,7 @@ import WeekLink from "./components/WeekLink";
 import styles from "@/styles/Home.module.css";
 import ScheduleWeek from "./components/ScheduleWeek.js";
 import YearProvider from "@/components/YearProvider";
-import { getSearchParamsInt } from "@/lib/time";
+import { getSearchParamsInt } from "@/lib/searchParams";
 
 export const dynamic = "force-dynamic";
 

@@ -5,6 +5,8 @@ import styles from "@/styles/Home.module.css";
 import InfoIcon from "./InfoIcon";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDeletedContext } from "./ProjectBackground";
+import { useRouterRefresh } from "./Popup";
 
 export default function ProjectTitle({
     uniqueId,
@@ -17,7 +19,15 @@ export default function ProjectTitle({
     const { selectedProject, setSelectedProject } = useSelectedProjectContext();
     const [name, setName] = useState(projectName);
     const [lastClickedIndex, setLastClickedIndex] = useState(0);
-    const router = useRouter();
+    const refresh = useRouterRefresh();
+    const { _, setDeleted } = useDeletedContext();
+
+    const handleDeleteProject = async () => {
+        setDeleted(true);
+        await handleDeletion(uniqueId).then(() =>
+            refresh().then(() => setDeleted(false))
+        );
+    };
 
     useEffect(() => {
         setName(projectName);
@@ -56,11 +66,7 @@ export default function ProjectTitle({
                         width="31"
                         height="34.44"
                         className={styles.trashButton}
-                        onClick={async () => {
-                            await handleDeletion(uniqueId).then((_) =>
-                                router.refresh()
-                            );
-                        }}
+                        onClick={handleDeleteProject}
                     />
                     <textarea
                         style={{

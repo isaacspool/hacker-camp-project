@@ -82,13 +82,6 @@ export default async function Form() {
                 className={styles.main}
                 style={{ width: "100%", height: "90vh" }}
             >
-                <img
-                    src="/logo/hacker_brain.png"
-                    alt="logo"
-                    className={styles.bigLogo}
-                    width="92%"
-                    height="92%"
-                />
                 <Link href="/" className={styles.backButton}>
                     <img src="/icons/back.svg" />
                 </Link>

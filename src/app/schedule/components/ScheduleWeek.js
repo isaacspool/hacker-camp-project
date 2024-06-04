@@ -3,7 +3,7 @@ import ScheduleDay from "./ScheduleDay";
 import styles from "@/styles/Home.module.css";
 
 export default async function ScheduleWeek({ day, week, year }) {
-    const weekFilter = { week, year };
+    const weekFilter = { week: { week, year } };
     if (day == 0 || day) {
         weekFilter.day = day;
     }

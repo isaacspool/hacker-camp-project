@@ -1,6 +1,7 @@
 import { Lato, Noto_Serif_Hebrew } from "next/font/google";
 import "@/app/global.css";
 import LanguageProvider from "@/components/LanguageProvider";
+import HackerBrain from "@/components/HackerBrain";
 
 const latoFont = Lato({
     weight: ["100", "400", "700"],
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
                         " "
                     )}
                 >
+                    <HackerBrain />
                     <LanguageProvider>{children}</LanguageProvider>
                 </main>
             </body>

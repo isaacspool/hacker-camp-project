@@ -1,5 +1,5 @@
-import styles from "@/styles/Home.module.css";
-import Popup from "./Popup";
+import PersonButton from "./PersonButton";
+import PopupProvider from "./PopupProvider";
 
 export default function Person({
     name,
@@ -8,7 +8,6 @@ export default function Person({
     staffList,
     canDelete,
     canEdit,
-    backgroundStyle,
     staffOut,
     staffInProjects,
     handleModifyStaffOut,
@@ -27,48 +26,28 @@ export default function Person({
         });
     };
 
-    const personInfo = () => (
-        <div
-            className={[
-                styles.thinBorder,
-                styles.pill,
-                styles.person,
-                canEdit ? styles.personHoverable : "",
-            ].join(" ")}
-            // style={
-            //     backgroundStyle
-            //         ? { backgroundColor: backgroundStyle, border: "none" }
-            //         : {}
-            // }
+    return canEdit ? (
+        <PopupProvider
+            data={staffList}
+            clickHandler={swapStaff}
+            handleTrashButton={
+                canDelete ? deleteStaff.bind(null, { name: name }) : null
+            }
+            useFilterChips={true}
+            doFlexGrow={true}
+            staffOut={staffOut}
+            staffInProjects={staffInProjects}
+            year={year}
+            handleModifyStaffOut={handleModifyStaffOut}
+            initValue={name}
         >
-            <img src={icon} width={canDelete ? 21 : 30} height={21} />
-            <p style={{ margin: 0, color: "black" }}>{name}</p>
-        </div>
-    );
-
-    return (
+            <PersonButton icon={icon} canDelete={canDelete} canEdit={canEdit} />
+        </PopupProvider>
+    ) : (
         <div style={{ display: "flex", flexGrow: 1, justifyContent: "center" }}>
-            {canEdit ? (
-                <Popup
-                    data={staffList}
-                    clickHandler={swapStaff}
-                    handleTrashButton={
-                        canDelete
-                            ? deleteStaff.bind(null, { name: name })
-                            : null
-                    }
-                    useFilterChips={true}
-                    doFlexGrow={true}
-                    staffOut={staffOut}
-                    staffInProjects={staffInProjects}
-                    year={year}
-                    handleModifyStaffOut={handleModifyStaffOut}
-                >
-                    {personInfo()}
-                </Popup>
-            ) : (
-                personInfo()
-            )}
+            <PersonButton icon={icon} canDelete={canDelete} canEdit={canEdit}>
+                {name}
+            </PersonButton>
         </div>
     );
 }

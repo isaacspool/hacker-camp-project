@@ -116,7 +116,7 @@ export default function ProjectDetails({ project }) {
                 <ProjectInformation
                     title={`Submitted by ${
                         project.creator.name
-                    } on ${date.getDay()}/${date.getMonth()}/${
+                    } on ${date.getDate()}/${date.getMonth() + 1}/${
                         date.getFullYear() - 2000
                     }`}
                 />
@@ -129,10 +129,10 @@ export default function ProjectDetails({ project }) {
                         ).map((day) => (
                             <>
                                 <Link
-                                    href={`/schedule/?week=${day.week}&year=${day.year}`}
+                                    href={`/schedule/?week=${day.week.week}&year=${day.week.year}`}
                                 >{`${englishLang["day." + day.day]} of Week ${
-                                    day.week
-                                }, ${day.year}`}</Link>
+                                    day.week.week
+                                }, ${day.week.year}`}</Link>
                                 <br />
                             </>
                         ))}

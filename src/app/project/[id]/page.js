@@ -1,7 +1,7 @@
 import styles from "@/styles/Home.module.css";
 import prisma from "@/lib/prisma";
 import ProjectDetails from "./components/ProjectDetails.js";
-import { getSearchParamsInt } from "@/lib/time.js";
+import { getSearchParamsInt } from "@/lib/searchParams.js";
 
 export async function generateMetadata({ params }) {
     const id = getSearchParamsInt(params.id);
@@ -23,9 +23,12 @@ export default async function ProjectPage({ params }) {
         include: {
             categories: true,
             creator: true,
-            ScheduledProject: { include: { day: true } },
+            ScheduledProject: {
+                include: { day: { include: { week: true } } },
+            },
         },
     });
+    // .then((a) => console.log(a));
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>
             <div style={{ padding: "3%" }}>

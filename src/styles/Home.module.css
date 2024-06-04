@@ -60,16 +60,6 @@
     }
 }
 
-.location {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: left;
-    gap: 10px;
-    list-style: none;
-    margin: 0.3rem;
-}
-
 .staffList {
     padding: 0px;
     margin: 0px;
@@ -367,10 +357,27 @@
     }
 }
 
-.locationButton:hover {
+.location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    list-style: none;
+    margin: 0.3rem;
+    width: min-content;
+    text-wrap: nowrap;
+}
+
+.locationInteractive:hover > p {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.locationInteractive:hover > img {
     cursor: pointer;
     transition: 0.1s;
-    scale: 1.05;
+    scale: 1.1;
 }
 
 .weekList {
@@ -423,7 +430,7 @@
     position: fixed;
     object-fit: contain;
     z-index: -1;
-    opacity: 0.05;
+    opacity: 0.01;
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);

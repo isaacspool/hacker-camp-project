@@ -2,7 +2,7 @@ import styles from "@/styles/Home.module.css";
 import WeekLink from "./schedule/components/WeekLink";
 import YearProvider from "@/components/YearProvider";
 import YearSelect from "@/components/YearSelect";
-import { getSearchParamsInt } from "@/lib/time";
+import { getSearchParamsInt } from "@/lib/searchParams";
 import FormButton from "@/components/FormButton";
 
 export default function Home({ searchParams }) {
@@ -12,13 +12,6 @@ export default function Home({ searchParams }) {
     );
     return (
         <div className={styles.container}>
-            <img
-                src="/logo/hacker_brain.png"
-                alt="logo"
-                className={styles.bigLogo}
-                width="92%"
-                height="92%"
-            />
             <FormButton scale={4} />
             <YearProvider defaultYear={year}>
                 <h1 className={styles.grandTitle}>
