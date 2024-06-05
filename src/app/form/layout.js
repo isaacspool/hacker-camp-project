@@ -1,3 +1,4 @@
+import HackerBrain from "@/components/HackerBrain";
 import FormPageProvider from "./components/FormPageProvider";
 
 export const metadata = {
