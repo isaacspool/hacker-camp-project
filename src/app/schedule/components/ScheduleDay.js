@@ -69,7 +69,7 @@ export default function ScheduleDay({
     const handleModifyStaffOut = async (update) => {
         "use server";
         await prisma.day.update({
-            where: dayInfo,
+            where: { id: dayInfo.id },
             data: {
                 out: update,
             },

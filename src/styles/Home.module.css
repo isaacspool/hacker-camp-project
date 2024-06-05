@@ -91,8 +91,8 @@
 
 @media screen and (max-width: 800px) {
     .openFormButton {
-        position: relative;
         left: calc(50% + 40px);
+        bottom: 12%;
     }
 }
 
@@ -443,7 +443,7 @@
     position: fixed;
     object-fit: contain;
     z-index: -1;
-    opacity: 0.01;
+    opacity: 0.04;
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
@@ -496,8 +496,8 @@
 
 .languageButton {
     position: fixed;
-    right: 0;
-    top: 1%;
+    right: 0.5%;
+    top: 1.5%;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -552,4 +552,19 @@
     cursor: pointer;
     transition: 0.1s;
     scale: 1.1;
+}
+
+.logoutButton {
+    padding: 10px 30px;
+    position: fixed;
+    top: 3%;
+    left: 2%;
+}
+
+@media screen and (max-width: 800px) {
+    .logoutButton {
+        left: 50%;
+        top: 2%;
+        transform: translateX(-50%);
+    }
 }

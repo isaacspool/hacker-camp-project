@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import LoginInput from "./components/LoginInput";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import HackerBrain from "@/components/HackerBrain";
 
 const NOT_STAFF_MSG =
     '"%s" isn\'t a Hacker Camp staff member. Tell someone to add your name to the database.';
@@ -56,6 +57,7 @@ export default async function LoginPage() {
                 The Learning Works Hacker Camp
             </h1>
             <LoginInput handleLogin={handleLogin} />
+            <HackerBrain />
         </div>
     );
 }

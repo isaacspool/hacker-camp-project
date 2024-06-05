@@ -7,6 +7,7 @@ export const metadata = {
 export default function FormLayout({ children }) {
     return (
         <section>
+            <HackerBrain />
             <FormPageProvider>{children}</FormPageProvider>
         </section>
     );

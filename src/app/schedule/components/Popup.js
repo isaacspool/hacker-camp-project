@@ -57,9 +57,12 @@ function useFilter(initFilter) {
             : setElementFilter((prev) => [...prev, name]);
     };
     const clearFilter = () => {
+        setElementFilter([]);
+    };
+    const resetFilter = () => {
         setElementFilter(initFilter);
     };
-    return [elementFilter, modifyFilter, clearFilter];
+    return [elementFilter, modifyFilter, clearFilter, resetFilter];
 }
 
 const filterChipsProviderProject = (language) => {
@@ -97,7 +100,7 @@ export default function Popup({
 }) {
     const [showPopup, setShowPopup] = useState(false);
     const [search, setSearch] = useState("");
-    const [elementFilter, modifyFilter, clearFilter] = useFilter(
+    const [elementFilter, modifyFilter, clearFilter, resetFilter] = useFilter(
         handleModifyStaffOut ? ["Unassigned"] : []
     );
 
@@ -116,7 +119,7 @@ export default function Popup({
         setShowPopup(true);
         setSearch("");
         setSelectedProject(null);
-        clearFilter();
+        resetFilter();
     };
 
     const handleDeleteElement = () => {
@@ -287,7 +290,7 @@ export default function Popup({
                                                 handleModifyStaffOut &&
                                                 elementFilter
                                             ) {
-                                                modifyFilter(elementFilter[0]);
+                                                clearFilter();
                                             }
                                             modifyFilter(chip.name);
                                         }}
@@ -365,9 +368,13 @@ export default function Popup({
                                                 }
                                                 await clickHandler(item).then(
                                                     () =>
-                                                        refresh().then(() =>
-                                                            setTempStaff([])
-                                                        )
+                                                        refresh().then(() => {
+                                                            if (setTempStaff) {
+                                                                setTempStaff(
+                                                                    []
+                                                                );
+                                                            }
+                                                        })
                                                 );
                                             }}
                                         >

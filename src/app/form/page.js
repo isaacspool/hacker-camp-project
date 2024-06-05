@@ -4,6 +4,7 @@ import FormState from "./components/FormState";
 import FormDots from "./components/FormDots";
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
+import HackerBrain from "@/components/HackerBrain";
 
 export default async function Form() {
     const submitAction = async (formData) => {
@@ -90,6 +91,7 @@ export default async function Form() {
                     submitAction={submitAction}
                     databaseCategories={categories}
                 />
+                <HackerBrain />
             </div>
         </div>
     );

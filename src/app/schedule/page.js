@@ -3,6 +3,7 @@ import styles from "@/styles/Home.module.css";
 import ScheduleWeek from "./components/ScheduleWeek.js";
 import YearProvider from "@/components/YearProvider";
 import { getSearchParamsInt } from "@/lib/searchParams";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,7 @@ export default function SchedulePage({ searchParams }) {
         new Date().getFullYear()
     );
     const day = getSearchParamsInt(searchParams.day, null);
+
     return (
         <div className={[styles.container, styles.blackScroll].join(" ")}>
             <YearProvider defaultYear={year}>

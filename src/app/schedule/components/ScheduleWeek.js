@@ -40,20 +40,14 @@ export default async function ScheduleWeek({ day, week, year }) {
     });
     const staffList = await prisma.staff.findMany();
 
-    const days = await prisma.day
-        .findMany({
-            where: weekFilter,
-            include: { satellites: true, rundown: true, out: true },
-        })
-        .then((daysData) =>
-            daysData.map((day) => {
-                if (!day.satellites[0]) day.satellites[0] = "Satellite";
-                if (!day.satellites[1]) day.satellites[1] = "Satellite";
-                if (!day.rundown[0]) day.rundown[0] = "Rundown";
-                if (!day.rundown[1]) day.rundown[1] = "Rundown";
-                return day;
-            })
-        );
+    const days = await prisma.day.findMany({
+        where: weekFilter,
+        include: {
+            satellites: { orderBy: { id: "asc" } },
+            rundown: { orderBy: { id: "asc" } },
+            out: { orderBy: { id: "asc" } },
+        },
+    });
 
     return (
         <div
@@ -72,7 +66,11 @@ export default async function ScheduleWeek({ day, week, year }) {
                     satellites={day.satellites}
                     rundown={day.rundown}
                     rooms={rooms}
-                    staffList={staffList}
+                    staffList={staffList.filter(
+                        (s) =>
+                            !s.name.startsWith("Satellit") &&
+                            !s.name.startsWith("Rundow")
+                    )}
                     presentationMode={days.length == 1 || year != currentYear}
                     staffOut={day.out}
                     key={day.id}

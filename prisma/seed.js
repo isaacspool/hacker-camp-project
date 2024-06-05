@@ -133,6 +133,22 @@ async function main() {
                     },
                 });
             });
+            days.filter((day) => day.week.year == 2024).forEach(async (day) => {
+                await prisma.day.update({
+                    where: { id: day.id },
+                    data: {
+                        rundown: {
+                            connect: [{ name: "Rundown" }, { name: "Rundowո" }],
+                        },
+                        satellites: {
+                            connect: [
+                                { name: "Satellite" },
+                                { name: "Satellitе" },
+                            ],
+                        },
+                    },
+                });
+            });
         });
 
     await prisma.room.deleteMany();
