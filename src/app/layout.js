@@ -24,7 +24,10 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className="black-scroll">
                 <LanguageProvider>
-                    <nav className="fixed top-right flex-end small-gap fill no-clicks">
+                    <nav
+                        className="fixed top-right flex-end small-gap fill no-clicks"
+                        style={{ zIndex: 500 }}
+                    >
                         <Link
                             href="/help"
                             className="hover-scale spin-animation clickable"
