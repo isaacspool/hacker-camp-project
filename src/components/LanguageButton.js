@@ -1,8 +1,10 @@
 "use client";
 
-import styles from "../styles/Home.module.css";
+import { useLanguageContext } from "./LanguageProvider";
 
-export default function LanguageButton({ language, setLanguage }) {
+export default function LanguageButton() {
+    const { language, setLanguage } = useLanguageContext();
+
     const handleChangeLanguage = () => {
         const newLanguage = language === "en" ? "he" : "en";
         setLanguage(newLanguage);
@@ -10,11 +12,12 @@ export default function LanguageButton({ language, setLanguage }) {
     };
 
     return (
-        <button
+        <img
             onClick={handleChangeLanguage}
-            className={styles.languageButton}
-        >
-            <img src="/icons/languages.svg" width="40" height="40" />
-        </button>
+            className="hover-scale clickable"
+            src="/icons/languages.svg"
+            width="40"
+            height="40"
+        />
     );
 }

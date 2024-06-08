@@ -1,4 +1,3 @@
-import styles from "@/styles/Home.module.css";
 import Person from "./Person";
 import ProjectTitle from "./ProjectTitle";
 import LocationButton from "./LocationButton";
@@ -41,7 +40,7 @@ export default function Project({
                 setProjectName={setProjectName}
                 presentationMode={presentationMode}
             />
-            <div className={styles.projectBody}>
+            <div className="thick-border-top flex-cols big-gap-px padding-3 fill">
                 {presentationMode ? (
                     <LocationButton presentationMode>
                         {location?.name}
@@ -57,7 +56,7 @@ export default function Project({
                         <LocationButton />
                     </PopupProvider>
                 )}
-                <ul className={styles.staffList}>
+                <div className="flex-wrap">
                     {staff.map((person) => (
                         <Person
                             icon="/icons/person.svg"
@@ -100,12 +99,12 @@ export default function Project({
                                     src="/icons/add.svg"
                                     width="50"
                                     height="50"
-                                    className={styles.addButton}
+                                    className="hover-rotate hover-opaque hover-scale"
                                 />
                             </Popup>
                         </TempStaffProvider>
                     )}
-                </ul>
+                </div>
             </div>
         </ProjectBackground>
     );

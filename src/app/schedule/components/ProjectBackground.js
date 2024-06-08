@@ -1,7 +1,6 @@
 "use client";
 
 import { getBackgroundString } from "@/lib/colors";
-import styles from "@/styles/Home.module.css";
 import { createContext, useContext, useState } from "react";
 
 const DeletedContext = createContext({});
@@ -12,7 +11,7 @@ export default function ProjectBackground({ children, types }) {
     return (
         <DeletedContext.Provider value={{ isDeleted, setDeleted }}>
             <div
-                className={[styles.border, styles.project].join(" ")}
+                className="thick-border rounded-30 flex-cols center-all margin-1 width-500"
                 style={{
                     background: types
                         ? getBackgroundString(types, "180deg")

@@ -1,77 +1,94 @@
-import styles from "@/styles/Project.module.css";
 import ProjectInformation from "./ProjectInformation";
 import { getColorFromType } from "@/lib/colors";
 import Linkify from "linkify-react";
 import englishLang from "@/../public/lang/en-us.json";
 import Link from "next/link";
+import Translate from "./Translate";
 
 export default function ProjectDetails({ project }) {
     const date = new Date(project.createdAt);
     return (
-        <div className={styles.infoContainer}>
-            <ProjectInformation title={project.name}>
+        <div className="flex-wrap lower-mobile">
+            <ProjectInformation title={project.name} doNotTranslate>
                 {project.description && (
                     <Linkify
-                        options={{ target: "_blank", className: styles.link }}
+                        options={{ target: "_blank", className: "blue-link" }}
                     >
                         {project.description}
                     </Linkify>
                 )}
             </ProjectInformation>
             {project.goals && (
-                <ProjectInformation title="Goals">
+                <ProjectInformation title={["project.goals"]}>
                     <Linkify
-                        options={{ target: "_blank", className: styles.link }}
+                        options={{ target: "_blank", className: "blue-link" }}
                     >
                         {project.goals}
                     </Linkify>
                 </ProjectInformation>
             )}
             {project.materials && (
-                <ProjectInformation title="Materials">
+                <ProjectInformation title={["project.materials"]}>
                     <Linkify
-                        options={{ target: "_blank", className: styles.link }}
+                        options={{ target: "_blank", className: "blue-link" }}
                     >
                         {project.materials}
                     </Linkify>
                 </ProjectInformation>
             )}
             {project.duration == 0.5 ? (
-                <ProjectInformation title="Half Day" />
+                <ProjectInformation title={["project.time.half"]} />
             ) : project.duration == 5 ? (
-                <ProjectInformation title="All Week" />
+                <ProjectInformation title={["project.time.week"]} />
             ) : project.duration == 1 ? (
-                <ProjectInformation title="1 Day" />
+                <ProjectInformation title={[project.duration, "form.day"]} />
             ) : project.duration ? (
-                <ProjectInformation title={`${project.duration} Days Long`} />
+                <ProjectInformation title={[project.duration, "form.days"]} />
             ) : (
                 <></>
             )}
             {project.minParticipants && !project.maxParticipants && (
                 <ProjectInformation
-                    title={`At Least ${project.minParticipants} Campers`}
+                    title={[
+                        "minimum",
+                        project.minParticipants,
+                        "project.campers",
+                    ]}
                 />
             )}
             {!project.minParticipants && project.maxParticipants && (
                 <ProjectInformation
-                    title={`At Most ${project.maxParticipants} Campers`}
+                    title={[
+                        "maximum",
+                        project.maxParticipants,
+                        "project.campers",
+                    ]}
                 />
             )}
             {project.minParticipants &&
                 project.maxParticipants &&
                 (project.minParticipants == project.maxParticipants ? (
                     <ProjectInformation
-                        title={`Around ${project.maxParticipants} Campers`}
+                        title={[
+                            "project.around",
+                            project.maxParticipants,
+                            "project.campers",
+                        ]}
                     />
                 ) : (
                     <ProjectInformation
-                        title={`${project.minParticipants} to ${project.maxParticipants} Campers`}
+                        title={[
+                            project.minParticipants,
+                            "form.to",
+                            project.maxParticipants,
+                            "project.campers",
+                        ]}
                     />
                 ))}
             {project.categories && project.categories.length > 0 && (
-                <ProjectInformation>
+                <ProjectInformation reactKey="categories">
                     <div
-                        className={styles.infoContainer}
+                        className="flex-wrap big-gap center-all"
                         style={{
                             alignContent: "center",
                             height: "100%",
@@ -80,7 +97,7 @@ export default function ProjectDetails({ project }) {
                         {project.categories.map((category) => (
                             <div
                                 key={category.name}
-                                className={styles.typeText}
+                                className="thin-border rounded title-padding-px center-text"
                             >
                                 <p>{category.name}</p>
                             </div>
@@ -91,16 +108,16 @@ export default function ProjectDetails({ project }) {
             {project.types &&
                 project.types.length > 0 &&
                 !project.types.every((t) => t.length == 0) && (
-                    <ProjectInformation stopFlexGrow={true}>
+                    <ProjectInformation stopFlexGrow={true} reactKey="types">
                         <div
-                            className={styles.infoContainer}
+                            className="flex-wrap big-gap"
                             style={{
                                 flexDirection: "column",
                             }}
                         >
                             {project.types.map((type) => (
                                 <div
-                                    className={styles.typeText}
+                                    className="thin-border rounded title-padding-px center-text"
                                     style={{
                                         background: getColorFromType(type),
                                     }}
@@ -114,25 +131,36 @@ export default function ProjectDetails({ project }) {
                 )}
             {project.creator && (
                 <ProjectInformation
-                    title={`Submitted by ${
-                        project.creator.name
-                    } on ${date.getDate()}/${date.getMonth() + 1}/${
-                        date.getFullYear() - 2000
-                    }`}
+                    title={[
+                        "project.submitted.by",
+                        project.creator.name,
+                        "project.submitted.on",
+                        `${date.getDate()}/${date.getMonth() + 1}/${
+                            date.getFullYear() - 2000
+                        }`,
+                    ]}
                 />
             )}
             {project.ScheduledProject &&
                 project.ScheduledProject.length > 0 && (
-                    <ProjectInformation title="Schedule">
+                    <ProjectInformation title={["project.schedule"]}>
                         {project.ScheduledProject.map(
                             (scheduledProject) => scheduledProject.day
                         ).map((day) => (
                             <>
                                 <Link
                                     href={`/schedule/?week=${day.week.week}&year=${day.week.year}`}
-                                >{`${englishLang["day." + day.day]} of Week ${
-                                    day.week.week
-                                }, ${day.week.year}`}</Link>
+                                    key={day}
+                                >
+                                    <Translate
+                                        text={[
+                                            `day.${day.day}`,
+                                            "week",
+                                            `${day.week.week},`,
+                                            day.week.year,
+                                        ]}
+                                    />
+                                </Link>
                                 <br />
                             </>
                         ))}

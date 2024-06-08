@@ -34,7 +34,7 @@ export default function ParticipantsPage({
                     type="number"
                     min="4"
                     max="1000"
-                    placeholder={translate("form.min", language)}
+                    placeholder={translate("minimum", language)}
                     value={participants[0]}
                     onChange={(e) =>
                         setParticipants([e.target.value, participants[1]])
@@ -52,7 +52,7 @@ export default function ParticipantsPage({
                     type="number"
                     min="4"
                     max="1000"
-                    placeholder={translate("form.max", language)}
+                    placeholder={translate("maximum", language)}
                     value={participants[1]}
                     onChange={(e) =>
                         setParticipants([participants[0], e.target.value])

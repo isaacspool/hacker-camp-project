@@ -1,10 +1,10 @@
 const { PrismaClient } = require("@prisma/client");
-const projectsJson = require("./project_data.json");
-const dataJson = require("./data.json");
+const projectsJson = require("./seed/project_data.json");
+const dataJson = require("./seed/data.json");
 const jsonStaff = dataJson.staff;
 const jsonCategories = dataJson.categories;
 const jsonRooms = dataJson.rooms;
-const weekExampleJson = require("./week_1_example_2023.json");
+const weekExampleJson = require("./seed/week_1_example_2023.json");
 const exampleSchedule = weekExampleJson.schedule;
 const exampleRundowns = weekExampleJson.rundown;
 const exampleSatellites = weekExampleJson.satellites;

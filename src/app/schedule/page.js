@@ -1,9 +1,7 @@
 import WeekLink from "./components/WeekLink";
-import styles from "@/styles/Home.module.css";
 import ScheduleWeek from "./components/ScheduleWeek.js";
 import YearProvider from "@/components/YearProvider";
 import { getSearchParamsInt } from "@/lib/searchParams";
-import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -27,16 +25,18 @@ export default function SchedulePage({ searchParams }) {
     const day = getSearchParamsInt(searchParams.day, null);
 
     return (
-        <div className={[styles.container, styles.blackScroll].join(" ")}>
+        <>
             <YearProvider defaultYear={year}>
                 <WeekLink
                     url={day == 0 || day ? `/schedule/?week=${week}&` : "/?"}
                     week={week}
-                    css={styles.weekTitle}
+                    css={
+                        "flex fixed top-left tiny-gap huge-text bold lato hover-underline"
+                    }
                     hasHidden={true}
                 />
             </YearProvider>
             <ScheduleWeek week={week} year={year} day={day} />
-        </div>
+        </>
     );
 }

@@ -44,7 +44,7 @@ export default function Person({
             <PersonButton icon={icon} canDelete={canDelete} canEdit={canEdit} />
         </PopupProvider>
     ) : (
-        <div style={{ display: "flex", flexGrow: 1, justifyContent: "center" }}>
+        <div className="flex grow center-all">
             <PersonButton icon={icon} canDelete={canDelete} canEdit={canEdit}>
                 {name}
             </PersonButton>

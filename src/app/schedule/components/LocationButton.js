@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "@/styles/Home.module.css";
 import { usePopupContext } from "./PopupProvider";
 
 export default function LocationButton({ children, presentationMode }) {
@@ -8,8 +7,8 @@ export default function LocationButton({ children, presentationMode }) {
     return (
         <div
             className={[
-                styles.location,
-                presentationMode ? "" : styles.locationInteractive,
+                "flex center left medium-gap min-width",
+                presentationMode ? "" : "hover-underline",
             ].join(" ")}
         >
             <img
@@ -17,7 +16,6 @@ export default function LocationButton({ children, presentationMode }) {
                 alt="location"
                 width={30}
                 height={30}
-                className={presentationMode ? "" : styles.locationButton}
             />
             <p style={{ fontSize: 24, margin: "1%" }}>
                 {displayValue || children || "The Void"}

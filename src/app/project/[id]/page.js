@@ -1,4 +1,3 @@
-import styles from "@/styles/Home.module.css";
 import prisma from "@/lib/prisma";
 import ProjectDetails from "./components/ProjectDetails.js";
 import { getSearchParamsInt } from "@/lib/searchParams.js";
@@ -26,7 +25,7 @@ export default async function ProjectPage({ params }) {
         },
     });
     return (
-        <div className={[styles.container, styles.blackScroll].join(" ")}>
+        <div className="black-scroll">
             <div style={{ padding: "3%" }}>
                 {!project ? (
                     <div>

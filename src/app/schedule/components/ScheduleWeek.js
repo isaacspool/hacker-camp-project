@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import ScheduleDay from "./ScheduleDay";
-import styles from "@/styles/Home.module.css";
 
 export default async function ScheduleWeek({ day, week, year }) {
     const weekFilter = { week: { week, year } };
@@ -51,8 +50,12 @@ export default async function ScheduleWeek({ day, week, year }) {
 
     return (
         <div
-            className={styles.week}
-            style={days.length == 1 ? { justifyContent: "center" } : {}}
+            className={"flex big-gap max-height"}
+            style={
+                days.length == 1
+                    ? { justifyContent: "center" }
+                    : { padding: "15px 2% 0 2%" }
+            }
         >
             {days.map((day) => (
                 <ScheduleDay

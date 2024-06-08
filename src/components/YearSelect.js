@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "@/styles/Home.module.css";
 import { useYearContext } from "./YearProvider";
 
 export default function YearSelect() {
@@ -8,7 +7,7 @@ export default function YearSelect() {
     const { year, setYear } = useYearContext();
     return (
         <select
-            className={styles.yearSelect}
+            className="bold title-text underline"
             value={year}
             onChange={(e) => setYear(e.target.value)}
         >

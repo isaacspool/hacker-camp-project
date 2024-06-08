@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import styles from "@/styles/Home.module.css";
 import { translate } from "@/lib/translation";
 import { useSelectedProjectContext } from "./SelectedProjectProvider";
 import { useLanguageContext } from "@/components/LanguageProvider";
@@ -105,7 +104,7 @@ export default function Popup({
     );
 
     const { _, setSelectedProject } = useSelectedProjectContext();
-    const language = useLanguageContext();
+    const { language, __ } = useLanguageContext();
 
     const [isDeleted, setDeleted] = useState(false);
 
@@ -211,7 +210,7 @@ export default function Popup({
         );
     };
 
-    const { __, setDisplayValue } = usePopupContext();
+    const { ___, setDisplayValue } = usePopupContext();
     const { tempStaff, setTempStaff } = useTempStaffContext();
 
     return (
@@ -233,58 +232,60 @@ export default function Popup({
             {showPopup && (
                 <div>
                     <button
-                        className={styles.blurBackground}
+                        className="blur fixed fill-all"
                         onClick={handleClosePopup}
                     />
-                    <div className={styles.popup}>
-                        <div className={styles.popupNav}>
+                    <div
+                        className={
+                            "popup fixed-center white padding-2 flex-cols center-all rounded thick-border"
+                        }
+                    >
+                        <div className="flex center-all big-gap fill">
                             <img
                                 src="/icons/trash.svg"
                                 width="30"
                                 height="33.33"
-                                style={{ opacity: handleTrashButton ? 1 : 0 }}
-                                className={styles.trashButton}
+                                style={{
+                                    display: handleTrashButton
+                                        ? "flex"
+                                        : "none",
+                                }}
+                                className="hover-scale"
                                 onClick={
                                     handleTrashButton
                                         ? handleDeleteElement
                                         : () => {}
                                 }
                             />
-                            <div className={styles.search}>
+                            <div className="rounded medium-border margin-3 big-gap flex center input-padding">
                                 <img
                                     src="/icons/search.svg"
                                     width="30"
                                     height="30"
                                 />
                                 <input
-                                    className={styles.searchInput}
+                                    className="medium-text fill"
                                     type="text"
                                     placeholder={translate("search", language)}
                                     onChange={(e) => setSearch(e.target.value)}
                                     id="search"
                                 />
                             </div>
-                            <button
-                                style={{
-                                    outline: "none",
-                                    background: "none",
-                                    border: "none",
-                                }}
-                            >
+                            <button>
                                 <img
                                     src="/icons/close.svg"
                                     width="30"
                                     height="30"
                                     onClick={handleClosePopup}
-                                    className={styles.closeButton}
+                                    className="hover-scale"
                                 />
                             </button>
                         </div>
                         {useFilterChips && (
-                            <div className={styles.filterChips}>
+                            <div className="flex-evenly fill medium-gap padding-2">
                                 {filterChips.map((chip) => (
                                     <button
-                                        className={styles.filterChip}
+                                        className="pill small-text medium-border grow padding-3"
                                         onClick={() => {
                                             if (
                                                 handleModifyStaffOut &&
@@ -316,10 +317,7 @@ export default function Popup({
                         )}
 
                         <div
-                            className={[
-                                styles.selectionMenu,
-                                styles.blackScroll,
-                            ].join(" ")}
+                            className="black-scroll overflow-y flex-cols big-gap fill grow padding-3"
                             id="selection_menu"
                         >
                             {[
@@ -332,18 +330,11 @@ export default function Popup({
                                 .filter((_, i) => i <= 99)
                                 .map((item) => (
                                     <div
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "3%",
-                                        }}
+                                        className="flex center big-gap"
                                         key={item.id ? item.id : item.name}
                                     >
                                         <button
-                                            className={[
-                                                styles.thinBorder,
-                                                styles.staff,
-                                            ].join(" ")}
+                                            className="medium-border rounded-30 padding-3 grow small-text"
                                             style={
                                                 useFilterChips && item.types
                                                     ? {

@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useState, useLayoutEffect } from "react";
-import LanguageButton from "./LanguageButton";
 
 const LanguageContext = createContext("en");
 export const useLanguageContext = () => useContext(LanguageContext);
@@ -12,8 +11,7 @@ export default function LanguageProvider({ children }) {
         setLanguage(localStorage.getItem("language") || "en");
     }, []);
     return (
-        <LanguageContext.Provider value={language}>
-            <LanguageButton language={language} setLanguage={setLanguage} />
+        <LanguageContext.Provider value={{ language, setLanguage }}>
             {children}
         </LanguageContext.Provider>
     );

@@ -1,5 +1,4 @@
 import styles from "@/styles/Form.module.css";
-import Link from "next/link";
 import FormState from "./components/FormState";
 import FormDots from "./components/FormDots";
 import prisma from "@/lib/prisma";
@@ -21,6 +20,7 @@ export default async function Form() {
         } else {
             maxParticipants = null;
         }
+        const duration = formData.duration ? parseFloat(formData.duration) : 1;
         const data = {
             name: formData.name,
             description: formData.description,
@@ -28,9 +28,9 @@ export default async function Form() {
             goals: formData.goals,
             minParticipants: minParticipants,
             maxParticipants: maxParticipants,
-            duration: formData.duration ? parseFloat(formData.duration) : 1,
+            duration: duration,
             creator: {
-                connect: { name: creator ? creator : "Option 42" },
+                connect: { name: creator || "Option 42" },
             },
         };
         if (formData.types) {
@@ -82,9 +82,6 @@ export default async function Form() {
                 className={styles.main}
                 style={{ width: "100%", height: "90vh" }}
             >
-                <Link href="/" className={styles.backButton}>
-                    <img src="/icons/back.svg" />
-                </Link>
                 <FormDots />
                 <FormState
                     submitAction={submitAction}

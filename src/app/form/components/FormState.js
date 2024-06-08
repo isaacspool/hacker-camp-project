@@ -15,7 +15,7 @@ import { translate } from "@/lib/translation";
 
 export default function FormState({ submitAction, databaseCategories }) {
     const { formPage, setFormPage } = useFormPageContext();
-    const language = useLanguageContext();
+    const { language, _ } = useLanguageContext();
 
     const [projectName, setProjectName] = useState("");
     const [projectTypes, setProjectTypes] = useState("");

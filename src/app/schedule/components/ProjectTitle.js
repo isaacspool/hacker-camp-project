@@ -1,9 +1,7 @@
 "use client";
 
 import { useSelectedProjectContext } from "./SelectedProjectProvider";
-import styles from "@/styles/Home.module.css";
 import InfoIcon from "./InfoIcon";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDeletedContext } from "./ProjectBackground";
 import { useRouterRefresh } from "./Popup";
@@ -52,38 +50,20 @@ export default function ProjectTitle({
     return (
         <>
             {selectedProject == uniqueId ? (
-                <div
-                    style={{
-                        display: "flex",
-                        alignContent: "center",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        padding: "0 0.83em",
-                    }}
-                >
+                <div className="flex-space center fill title-padding-px">
                     <img
                         src="/icons/trash.svg"
                         width="31"
                         height="34.44"
-                        className={styles.trashButton}
+                        className="hover-scale"
                         onClick={handleDeleteProject}
                     />
                     <textarea
-                        style={{
-                            fontSize: 26,
-                            margin: "0.83em",
-                            textAlign: "center",
-                            background: "none",
-                            outline: "none",
-                            border: "none",
-                            fontWeight: "700",
-                            fontFamily: '"Lato", sans-serif',
-                        }}
+                        className="black-scroll center-text bold lato large-text"
                         rows={
                             name.split("").filter((char) => char == "\n")
                                 .length + 1
                         }
-                        className={styles.blackScroll}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         id={`textarea_${uniqueId}`}
@@ -91,15 +71,10 @@ export default function ProjectTitle({
                     <InfoIcon scale={33} url={`/project/${databaseId}`} />
                 </div>
             ) : (
-                <div
-                    style={{
-                        marginBlockStart: 26 * 0.83,
-                        marginBlockEnd: 26 * 0.83,
-                    }}
-                >
+                <div className="title-padding-px">
                     {name.split("\n").map((line, i) => (
                         <h2
-                            style={{ fontSize: 26, margin: 0 }}
+                            className="large-text"
                             onClick={() => {
                                 if (!presentationMode)
                                     setSelectedProject(uniqueId);

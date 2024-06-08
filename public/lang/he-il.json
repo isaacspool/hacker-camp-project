@@ -15,8 +15,8 @@
     "form.duration": "משך",
     "form.days": "ימים",
     "form.day": "ימ",
-    "form.min": "מינימום",
-    "form.max": "מקסימום",
+    "minimum": "מינימום",
+    "maximum": "מקסימום",
     "form.plan.title": "?מה אתה מתכנן לעשות",
     "form.plan.subtitle": "הסיפור הארוך",
     "form.materials.title": "?אילו חומרים צריך הפרויקט",
@@ -24,6 +24,15 @@
     "form.goals.title": "מטרות הפרויקט",
     "form.goals.subtitle": "?באילו מטרות ארגון תומך הפרויקט הזה במיוחד",
     "form.submit": "שלח",
-    "login.request.name": "מה השם שלך",
-    "login.request.secret": "?מהו הקוד הסודי"
+    "login.request.name": "?מה השם שלך",
+    "login.request.secret": "?מהו הקוד הסודי",
+    "project.goals": "מטרות",
+    "project.materials": "חומרים",
+    "project.schedule": "מתוזמן",
+    "project.submitted.by": "הוגש על ידי",
+    "project.submitted.on": "בתאריך",
+    "project.campers": "חניכים",
+    "project.around": "בערך",
+    "project.time.half": "חצי יום",
+    "project.time.week": "כל השבוע"
 }

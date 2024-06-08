@@ -1,4 +1,3 @@
-import styles from "@/styles/Home.module.css";
 import Project from "./Project";
 import Popup from "./Popup";
 import DayTitle from "./DayTitle";
@@ -85,13 +84,13 @@ export default function ScheduleDay({
         .concat(satellites, rundown);
 
     return (
-        <div className={styles.day}>
+        <div className="flex-cols medium-gap width-540">
             <DayTitle
                 dayKey={dayKey}
                 dayInfo={dayInfo}
                 presentationMode={presentationMode}
             />
-            <div className={[styles.border, styles.projectList].join(" ")}>
+            <div className="center max-height thick-border rounded-30 flex-cols small-gap hide-scroll overflow-y width-540 padding-2">
                 {(!presentationMode || dayInfo.year != currentYear) && (
                     <DayDetails
                         databaseId={databaseDayId}
@@ -105,7 +104,7 @@ export default function ScheduleDay({
                         handleModifyStaffOut={handleModifyStaffOut}
                     />
                 )}
-                {scheduledProjects.map((project, i) => {
+                {scheduledProjects.map((project) => {
                     return (
                         <Project
                             staff={project.staff}
@@ -154,7 +153,7 @@ export default function ScheduleDay({
                     );
                 })}
                 {!presentationMode && (
-                    <div className={styles.addButtonContainer}>
+                    <div className="flex center-all width-500">
                         <Popup
                             data={databaseProjects}
                             clickHandler={handleSelectProject}
@@ -165,7 +164,7 @@ export default function ScheduleDay({
                                 src="/icons/add.svg"
                                 width="80"
                                 height="80"
-                                className={styles.addButton}
+                                className="hover-rotate hover-opaque hover-scale"
                             />
                         </Popup>
                     </div>
