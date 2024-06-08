@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguageContext } from "./LanguageProvider";
 
 export default function LanguageButton({ scale }) {
@@ -12,12 +13,13 @@ export default function LanguageButton({ scale }) {
     };
 
     return (
-        <img
+        <Image
             onClick={handleChangeLanguage}
             className="hover-scale clickable"
             src="/icons/languages.svg"
             width={scale}
             height={scale}
+            alt="language button"
         />
     );
 }

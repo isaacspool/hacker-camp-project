@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function FormButton({ scale }) {
@@ -11,10 +12,11 @@ export default function FormButton({ scale }) {
                 width: 20 * scale + 8,
             }}
         >
-            <img
+            <Image
                 src="/icons/open_form_background.svg"
                 width={20 * scale}
                 height={28 * scale}
+                alt="open form button"
             />
             <div
                 style={{
@@ -23,11 +25,12 @@ export default function FormButton({ scale }) {
                     left: 10 * scale,
                 }}
             >
-                <img
+                <Image
                     src="/icons/open_form_pencil.svg"
                     width={16 * scale}
                     height={16 * scale}
                     id="pencil"
+                    alt=""
                 />
             </div>
         </Link>

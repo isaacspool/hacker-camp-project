@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { translate } from "@/lib/translation";
+import Image from "next/image";
 
 const engineering = "Engineering";
 const analytical = "Analytical";
@@ -139,11 +140,12 @@ export default function ProjectTypePage({
                     pointerEvents: "none",
                 }}
             ></div>
-            <img
+            <Image
                 src="/triangle/rounded_triangle.svg"
                 width="410"
                 height="345"
                 className="fixed-center"
+                alt="project types triangle"
                 style={{ zIndex: 10 }}
             />
             <div

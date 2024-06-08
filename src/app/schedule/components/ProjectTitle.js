@@ -5,6 +5,7 @@ import InfoIcon from "./InfoIcon";
 import { useEffect, useState } from "react";
 import { useDeletedContext } from "./ProjectBackground";
 import { useRouterRefresh } from "./Popup";
+import Image from "next/image";
 
 export default function ProjectTitle({
     uniqueId,
@@ -51,10 +52,11 @@ export default function ProjectTitle({
         <>
             {selectedProject == uniqueId ? (
                 <div className="flex-space center fill title-padding-px">
-                    <img
+                    <Image
                         src="/icons/trash.svg"
                         width="31"
                         height="34.44"
+                        alt="trash button"
                         className="hover-scale"
                         onClick={handleDeleteProject}
                     />

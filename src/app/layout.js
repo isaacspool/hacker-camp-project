@@ -5,6 +5,7 @@ import Link from "next/link";
 import FormButton from "@/components/FormButton";
 import LanguageButton from "@/components/LanguageButton";
 import HomeButton from "@/components/HomeButton";
+import HelpButton from "@/components/HelpButton";
 
 const latoFont = Lato({
     weight: ["100", "400", "700"],
@@ -29,12 +30,7 @@ export default function RootLayout({ children }) {
                         className="fixed top-right flex-end small-gap fill no-clicks"
                         style={{ zIndex: 500 }}
                     >
-                        <Link
-                            href="/help"
-                            className="hover-scale spin-animation clickable"
-                        >
-                            <img src="/icons/help.svg" width="40" height="40" />
-                        </Link>
+                        <HelpButton />
                         <FormButton scale={1.5} />
                         <LanguageButton scale={40} />
                         <HomeButton scale={40} />

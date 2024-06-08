@@ -1,10 +1,10 @@
 export const getColorFromType = (type) => {
-    switch (type) {
-        case "Analytical":
+    switch (type.toLowerCase()) {
+        case "analytical":
             return "rgba(220, 63, 63, 0.25)";
-        case "Creative":
+        case "creative":
             return "rgba(43, 73, 231, 0.25)";
-        case "Engineering":
+        case "engineering":
             return "rgba(251, 170, 11, 0.25)";
     }
 };

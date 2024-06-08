@@ -151,7 +151,13 @@ export default function ProjectDetails({ project }) {
                         ).map((day) => (
                             <>
                                 <Link
-                                    href={`/schedule/?week=${day.week.week}&year=${day.week.year}`}
+                                    href={{
+                                        pathname: "/schedule/",
+                                        query: {
+                                            week: day.week.week,
+                                            year: day.week.year,
+                                        },
+                                    }}
                                     key={day}
                                 >
                                     <Translate

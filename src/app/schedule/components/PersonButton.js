@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { usePopupContext } from "./PopupProvider";
 
 export default function PersonButton({ children, icon, canDelete, canEdit }) {
@@ -14,7 +15,12 @@ export default function PersonButton({ children, icon, canDelete, canEdit }) {
                 margin: "0.3rem",
             }}
         >
-            <img src={icon} width={canDelete ? 21 : 30} height={21} />
+            <Image
+                src={icon}
+                width={canDelete ? 21 : 30}
+                height={21}
+                alt="person icon"
+            />
             <p>{displayValue || children}</p>
         </div>
     );

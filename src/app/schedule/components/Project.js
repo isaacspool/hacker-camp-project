@@ -5,6 +5,7 @@ import PopupProvider from "./PopupProvider";
 import Popup from "./Popup";
 import ProjectBackground from "./ProjectBackground";
 import TempStaffProvider from "./TempStaffProvider";
+import Image from "next/image";
 
 export default function Project({
     staff,
@@ -75,12 +76,13 @@ export default function Project({
                     {!presentationMode && (
                         <TempStaffProvider>
                             {staff.length == 0 && (
-                                <img
+                                <Image
                                     src="/icons/person.svg"
                                     width="25"
                                     height="25"
                                     style={{ margin: "0.3rem" }}
                                     key="img"
+                                    alt="person icon"
                                 />
                             )}
                             <Popup
@@ -95,11 +97,12 @@ export default function Project({
                                 handleModifyStaffOut={handleModifyStaffOut}
                                 key="popup"
                             >
-                                <img
+                                <Image
                                     src="/icons/add.svg"
                                     width="50"
                                     height="50"
                                     className="hover-rotate hover-opaque hover-scale"
+                                    alt="add button"
                                 />
                             </Popup>
                         </TempStaffProvider>

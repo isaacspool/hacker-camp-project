@@ -9,6 +9,7 @@ import { getBackgroundString, getColorFromType } from "@/lib/colors";
 import InfoIcon from "./InfoIcon";
 import { usePopupContext } from "./PopupProvider";
 import { useTempStaffContext } from "./TempStaffProvider";
+import Image from "next/image";
 
 /**
  * https://github.com/vercel/next.js/discussions/58520
@@ -241,7 +242,7 @@ export default function Popup({
                         }
                     >
                         <div className="flex center-all big-gap fill">
-                            <img
+                            <Image
                                 src="/icons/trash.svg"
                                 width="30"
                                 height="33.33"
@@ -250,6 +251,7 @@ export default function Popup({
                                         ? "flex"
                                         : "none",
                                 }}
+                                alt="trash button"
                                 className="hover-scale"
                                 onClick={
                                     handleTrashButton
@@ -258,10 +260,11 @@ export default function Popup({
                                 }
                             />
                             <div className="rounded medium-border margin-3 big-gap flex center input-padding">
-                                <img
+                                <Image
                                     src="/icons/search.svg"
                                     width="30"
                                     height="30"
+                                    alt="search"
                                 />
                                 <input
                                     className="medium-text fill"
@@ -272,12 +275,13 @@ export default function Popup({
                                 />
                             </div>
                             <button>
-                                <img
+                                <Image
                                     src="/icons/close.svg"
                                     width="30"
                                     height="30"
                                     onClick={handleClosePopup}
                                     className="hover-scale"
+                                    alt="close button"
                                 />
                             </button>
                         </div>
@@ -392,10 +396,11 @@ export default function Popup({
                                                 (s) => s.name == item.name
                                             ) &&
                                             item.years.includes(year) && (
-                                                <img
+                                                <Image
                                                     src="/icons/close.svg"
                                                     width="25"
                                                     height="25"
+                                                    alt="close button"
                                                     onClick={async () =>
                                                         await handleModifyStaffOut(
                                                             {
@@ -414,10 +419,11 @@ export default function Popup({
                                             staffOut.find(
                                                 (s) => s.name == item.name
                                             ) && (
-                                                <img
+                                                <Image
                                                     src="/icons/add.svg"
                                                     width="47"
                                                     height="47"
+                                                    alt="add button"
                                                     onClick={async () =>
                                                         await handleModifyStaffOut(
                                                             {

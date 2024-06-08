@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { usePopupContext } from "./PopupProvider";
 
 export default function LocationButton({ children, presentationMode }) {
@@ -11,7 +12,7 @@ export default function LocationButton({ children, presentationMode }) {
                 presentationMode ? "" : "hover-underline",
             ].join(" ")}
         >
-            <img
+            <Image
                 src="/icons/location.svg"
                 alt="location"
                 width={30}

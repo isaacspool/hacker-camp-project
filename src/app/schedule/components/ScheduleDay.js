@@ -3,6 +3,7 @@ import Popup from "./Popup";
 import DayTitle from "./DayTitle";
 import DayDetails from "./DayDetails";
 import prisma from "@/lib/prisma";
+import Image from "next/image";
 
 export default function ScheduleDay({
     dayInfo,
@@ -90,7 +91,7 @@ export default function ScheduleDay({
                 dayInfo={dayInfo}
                 presentationMode={presentationMode}
             />
-            <div className="center max-height thick-border rounded-30 flex-cols small-gap hide-scroll overflow-y width-540 padding-2">
+            <div className="center max-height thick-border rounded-30 flex-cols small-gap hide-scroll overflow-x-hidden overflow-y width-540 padding-2 blur">
                 {(!presentationMode || dayInfo.year != currentYear) && (
                     <DayDetails
                         databaseId={databaseDayId}
@@ -160,10 +161,11 @@ export default function ScheduleDay({
                             useFilterChips={true}
                             doFlexGrow={false}
                         >
-                            <img
+                            <Image
                                 src="/icons/add.svg"
                                 width="80"
                                 height="80"
+                                alt="add button"
                                 className="hover-rotate hover-opaque hover-scale"
                             />
                         </Popup>
