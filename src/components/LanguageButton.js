@@ -2,7 +2,7 @@
 
 import { useLanguageContext } from "./LanguageProvider";
 
-export default function LanguageButton() {
+export default function LanguageButton({ scale }) {
     const { language, setLanguage } = useLanguageContext();
 
     const handleChangeLanguage = () => {
@@ -16,8 +16,8 @@ export default function LanguageButton() {
             onClick={handleChangeLanguage}
             className="hover-scale clickable"
             src="/icons/languages.svg"
-            width="40"
-            height="40"
+            width={scale}
+            height={scale}
         />
     );
 }

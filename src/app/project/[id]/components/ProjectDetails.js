@@ -97,7 +97,7 @@ export default function ProjectDetails({ project }) {
                         {project.categories.map((category) => (
                             <div
                                 key={category.name}
-                                className="thin-border rounded title-padding-px center-text"
+                                className="thin-border rounded title-padding-px center-text margin-1"
                             >
                                 <p>{category.name}</p>
                             </div>
@@ -117,13 +117,15 @@ export default function ProjectDetails({ project }) {
                         >
                             {project.types.map((type) => (
                                 <div
-                                    className="thin-border rounded title-padding-px center-text"
+                                    className="thin-border rounded title-padding-px center-text margin-3"
                                     style={{
                                         background: getColorFromType(type),
                                     }}
                                     key={type}
                                 >
-                                    <p>{type}</p>
+                                    <Translate
+                                        text={[`type.${type.toLowerCase()}`]}
+                                    />
                                 </div>
                             ))}
                         </div>

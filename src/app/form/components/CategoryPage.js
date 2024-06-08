@@ -1,6 +1,3 @@
-import styles from "@/styles/Form.module.css";
-import { useEffect } from "react";
-
 export default function CategoryPage({ categories, value, setValue }) {
     const handleCategoryClick = (category) => {
         if (value.includes(category)) {
@@ -10,18 +7,18 @@ export default function CategoryPage({ categories, value, setValue }) {
         }
     };
     return (
-        <div className={styles.categories}>
+        <div className="flex-wrap big-gap-px padding-3">
             {categories && categories.length > 0 ? (
                 categories.map((category) => (
                     <button
-                        className={styles.pill}
+                        className="pill grow thick-border hover-darken"
                         onClick={() => handleCategoryClick(category)}
                         style={
                             value.includes(category)
                                 ? {
-                                      background: "black",
+                                      backgroundColor: "black",
                                   }
-                                : { background: "white" }
+                                : { backgroundColor: "white" }
                         }
                         key={category.id}
                     >

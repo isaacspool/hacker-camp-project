@@ -1,5 +1,3 @@
-import styles from "@/styles/Form.module.css";
-
 export default function ProjectDescriptionPage({
     children,
     title,
@@ -8,36 +6,36 @@ export default function ProjectDescriptionPage({
     setValue,
 }) {
     let inputPart = (
-        <div className={styles.descriptionPage}>
-            <h1 style={{ fontSize: 40, textAlign: "center" }}>{title}</h1>
-            <p style={{ fontSize: 24, textAlign: "center" }}>{subtitle}</p>
-            <div className={styles.textBox}>
+        <>
+            <h1 className="huge-text center-text">{title}</h1>
+            <p className="large-text center-text">{subtitle}</p>
+            <div className="thick-border rounded-30 padding-4 fill blur fill-height-80">
                 <textarea
-                    style={{
-                        overflowY: "auto",
-                        borderRadius: 30,
-                        outline: "none",
-                        border: "none",
-                        backdropFilter: "none",
-                        borderRadius: 0,
-                        padding: 0,
-                    }}
                     placeholder="..."
                     onChange={(e) => setValue(e.target.value)}
                     value={value}
-                    className={styles.textBox}
+                    className="fill overflow-y medium-text no-resize black-scroll fill-height"
                 />
             </div>
-        </div>
+        </>
     );
     if (children) {
         return (
-            <div className={styles.descriptionContainer}>
-                {inputPart}
+            <div className="flex-cols-mobile small-gap fill">
+                <div
+                    className="flex-cols grow big-gap center padding-3 height-auto"
+                    style={{ maxHeight: "80vh" }}
+                >
+                    {inputPart}
+                </div>
                 {children}
             </div>
         );
     } else {
-        return inputPart;
+        return (
+            <div className="flex-cols grow big-gap center padding-3 fill-height-80">
+                {inputPart}
+            </div>
+        );
     }
 }

@@ -1,4 +1,3 @@
-import styles from "@/styles/Form.module.css";
 import { translate } from "@/lib/translation";
 
 export default function NamePage({ value, setValue, language }) {
@@ -8,14 +7,7 @@ export default function NamePage({ value, setValue, language }) {
             placeholder={translate("form.project_name", language)}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className={styles.thickBorder}
-            style={{
-                padding: 20,
-                fontSize: 40,
-                width: "100%",
-                background: "transparent",
-                backdropFilter: "blur(5px)",
-            }}
+            className="thick-border fill blur huge-text rounded-30 input-padding"
         />
     );
 }

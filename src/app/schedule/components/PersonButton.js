@@ -6,7 +6,7 @@ export default function PersonButton({ children, icon, canDelete, canEdit }) {
     const { displayValue, _ } = usePopupContext();
     return (
         <div
-            className={`flex grow center-all small-text medium-gap-px medium-border pill ${
+            className={`flex grow center-all small-text big-gap-px medium-border pill ${
                 canEdit ? "hover-darken" : ""
             }`}
             style={{

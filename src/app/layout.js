@@ -4,6 +4,7 @@ import LanguageProvider from "@/components/LanguageProvider";
 import Link from "next/link";
 import FormButton from "@/components/FormButton";
 import LanguageButton from "@/components/LanguageButton";
+import HomeButton from "@/components/HomeButton";
 
 const latoFont = Lato({
     weight: ["100", "400", "700"],
@@ -35,13 +36,8 @@ export default function RootLayout({ children }) {
                             <img src="/icons/help.svg" width="40" height="40" />
                         </Link>
                         <FormButton scale={1.5} />
-                        <LanguageButton />
-                        <Link
-                            href="/"
-                            className="hover-scale remove-mobile clickable"
-                        >
-                            <img src="/icons/home.svg" width="40" height="40" />
-                        </Link>
+                        <LanguageButton scale={40} />
+                        <HomeButton scale={40} />
                     </nav>
                     <main
                         className={[

@@ -1,4 +1,3 @@
-import styles from "@/styles/Form.module.css";
 import { translate } from "@/lib/translation";
 
 export default function ParticipantsPage({
@@ -9,27 +8,11 @@ export default function ParticipantsPage({
     language,
 }) {
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "10%",
-            }}
-        >
-            <h1 style={{ fontSize: 40 }}>
+        <div className="flex-cols center-all big-gap-px">
+            <h1 className="huge-text">
                 {translate("form.participants", language)}
             </h1>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 40,
-                    width: "100%",
-                }}
-            >
+            <div className="flex center-all big-gap-px fill">
                 <input
                     type="number"
                     min="4"
@@ -39,15 +22,9 @@ export default function ParticipantsPage({
                     onChange={(e) =>
                         setParticipants([e.target.value, participants[1]])
                     }
-                    className={styles.textBox}
-                    style={{
-                        flexGrow: 0,
-                        textAlign: "center",
-                        width: 180,
-                        borderRadius: 20,
-                    }}
+                    className="medium-border rounded padding-4 large-text width-100 blur lato center-text transparent"
                 />
-                <p style={{ fontSize: 36 }}>{translate("form.to", language)}</p>
+                <p className="huge-text">{translate("form.to", language)}</p>
                 <input
                     type="number"
                     min="4"
@@ -57,45 +34,27 @@ export default function ParticipantsPage({
                     onChange={(e) =>
                         setParticipants([participants[0], e.target.value])
                     }
-                    className={styles.textBox}
-                    style={{
-                        flexGrow: 0,
-                        textAlign: "center",
-                        borderRadius: 20,
-                    }}
+                    className="medium-border rounded padding-4 large-text blur lato center-text width-100 transparent"
                 ></input>
             </div>
-            <h1 style={{ fontSize: 40 }}>
+            <h1 className="huge-text">
                 {translate("form.duration", language)}
             </h1>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 40,
-                    width: "100%",
-                }}
-            >
+            <div className="flex center-all big-gap-px fill">
                 <input
                     type="number"
                     min="0.5"
                     max="21"
-                    className={styles.textBox}
+                    className="medium-border rounded padding-4 large-text blur lato center-text width-100 transparent"
                     placeholder="..."
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
-                    style={{
-                        flexGrow: 0,
-                        width: 70,
-                        textAlign: "center",
-                        borderRadius: 20,
-                    }}
                 ></input>
-                <p style={{ fontSize: 36 }}>
-                    {duration == 1
+                <p className="huge-text">
+                    {(duration == 1
                         ? translate("form.day", language)
-                        : translate("form.days", language)}
+                        : translate("form.days", language)
+                    ).toLowerCase()}
                 </p>
             </div>
         </div>

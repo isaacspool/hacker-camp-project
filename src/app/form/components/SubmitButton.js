@@ -1,4 +1,3 @@
-import styles from "@/styles/Form.module.css";
 import { translate } from "@/lib/translation";
 import { useFormPageContext } from "./FormPageProvider";
 import { useRouter } from "next/navigation";
@@ -35,23 +34,26 @@ export default function SubmitButton({ language, formAnswers, submitAction }) {
         };
     }, []);
     return (
-        <div style={{ width: "40%" }}>
+        <div className="grow-mobile">
             {submittedProject ? (
-                <div className={styles.submitDoneContainer}>
+                <div className="flex-cols center huge-text big-gap fill-height">
                     <h1>Success!</h1>
                     <Link
-                        className={styles.submitDoneLink}
+                        className="large-text medium-border blur input-padding margin-2 rounded"
                         href={`/project/${submittedProject?.id}`}
                     >
                         View Project
                     </Link>
-                    <Link className={styles.submitDoneLink} href="/">
+                    <Link
+                        className="large-text medium-border blur input-padding margin-2 rounded"
+                        href="/"
+                    >
                         Home
                     </Link>
                 </div>
             ) : (
                 <button
-                    className={[styles.box, styles.submitButton].join(" ")}
+                    className="thick-border rounded-30 padding-3 hover-darken huge-text center fill blur transparent"
                     onClick={handleSubmit}
                 >
                     {translate("form.submit", language)}

@@ -1,4 +1,3 @@
-import styles from "@/styles/Form.module.css";
 import FormState from "./components/FormState";
 import FormDots from "./components/FormDots";
 import prisma from "@/lib/prisma";
@@ -49,7 +48,9 @@ export default async function Form() {
     const categories = await prisma.category.findMany();
 
     return (
-        <div className={styles.container}>
+        <div className="flex-cols center lato margin-center grow-mobile wide-grow-mobile">
+            {/* This svg filter is for a hacky solution to get the triangle
+            to render correctly on the types page. */}
             <svg
                 style={{ visibility: "hidden", position: "absolute" }}
                 width="0"
@@ -78,10 +79,7 @@ export default async function Form() {
                     </filter>
                 </defs>
             </svg>
-            <div
-                className={styles.main}
-                style={{ width: "100%", height: "90vh" }}
-            >
+            <div className="fill max-height overflow-hidden">
                 <FormDots />
                 <FormState
                     submitAction={submitAction}

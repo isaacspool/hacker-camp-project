@@ -144,7 +144,7 @@ hr {
 }
 
 .medium-gap-px {
-    gap: 18px;
+    gap: 10px;
 }
 
 .big-gap {
@@ -158,6 +158,10 @@ hr {
 .flex-cols {
     display: flex;
     flex-direction: column;
+}
+
+.flex-cols-mobile {
+    display: flex;
 }
 
 .flex-wrap {
@@ -365,6 +369,10 @@ hr {
     padding: 3%;
 }
 
+.padding-4 {
+    padding: 4%;
+}
+
 .title-padding-px {
     padding: calc(0.83 * 26px);
 }
@@ -393,10 +401,6 @@ hr {
     margin: 0 auto;
 }
 
-.white {
-    background: white;
-}
-
 .popup {
     z-index: 1001;
     height: 65vh;
@@ -404,6 +408,10 @@ hr {
 
 .grow-mobile {
     width: 40%;
+}
+
+.wide-grow-mobile {
+    width: 75%;
 }
 
 .width-500 {
@@ -416,6 +424,10 @@ hr {
 
 .width-540 {
     width: 540px;
+}
+
+.width-100 {
+    width: 100px;
 }
 
 .max-content {
@@ -433,12 +445,29 @@ hr {
 .max-height {
     height: 90vh;
 }
+
+.fill-height {
+    height: 100%;
+}
+
+.fill-height-80 {
+    height: 80%;
+}
+
+.height-auto {
+    height: auto;
+}
+
 .half-height {
     height: 45vh;
 }
 
 .overflow-y {
     overflow-y: auto;
+}
+
+.overflow-hidden {
+    overflow: hidden;
 }
 
 .blue-link {
@@ -448,6 +477,37 @@ hr {
 .blue-link:hover {
     color: rgb(26, 90, 201);
     text-decoration: underline;
+}
+
+.dot-30 {
+    height: 30px;
+    width: 30px;
+    aspect-ratio: 1/1;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.white {
+    background: white;
+}
+
+.transparent {
+    background: transparent;
+}
+
+.no-resize {
+    resize: none;
+}
+
+.triangle-effect {
+    display: inline-block;
+    clip-path: polygon(50% -5%, 100% 100%, 0 100%);
+    z-index: 1;
+    mask-image: url("/triangle/triangle_mask.svg");
+    mask-size: 100% 97%;
+    mask-position: 50% 70%;
+    mask-repeat: no-repeat;
 }
 
 @keyframes rotate {
@@ -515,13 +575,25 @@ hr {
         width: 90%;
         height: 90%;
     }
+    .wide-grow-mobile {
+        width: 95%;
+    }
     .lower-mobile {
         margin-top: 90px;
+    }
+    .left-mobile {
+        justify-content: left;
+    }
+    .half-mobile {
+        width: 65%;
     }
     .width-500 {
         width: 85vw;
     }
     .width-540 {
         width: 95vw;
+    }
+    .flex-cols-mobile {
+        flex-direction: column;
     }
 }

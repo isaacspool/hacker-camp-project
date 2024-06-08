@@ -1,4 +1,3 @@
-import styles from "@/styles/Form.module.css";
 import { useEffect } from "react";
 import { translate } from "@/lib/translation";
 
@@ -61,12 +60,7 @@ export default function ProjectTypePage({
     const handleTriangleClick = (e) => {
         // Handle events where user clicks anywhere on the page
         const triangle = e.target;
-        if (
-            e &&
-            triangle &&
-            triangle.tagName === "IMG" &&
-            triangle.classList.contains(styles.roundedTriangle)
-        ) {
+        if (e && triangle && triangle.tagName === "IMG") {
             const client = { x: e.clientX, y: e.clientY };
             let closestPoint = null;
             let closestDistance = 10000;
@@ -100,28 +94,42 @@ export default function ProjectTypePage({
             document.removeEventListener("click", handleTriangleClick);
         };
     }, []);
+    const triangleHeight = 345;
+    const triangleWidth = 415;
     return (
         <div>
             <p
-                className={[
-                    styles.triangleText,
-                    styles.notoSerifHebrew200,
-                ].join(" ")}
                 style={{
-                    left: "50%",
-                    top: "calc(50% - var(--triangle-height) / 2 - 90px)",
+                    position: "absolute",
+                    fontSize: "3.25vmax",
+                    left: "44%",
+                    top: `calc(50% - ${triangleHeight}px / 2 - 70px)`,
                 }}
             >
                 {translate("type.creative", language)}
             </p>
-            <p className={styles.triangleText} style={{ left: "72%" }}>
+            <p
+                style={{
+                    position: "absolute",
+                    fontSize: "3.25vmax",
+                    top: `calc(50% + ${triangleHeight}px / 2 + 10px)`,
+                    left: "63%",
+                }}
+            >
                 {translate("type.engineering", language)}
             </p>
-            <p className={styles.triangleText} style={{ left: "27%" }}>
+            <p
+                style={{
+                    position: "absolute",
+                    fontSize: "3.25vmax",
+                    top: `calc(50% + ${triangleHeight}px / 2 + 10px)`,
+                    left: "24%",
+                }}
+            >
                 {translate("type.analytical", language)}
             </p>
             <div
-                className={styles.emptyDot}
+                className="thick-border pill dot-30"
                 style={{
                     position: "fixed",
                     left: triangleLocation.x - 15,
@@ -135,25 +143,32 @@ export default function ProjectTypePage({
                 src="/triangle/rounded_triangle.svg"
                 width="410"
                 height="345"
-                className={styles.roundedTriangle}
+                className="fixed-center"
+                style={{ zIndex: 10 }}
             />
             <div
-                className={styles.triangle}
+                className="fixed-center triangle-effect"
                 style={{
+                    width: triangleWidth,
+                    height: triangleHeight,
                     background:
                         "linear-gradient(300deg, rgba(251, 170, 11, 1) 0%, rgba(255, 255, 255, 1) 53%)",
                 }}
             ></div>
             <div
-                className={styles.triangle}
+                className="fixed-center triangle-effect"
                 style={{
+                    width: triangleWidth,
+                    height: triangleHeight,
                     background:
                         "linear-gradient(60deg, rgba(220,63,63,1) 0%, rgba(255,255,255,0) 53%)",
                 }}
             ></div>
             <div
-                className={styles.triangle}
+                className="fixed-center triangle-effect"
                 style={{
+                    width: triangleWidth,
+                    height: triangleHeight,
                     background:
                         "linear-gradient(180deg, rgba(43,73,231,1) 0%, rgba(255,255,255,0) 65%)",
                 }}

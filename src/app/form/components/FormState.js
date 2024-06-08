@@ -10,12 +10,11 @@ import ProjectDescriptionPage from "./ProjectDescriptionPage";
 import FullHackerCampLogo from "./FullHackerCampLogo";
 import SubmitButton from "./SubmitButton";
 import { useState, useLayoutEffect } from "react";
-import styles from "@/styles/Form.module.css";
 import { translate } from "@/lib/translation";
 
 export default function FormState({ submitAction, databaseCategories }) {
-    const { formPage, setFormPage } = useFormPageContext();
-    const { language, _ } = useLanguageContext();
+    const { formPage, _ } = useFormPageContext();
+    const { language, __ } = useLanguageContext();
 
     const [projectName, setProjectName] = useState("");
     const [projectTypes, setProjectTypes] = useState("");
@@ -36,7 +35,7 @@ export default function FormState({ submitAction, databaseCategories }) {
 
     return (
         <div
-            className={styles.formPage}
+            className="flex center-all"
             style={formPage != 2 ? { height: "100%" } : {}}
         >
             {

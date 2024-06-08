@@ -16,7 +16,7 @@ export default function Translate({ text }) {
     return (
         <div className="flex tiny-gap center-all">
             {translatedText.map((text) => (
-                <span>{text}</span>
+                <span key={text}>{text}</span>
             ))}
         </div>
     );

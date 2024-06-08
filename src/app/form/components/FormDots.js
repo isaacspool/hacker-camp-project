@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useFormPageContext } from "./FormPageProvider";
-import styles from "@/styles/Form.module.css";
 
 const PAGE_COUNT = 8;
 
@@ -37,15 +36,15 @@ export default function FormDots() {
         };
     }, []);
     return (
-        <div className={styles.dots}>
+        <div className="flex-wrap center-all left-mobile medium-gap-px padding-3 half-mobile">
             {[...Array(PAGE_COUNT).keys()].map((dot) => {
                 if (dot == formPage) {
-                    return <div className={styles.filledDot} key={dot}></div>;
+                    return <div className="pill dot-30" key={dot}></div>;
                 } else {
                     return (
                         <button
                             onClick={handleClick}
-                            className={styles.emptyDot}
+                            className="pill white dot-30  thick-border"
                             value={dot}
                             key={dot}
                         ></button>
