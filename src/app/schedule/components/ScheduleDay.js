@@ -91,7 +91,10 @@ export default function ScheduleDay({
                 dayInfo={dayInfo}
                 presentationMode={presentationMode}
             />
-            <div className="center max-height thick-border rounded-30 flex-cols small-gap hide-scroll overflow-x-hidden overflow-y width-540 padding-2 blur">
+            <div
+                className="center max-height thick-border rounded-30 flex-cols small-gap hide-scroll overflow-x-hidden overflow-y width-540 padding-2"
+                style={{ background: "rgba(255,255,255,0.8)" }}
+            >
                 {(!presentationMode || dayInfo.year != currentYear) && (
                     <DayDetails
                         databaseId={databaseDayId}

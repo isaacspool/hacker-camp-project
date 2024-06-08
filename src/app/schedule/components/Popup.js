@@ -233,19 +233,19 @@ export default function Popup({
             {showPopup && (
                 <div>
                     <button
-                        className="blur fixed fill-all"
+                        className="blur fill-all hover-scale"
                         onClick={handleClosePopup}
                     />
                     <div
                         className={
-                            "popup fixed-center white padding-2 flex-cols center-all rounded thick-border"
+                            "popup grow-mobile fixed-center white padding-2 flex-cols center-all rounded thick-border"
                         }
                     >
                         <div className="flex center-all big-gap fill">
                             <Image
                                 src="/icons/trash.svg"
                                 width="30"
-                                height="33.33"
+                                height="33"
                                 style={{
                                     display: handleTrashButton
                                         ? "flex"

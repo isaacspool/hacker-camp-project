@@ -55,7 +55,7 @@ export default function ProjectTitle({
                     <Image
                         src="/icons/trash.svg"
                         width="31"
-                        height="34.44"
+                        height="34"
                         alt="trash button"
                         className="hover-scale"
                         onClick={handleDeleteProject}
