@@ -334,7 +334,7 @@ export default function Popup({
                                         key={item.id ? item.id : item.name}
                                     >
                                         <button
-                                            className="medium-border rounded-30 padding-3 grow small-text"
+                                            className="medium-border rounded-30 padding-3 grow small-text hover-darken"
                                             style={
                                                 useFilterChips && item.types
                                                     ? {

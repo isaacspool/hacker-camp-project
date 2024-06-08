@@ -7,7 +7,7 @@ export default function PersonButton({ children, icon, canDelete, canEdit }) {
     return (
         <div
             className={`flex grow center-all small-text medium-gap-px medium-border pill ${
-                canEdit ?? "hover-darken"
+                canEdit ? "hover-darken" : ""
             }`}
             style={{
                 padding: "0.65rem 2.5rem",
