@@ -28,7 +28,11 @@ export default function SchedulePage({ searchParams }) {
         <>
             <YearProvider defaultYear={year}>
                 <WeekLink
-                    url={day == 0 || day ? `/schedule/?week=${week}&` : "/?"}
+                    url={
+                        day == 0 || day
+                            ? { pathname: "/schedule", query: { week } }
+                            : { pathname: "/" }
+                    }
                     week={week}
                     css={
                         "flex fixed top-left tiny-gap huge-text bold lato hover-underline"

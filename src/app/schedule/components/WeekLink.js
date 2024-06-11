@@ -13,6 +13,13 @@ export default function WeekLink({ url, week, css, hasHidden }) {
         linkText = [year, ...linkText];
     }
     linkText = reverseIfHebrew(linkText, language);
+    const modifiedUrl = {
+        ...url,
+        query: {
+            ...url.query,
+            year,
+        },
+    };
     return (
         <>
             {hasHidden && (
@@ -26,7 +33,7 @@ export default function WeekLink({ url, week, css, hasHidden }) {
                     {linkText.join(" ")}
                 </div>
             )}
-            <Link href={url + `year=${year}`} className={css}>
+            <Link href={modifiedUrl} className={css}>
                 {linkText.map((t) => (
                     <div key={t}>
                         <span>{t}</span>{" "}
