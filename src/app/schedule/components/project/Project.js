@@ -1,11 +1,14 @@
-import Person from "./Person";
+import Person from "../Person";
 import ProjectTitle from "./ProjectTitle";
 import LocationButton from "./LocationButton";
-import PopupProvider from "./PopupProvider";
-import Popup from "./Popup";
+import PopupProvider from "../popup/PopupProvider";
+import Popup from "../popup/Popup";
 import ProjectBackground from "./ProjectBackground";
-import TempStaffProvider from "./TempStaffProvider";
+import TempStaffProvider from "../TempStaffProvider";
 import Image from "next/image";
+import PersonSelectPopup from "../popup/PersonSelectPopup";
+import PersonIcon from "./PersonIcon";
+import LocationPopup from "../popup/LocationPopup";
 
 export default function Project({
     staff,
@@ -47,17 +50,13 @@ export default function Project({
                         {location?.name}
                     </LocationButton>
                 ) : (
-                    <PopupProvider
-                        data={rooms}
-                        clickHandler={setLocation}
-                        useFilterChips={false}
-                        doFlexGrow={false}
-                        initValue={location?.name}
-                    >
-                        <LocationButton />
+                    <PopupProvider initValue={location?.name}>
+                        <LocationPopup rooms={rooms} setLocation={setLocation}>
+                            <LocationButton />
+                        </LocationPopup>
                     </PopupProvider>
                 )}
-                <div className="flex-wrap">
+                <div className="flex-wrap center">
                     {staff.map((person) => (
                         <Person
                             icon="/icons/person.svg"
@@ -74,23 +73,11 @@ export default function Project({
                         />
                     ))}
                     {!presentationMode && (
-                        <TempStaffProvider>
-                            {staff.length == 0 && (
-                                <Image
-                                    src="/icons/person.svg"
-                                    width="25"
-                                    height="25"
-                                    style={{ margin: "0.3rem" }}
-                                    key="img"
-                                    alt="person icon"
-                                />
-                            )}
-                            <Popup
-                                addTempStaff={true}
-                                data={staffList}
-                                clickHandler={handleAddStaff}
-                                useFilterChips={true}
+                        <TempStaffProvider staffInProject={staff}>
+                            <PersonSelectPopup
                                 doFlexGrow={false}
+                                data={staffList}
+                                handleSelectPerson={handleAddStaff}
                                 staffOut={staffOut}
                                 staffInProjects={staffInProjects}
                                 year={dayInfo.year}
@@ -104,7 +91,7 @@ export default function Project({
                                     className="hover-rotate hover-opaque hover-scale"
                                     alt="add button"
                                 />
-                            </Popup>
+                            </PersonSelectPopup>
                         </TempStaffProvider>
                     )}
                 </div>

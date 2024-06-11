@@ -606,4 +606,7 @@ hr {
     .flex-cols-mobile {
         flex-direction: column;
     }
+    .fill-height-80 {
+        height: 70%;
+    }
 }

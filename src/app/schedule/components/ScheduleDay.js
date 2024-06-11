@@ -1,9 +1,10 @@
-import Project from "./Project";
-import Popup from "./Popup";
+import Project from "./project/Project";
+import Popup from "./popup/Popup";
 import DayTitle from "./DayTitle";
 import DayDetails from "./DayDetails";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
+import NewProjectPopup from "./popup/NewProjectPopup";
 
 export default function ScheduleDay({
     dayInfo,
@@ -158,11 +159,9 @@ export default function ScheduleDay({
                 })}
                 {!presentationMode && (
                     <div className="flex center-all width-500">
-                        <Popup
+                        <NewProjectPopup
                             data={databaseProjects}
                             clickHandler={handleSelectProject}
-                            useFilterChips={true}
-                            doFlexGrow={false}
                         >
                             <Image
                                 src="/icons/add.svg"
@@ -171,7 +170,7 @@ export default function ScheduleDay({
                                 alt="add button"
                                 className="hover-rotate hover-opaque hover-scale"
                             />
-                        </Popup>
+                        </NewProjectPopup>
                     </div>
                 )}
             </div>

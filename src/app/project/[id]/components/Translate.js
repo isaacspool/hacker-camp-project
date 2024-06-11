@@ -14,9 +14,11 @@ export default function Translate({ text }) {
         language
     );
     return (
-        <div className="flex tiny-gap center-all">
+        <div className="flex-wrap tiny-gap center-all">
             {translatedText.map((text) => (
-                <span key={text}>{text}</span>
+                <span style={{ textWrap: "nowrap" }} key={text}>
+                    {text}
+                </span>
             ))}
         </div>
     );

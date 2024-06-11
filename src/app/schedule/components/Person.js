@@ -1,5 +1,6 @@
 import PersonButton from "./PersonButton";
-import PopupProvider from "./PopupProvider";
+import PersonSelectPopup from "./popup/PersonSelectPopup";
+import PopupProvider from "./popup/PopupProvider";
 
 export default function Person({
     name,
@@ -27,21 +28,25 @@ export default function Person({
     };
 
     return canEdit ? (
-        <PopupProvider
-            data={staffList}
-            clickHandler={swapStaff}
-            handleTrashButton={
-                canDelete ? deleteStaff.bind(null, { name: name }) : null
-            }
-            useFilterChips={true}
-            doFlexGrow={true}
-            staffOut={staffOut}
-            staffInProjects={staffInProjects}
-            year={year}
-            handleModifyStaffOut={handleModifyStaffOut}
-            initValue={name}
-        >
-            <PersonButton icon={icon} canDelete={canDelete} canEdit={canEdit} />
+        <PopupProvider initValue={name}>
+            <PersonSelectPopup
+                data={staffList}
+                handleSelectPerson={swapStaff}
+                handleTrashButton={
+                    canDelete ? deleteStaff.bind(null, { name: name }) : null
+                }
+                doFlexGrow
+                staffOut={staffOut}
+                staffInProjects={staffInProjects}
+                year={year}
+                handleModifyStaffOut={handleModifyStaffOut}
+            >
+                <PersonButton
+                    icon={icon}
+                    canDelete={canDelete}
+                    canEdit={canEdit}
+                />
+            </PersonSelectPopup>
         </PopupProvider>
     ) : (
         <div className="flex grow center-all">

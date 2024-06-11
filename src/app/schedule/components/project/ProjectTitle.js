@@ -1,11 +1,11 @@
 "use client";
 
-import { useSelectedProjectContext } from "./SelectedProjectProvider";
-import InfoIcon from "./InfoIcon";
+import { useSelectedProjectContext } from "../SelectedProjectProvider";
+import InfoIcon from "../InfoIcon";
 import { useEffect, useState } from "react";
 import { useDeletedContext } from "./ProjectBackground";
-import { useRouterRefresh } from "./Popup";
 import Image from "next/image";
+import { useRouterRefresh } from "@/lib/hooks";
 
 export default function ProjectTitle({
     uniqueId,

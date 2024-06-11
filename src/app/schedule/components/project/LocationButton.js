@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { usePopupContext } from "./PopupProvider";
+import { usePopupContext } from "../popup/PopupProvider";
 
 export default function LocationButton({ children, presentationMode }) {
     const { displayValue, _ } = usePopupContext();

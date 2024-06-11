@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { usePopupContext } from "./PopupProvider";
+import { usePopupContext } from "./popup/PopupProvider";
 
 export default function PersonButton({ children, icon, canDelete, canEdit }) {
     const { displayValue, _ } = usePopupContext();

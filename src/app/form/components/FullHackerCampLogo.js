@@ -1,15 +1,13 @@
-import Image from "next/image";
-
 export default function FullHackerCampLogo() {
     return (
         <div style={{ width: "65%", margin: "auto" }}>
-            <Image
+            <img
                 src="/logo/full_hacker_logo_hexagons.svg"
                 width="100%"
                 height="100%"
                 alt="logo with hexagons"
             />
-            <Image
+            <img
                 src="/logo/hacker_brain.png"
                 width="28%"
                 height="28%"
