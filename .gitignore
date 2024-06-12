@@ -29,5 +29,6 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# private data used to seed the database
+# private data
 /prisma/seed
+/public/video

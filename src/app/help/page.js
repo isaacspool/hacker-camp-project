@@ -18,7 +18,7 @@ export default function HelpPage() {
         </span>
     );
     return (
-        <div className="padding-4 grow-mobile">
+        <div className="padding-4">
             <h1>Help / FAQ</h1>
             <ul
                 className="medium-text flex-cols max-height big-gap"
@@ -45,41 +45,29 @@ export default function HelpPage() {
                             Click on the types such as{" "}
                             {typeTextSpan("Creative")} and{" "}
                             {typeTextSpan("Analytical")} to add those too. Check
-                            out this video to see an example (not visible on
-                            your phone)
-                            <h1
-                                className="remove-mobile"
-                                style={{
-                                    position: "absolute",
-                                    top: 280,
-                                    left: "70%",
-                                    transform:
-                                        "translateX(-50%) translateY(-50%)",
-                                    textWrap: "nowrap",
-                                }}
-                            >
-                                Adding a new project
-                            </h1>
-                            <video
-                                width={1280 / 2}
-                                height={720 / 2}
-                                className="remove-mobile"
-                                style={{
-                                    position: "absolute",
-                                    top: 500,
-                                    left: "70%",
-                                    transform:
-                                        "translateX(-50%) translateY(-50%)",
-                                }}
-                                controls
-                                preload="none"
-                            >
-                                <source
-                                    src="/videos/create_new_project.mp4"
-                                    type="video/mp4"
-                                />
-                                Your browser does not support the video tag.
-                            </video>
+                            out this video to see an example:
+                            <div className="min-content">
+                                <h1 className="margin-title center-text">
+                                    Adding a new project
+                                </h1>
+                                <video
+                                    width={1280 / 2}
+                                    height={720 / 2}
+                                    className="rounded"
+                                    style={{
+                                        width: "50vw",
+                                        height: "calc(9/16 * 50vw)",
+                                    }}
+                                    controls
+                                    preload="none"
+                                >
+                                    <source
+                                        src="/video/create_new_project.mp4"
+                                        type="video/mp4"
+                                    />
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                         </li>
                         <li>
                             Blue means {typeTextSpan("creative")}, red means{" "}
@@ -115,6 +103,7 @@ export default function HelpPage() {
                         <li>
                             The solid colored dot represents the page you're on
                         </li>
+                        <li>Here's a fun example:</li>
                         <FormPageProvider>
                             <FormDots />
                         </FormPageProvider>
@@ -136,6 +125,10 @@ export default function HelpPage() {
                         <li>
                             You can log out on this page if you need to (such as
                             on a public computer)
+                        </li>
+                        <li>
+                            See who you're logged in as next to the log out
+                            button
                         </li>
                         <li>
                             Click on the year at the top of the page to change
