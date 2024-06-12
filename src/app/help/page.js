@@ -47,6 +47,19 @@ export default function HelpPage() {
                             {typeTextSpan("Analytical")} to add those too. Check
                             out this video to see an example (not visible on
                             your phone)
+                            <h1
+                                className="remove-mobile"
+                                style={{
+                                    position: "absolute",
+                                    top: 280,
+                                    left: "70%",
+                                    transform:
+                                        "translateX(-50%) translateY(-50%)",
+                                    textWrap: "nowrap",
+                                }}
+                            >
+                                Adding a new project
+                            </h1>
                             <video
                                 width={1280 / 2}
                                 height={720 / 2}

@@ -6,7 +6,6 @@ import HackerBrain from "@/components/HackerBrain";
 import LogoutButton from "@/components/LogoutButton";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import EditNotesButton from "@/components/EditNotesButton";
 import WeekNotes from "@/components/WeekNotes";
 import EditingNotesProvider from "@/components/EditingNotesProvider";
@@ -51,6 +50,7 @@ export default async function Home({ searchParams }) {
                 });
             });
     };
+
     return (
         <>
             <YearProvider defaultYear={year}>
@@ -103,7 +103,10 @@ export default async function Home({ searchParams }) {
                 </div>
             </YearProvider>
             <HackerBrain />
-            <LogoutButton handleLogout={handleLogout} />
+            <LogoutButton
+                handleLogout={handleLogout}
+                loggedInUser={cookies().get("name").value}
+            />
         </>
     );
 }
