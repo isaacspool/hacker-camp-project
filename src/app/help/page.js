@@ -28,7 +28,18 @@ export default function HelpPage() {
                     You can always click the <LanguageButton scale={20} />{" "}
                     button in the top right to switch from English to Hebrew or
                     back again. Sorry if my translations are bad, they are
-                    mostly from Google
+                    mostly from Google. If you want to help me improve them,
+                    message Isaac
+                </li>
+                <li>
+                    Check out the{" "}
+                    <Link
+                        href="https://github.com/isaacspool/hacker-camp-project"
+                        className="blue-link"
+                    >
+                        GitHub page
+                    </Link>{" "}
+                    to view the source code for this website!
                 </li>
                 <li className="medium-border rounded padding-3">
                     <Link href="/schedule/" className="blue-link">

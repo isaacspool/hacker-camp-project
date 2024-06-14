@@ -11,6 +11,7 @@ import WeekNotes from "@/components/WeekNotes";
 import EditingNotesProvider from "@/components/EditingNotesProvider";
 import WeekContainer from "@/components/WeekContainer";
 import prisma from "@/lib/prisma";
+import Link from "next/link";
 
 export default async function Home({ searchParams }) {
     const currentYear = new Date().getFullYear();
@@ -102,6 +103,12 @@ export default async function Home({ searchParams }) {
                         })}
                 </div>
             </YearProvider>
+            <Link
+                href="https://github.com/isaacspool/hacker-camp-project"
+                className="blue-link bottom-left fixed-desktop"
+            >
+                https://github.com/isaacspool/hacker-camp-project
+            </Link>
             <HackerBrain />
             <LogoutButton
                 handleLogout={handleLogout}

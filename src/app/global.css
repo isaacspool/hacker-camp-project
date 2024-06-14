@@ -339,6 +339,11 @@ hr {
     right: 2%;
 }
 
+.bottom-left {
+    bottom: 2%;
+    left: 2%;
+}
+
 .fixed-center {
     position: fixed;
     transform: translate(-50%, -50%);
@@ -520,8 +525,8 @@ hr {
     mask-repeat: no-repeat;
 }
 
-.absolute-desktop {
-    display: absolute;
+.fixed-desktop {
+    position: fixed;
 }
 
 @keyframes rotate {
@@ -613,7 +618,7 @@ hr {
     .fill-height-80 {
         height: 70%;
     }
-    .absolute-desktop {
-        display: static;
+    .fixed-desktop {
+        position: static;
     }
 }
