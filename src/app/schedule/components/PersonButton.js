@@ -15,12 +15,17 @@ export default function PersonButton({ children, icon, canDelete, canEdit }) {
                 margin: "0.3rem",
             }}
         >
-            <Image
-                src={icon}
-                width={canDelete ? 21 : 30}
-                height={21}
-                alt="person icon"
-            />
+            <div
+                className="flex center"
+                style={canDelete ? { minHeight: 21 } : { minHeight: 30 }}
+            >
+                <Image
+                    src={icon}
+                    width={canDelete ? 21 : 30}
+                    height={canDelete ? 21 : 30}
+                    alt="person icon"
+                />
+            </div>
             <p>{displayValue || children}</p>
         </div>
     );

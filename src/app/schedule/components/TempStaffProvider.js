@@ -13,7 +13,7 @@ export default function TempStaffProvider({ children, staffInProject }) {
         <TempStaffContext.Provider value={{ tempStaff, setTempStaff }}>
             <PersonIcon staff={staffInProject} tempStaff={tempStaff} />
             {tempStaff.map((staff, i) => (
-                <PersonButton icon="/icons/person.svg" key={i}>
+                <PersonButton icon="/icons/person.svg" key={i} canDelete>
                     {staff}
                 </PersonButton>
             ))}

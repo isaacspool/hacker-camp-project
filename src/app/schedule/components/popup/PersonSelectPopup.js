@@ -38,6 +38,7 @@ export default function PersonSelectPopup({
     const itemIconProvider = (item) => {
         const notInProject =
             !staffInProjects.find((s) => s.name == item.name) &&
+            item.years &&
             item.years.includes(year);
         const isNotHere = staffOut.find((s) => s.name == item.name);
         if (notInProject) {
@@ -86,7 +87,8 @@ export default function PersonSelectPopup({
             staffInProjects.find((e) => e.name == item.name);
         const isStaffUnassigned =
             !elementFilter.find((e) => e == "Unassigned") ||
-            (item.years.includes(year) &&
+            (item.years &&
+                item.years.includes(year) &&
                 !staffInProjects?.find((e) => e.name == item.name) &&
                 !staffOut?.find((e) => e.name == item.name));
         return isStaffOut && isStaffInProject && isStaffUnassigned;
