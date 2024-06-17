@@ -54,8 +54,8 @@ export default function ProjectTitle({
                 <div className="flex-space center fill title-padding-px">
                     <Image
                         src="/icons/trash.svg"
-                        width="31"
-                        height="34"
+                        width="26"
+                        height="30"
                         alt="trash button"
                         className="hover-scale"
                         onClick={handleDeleteProject}
@@ -70,7 +70,7 @@ export default function ProjectTitle({
                         onChange={(e) => setName(e.target.value)}
                         id={`textarea_${uniqueId}`}
                     />
-                    <InfoIcon scale={33} url={`/project/${databaseId}`} />
+                    <InfoIcon scale={30} url={`/project/${databaseId}`} />
                 </div>
             ) : (
                 <div className="title-padding-px">

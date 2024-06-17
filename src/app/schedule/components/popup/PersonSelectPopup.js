@@ -49,6 +49,7 @@ export default function PersonSelectPopup({
                         width="47"
                         height="47"
                         alt="add button"
+                        className="hover-scale"
                         onClick={async () =>
                             await handleModifyStaffOut({
                                 disconnect: {
@@ -65,6 +66,7 @@ export default function PersonSelectPopup({
                         width="25"
                         height="25"
                         alt="close button"
+                        className="hover-scale"
                         onClick={async () =>
                             await handleModifyStaffOut({
                                 connect: {

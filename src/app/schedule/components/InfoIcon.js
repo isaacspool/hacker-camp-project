@@ -4,7 +4,7 @@ import info from "@/../public/icons/info.svg";
 
 export default function InfoIcon({ scale, url }) {
     return (
-        <Link href={url} target="_blank">
+        <Link href={url} target="_blank" className="flex center-all">
             <Image
                 src={info}
                 width={scale}
