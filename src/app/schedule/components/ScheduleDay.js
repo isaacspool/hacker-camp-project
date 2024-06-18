@@ -83,7 +83,7 @@ export default function ScheduleDay({
                 sp.staff.find((spStaff) => spStaff.name == s.name)
             )
         )
-        .concat(satellites, rundown);
+        .concat(satellites);
 
     return (
         <div className="flex-cols medium-gap width-540">
